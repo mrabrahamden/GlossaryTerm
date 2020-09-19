@@ -7,8 +7,5 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
-    <Grid>
-    <Label Content="Предмет" HorizontalAlignment="Left" Margin="100,380,0,0" VerticalAlignment="Top" Width="131" FontSize="22"/>
-
-  </Grid>
+    <DockPanel HorizontalAlignment="Left" Height="450" LastChildFill="False" VerticalAlignment="Top" Width="800"/>
 </Page>
