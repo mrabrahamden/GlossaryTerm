@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="StartPage" Height="450" Width="800">
-    <Grid Margin="0,0,3.6,-20" Background="WhiteSmoke">
+        Title="StartPage" Height="558" Width="965.6">
+    <Grid Margin="0,0,-157.4,-164" Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="63*"/>
             <ColumnDefinition Width="727*"/>
