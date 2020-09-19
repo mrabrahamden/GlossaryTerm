@@ -5,9 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-    <Button Content="Button" HorizontalAlignment="Left" Margin="162,168,0,0" VerticalAlignment="Top" Width="75"/>
-
+        Title="Teacherry" Height="450" Width="800">
+  <Grid ShowGridLines="True" Background="White">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="220">
+      </ColumnDefinition>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="0*"/>
+    </Grid.ColumnDefinitions>
+    <Button Content="Создать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" FontSize="20" HorizontalAlignment="Left" Margin="30,209,0,0" VerticalAlignment="Top" Width="160" Height="34" RenderTransformOrigin="0.511,-0.747"/>
+    <Button Content="Кроссворд" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" FontSize="20" HorizontalAlignment="Left" Margin="30,261,0,0" VerticalAlignment="Top" Width="160" Height="34"/>
+    <Button Content="Сопоставление" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" FontSize="20" HorizontalAlignment="Left" Margin="30,312,0,0" VerticalAlignment="Top" Width="160" Height="34"/>
+    <Button Content="Дополнение" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" FontSize="20" HorizontalAlignment="Left" Margin="30,362,0,0" VerticalAlignment="Top" Width="160" Height="34"/>
+    <RichTextBox Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="10,10,0,0" VerticalAlignment="Top" Width="554">
+      <FlowDocument>
+        <Paragraph>
+          <Run Text=""/>
+        </Paragraph>
+      </FlowDocument>
+    </RichTextBox>
+    <TextBox Background="WhiteSmoke" HorizontalAlignment="Left" Height="36" Margin="30,10,0,0" TextWrapping="Wrap" Text=". . ." FontSize="22" Padding="1" VerticalAlignment="Top" Width="160"/>
+    <RadioButton Content="Выполнять" IsChecked="True" FontSize="20" HorizontalAlignment="Left" Margin="30,112,0,0" VerticalAlignment="Top" Height="35" Width="200" Grid.ColumnSpan="2"/>
+    <RadioButton Content="Распечатать" HorizontalAlignment="Left" FontSize="20" Margin="30,147,0,0" VerticalAlignment="Top" Height="34" Width="160" RenderTransformOrigin="0.976,0.626"/>
   </Grid>
 </Window>
