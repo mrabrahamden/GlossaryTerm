@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TermLib
 {
+    [Serializable]
     public class Term
     {
         public string Name;
@@ -15,6 +16,11 @@ namespace TermLib
         {
             Name = name;
             Description = desc;
+        }
+
+        public string ToString()
+        {
+            return Name + "-" + Description;
         }
     }
 }

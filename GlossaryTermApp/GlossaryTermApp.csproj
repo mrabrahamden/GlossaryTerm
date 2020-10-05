@@ -102,7 +102,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TermLib\TermLib.csproj">
+      <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
+      <Name>TermLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="image\Screenshot_1.png" />
   </ItemGroup>

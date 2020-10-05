@@ -29,7 +29,7 @@
             <TextBlock>Французский язык</TextBlock>
             <TextBlock>Химия</TextBlock>
         </ComboBox>
-        <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24" Click="ButtonStart_OnClick" Grid.Column="1"/>
+        <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="1"/>
         <RichTextBox Background="White" BorderThickness="2" Grid.Column="1" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
             <FlowDocument>
                 <Paragraph>

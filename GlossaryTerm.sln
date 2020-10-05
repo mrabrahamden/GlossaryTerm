@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlossaryTermApp", "Glossary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TermLib", "TermLib\TermLib.csproj", "{5BED843A-1224-43E8-89C9-77F4C512F10F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializerLib", "Serializer\SerializerLib.csproj", "{C8B8A60B-F661-4098-9EC0-859F7ADB625C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{14EFF900-B530-416C-BFD1-3FB1832B4A93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{5BED843A-1224-43E8-89C9-77F4C512F10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BED843A-1224-43E8-89C9-77F4C512F10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BED843A-1224-43E8-89C9-77F4C512F10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B8A60B-F661-4098-9EC0-859F7ADB625C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B8A60B-F661-4098-9EC0-859F7ADB625C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B8A60B-F661-4098-9EC0-859F7ADB625C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B8A60B-F661-4098-9EC0-859F7ADB625C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
