@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
         Title="StartPage" Height="558" Width="965.6">
-    <Grid Margin="0,0,-157.4,-164" Background="WhiteSmoke">
+    <Grid Margin="0,0,3.6,-20" Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="63*"/>
             <ColumnDefinition Width="727*"/>
@@ -37,6 +37,7 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Label Content="Приветствуем вас в программе" FontSize="26" FontWeight="SemiBold" Grid.Column="1" HorizontalAlignment="Left" Margin="205,24,0,0" VerticalAlignment="Top" Height="54" Width="427"/>
+        <Label Content="Приветствуем вас в программе" FontSize="26" FontWeight="SemiBold" Grid.Column="1" HorizontalAlignment="Left" Margin="187,23,0,0" VerticalAlignment="Top" Height="54" Width="427"/>
+        <Label Content="TEACHERRY" Foreground="#FFBD2525"  Grid.Column="1" FontSize="36" HorizontalAlignment="Left" Margin="332,99,0,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62" Width="263"/>
     </Grid>
 </Window>
