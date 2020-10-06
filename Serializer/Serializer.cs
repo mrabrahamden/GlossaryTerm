@@ -15,14 +15,21 @@ namespace SerializerLib
         public List<Term> TermList=new List<Term>();
         public static int Class;
         public static string Subject;
-        public string Path = @"%appdata%\Roaming\Teacherry"+Subject;
-        public string FileName = Class.ToString()+".dat";
+
+        public string DefaultPath =
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Teacherry\\";
+
+        public string Path;
+        public string FileName;
         BinaryFormatter formatter = new BinaryFormatter();
 
         public Serializer(int cl,string subj)
         {
-            Class = cl;
+            if(cl<=11&&cl>=1)
+                Class = cl;
             Subject = subj;
+            FileName = Class + ".dat";
+            Path = DefaultPath + Subject + "\\";
         }
         public void Serialize()
         {
@@ -30,7 +37,7 @@ namespace SerializerLib
             using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, TermList);
-                Console.WriteLine("Объект сериализован");
+                Console.WriteLine("Сериализован");
             }
         }
         public void Deserialize()
@@ -39,7 +46,7 @@ namespace SerializerLib
             using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
             {
                 TermList = (List<Term>)formatter.Deserialize(fs);
-                Console.WriteLine("Объект десериализован");
+                Console.WriteLine("Десериализован");
             }
         }
         private void CheckForPathExist()
