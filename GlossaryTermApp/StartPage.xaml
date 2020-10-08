@@ -11,7 +11,9 @@
             <ColumnDefinition Width="63*"/>
             <ColumnDefinition Width="727*"/>
         </Grid.ColumnDefinitions>
+        <Image Source="Screenshot_1.png" Grid.Column="1" Margin="251,-157,553,156.8"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,456,0,0" FontSize="24" Grid.ColumnSpan="2"/>
+        <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="297,458,0,0" FontSize="24" Grid.Column="1"/>
         <ComboBox HorizontalAlignment="Left" Margin="97,458,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="1">
             <TextBlock>Английский язык</TextBlock>
             <TextBlock>Биология</TextBlock>
@@ -28,6 +30,15 @@
             <TextBlock>Физика</TextBlock>
             <TextBlock>Французский язык</TextBlock>
             <TextBlock>Химия</TextBlock>
+        </ComboBox>
+        <ComboBox HorizontalAlignment="Left" Margin="400,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="1">
+            <TextBlock>5 класс</TextBlock>
+            <TextBlock>6 класс</TextBlock>
+            <TextBlock>7 класс</TextBlock>
+            <TextBlock>8 класс</TextBlock>
+            <TextBlock>9 класс</TextBlock>
+            <TextBlock>10 класс</TextBlock>
+            <TextBlock>11 класс</TextBlock>
         </ComboBox>
         <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="1"/>
         <RichTextBox Background="White" BorderThickness="2" Grid.Column="1" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
