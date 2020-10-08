@@ -116,21 +116,21 @@
     <Resource Include="image\Screenshot_1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="favorite.png" />
-    <Resource Include="home.png" />
-    <Resource Include="search.png" />
+    <Resource Include="image\favorite.png" />
+    <Resource Include="image\home.png" />
+    <Resource Include="image\search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="crossword.png" />
+    <Resource Include="image\crossword.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="edit.png" />
+    <Resource Include="image\edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="match.png" />
+    <Resource Include="image\match.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="fill in.png" />
+    <Resource Include="image\fill in.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Screenshot_1.png" />
