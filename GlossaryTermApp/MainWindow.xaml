@@ -7,14 +7,15 @@
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
         Title="Teacherry" Height="450" Width="800">
- 
+
     <Grid ShowGridLines="False" Background="White">
-        <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left">
-          <HamburgerMenu:HamburgerMenuItem Icon="home.png" Text="Создать" SelectionCommand="{Binding ElementName=this_}"/>
-          <HamburgerMenu:HamburgerMenuItem Icon="search.png" Text="Поиск"/>
-          <HamburgerMenu:HamburgerMenuItem Icon="favorite.png" Text="Сопоставление"/>
-          <HamburgerMenu:HamburgerMenuItem Icon="list.png" Text="Дополнение"/>
-          <HamburgerMenu:HamburgerMenuItem Icon="person.png" Text="Кроссворд"/>
+        <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="200">
+            <HamburgerMenu:HamburgerMenuItem Icon="home.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}"/>
+            <HamburgerMenu:HamburgerMenuItem  Icon="edit.png" Text="Редактор"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="search.png" Text="Поиск"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="match.png" Text="Сопоставление"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="fill in.png" Text="Дополнение"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="crossword.png" Text="Кроссворд"/>
         </HamburgerMenu:HamburgerMenu>
-  </Grid>
+    </Grid>
 </Window>

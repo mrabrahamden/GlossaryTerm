@@ -118,9 +118,19 @@
   <ItemGroup>
     <Resource Include="favorite.png" />
     <Resource Include="home.png" />
-    <Resource Include="list.png" />
-    <Resource Include="person.png" />
     <Resource Include="search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="crossword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="match.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="fill in.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
