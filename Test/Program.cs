@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TermLib;
 using SerializerLib;
+using SubjectLib;
 
 namespace Test
 {
@@ -12,12 +13,13 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Serializer serializer=new Serializer(9,"Обществознание");
-            serializer.TermList.Add(new Term("termName1", "termDesc1"));
-            serializer.TermList.Add(new Term("termName2", "termDesc2"));
-            serializer.TermList.Add(new Term("termName3", "termDesc3"));
-            serializer.TermList.Add(new Term("termName4", "termDesc4"));
-            serializer.TermList.Add(new Term("termName5", "termDesc5"));
+            var subj=new Subject(10);
+            Serializer serializer=new Serializer(9,subj.Name);
+            serializer.TermList.Add(new SimpleTerm("termName1", "termDesc1"));
+            serializer.TermList.Add(new SimpleTerm("termName2", "termDesc2"));
+            serializer.TermList.Add(new SimpleTerm("termName3", "termDesc3"));
+            serializer.TermList.Add(new SimpleTerm("termName4", "termDesc4"));
+            serializer.TermList.Add(new SimpleTerm("termName5", "termDesc5"));
             serializer.Serialize();
             serializer.Deserialize();
             foreach (var term in serializer.TermList)

@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TermLib
 {
     [Serializable]
-    public class Term
+    public abstract class Term
     {
-        public string Name;
+        public string Word;
+    }
+    [Serializable]
+    public class SimpleTerm : Term
+    {
         public string Description;
 
-        public Term(string name, string desc)
+        public SimpleTerm(string word, string descr)
         {
-            Name = name;
-            Description = desc;
+            Word = word;
+            Description = descr;
         }
 
         public string ToString()
         {
-            return Name + "-" + Description;
+            return Word + " -- " + Description;
         }
     }
 }
