@@ -12,7 +12,7 @@ namespace SerializerLib
 {
     public class Serializer 
     {
-        public List<Term> TermList=new List<Term>();
+        public List<SimpleTerm> TermList=new List<SimpleTerm>();
         public static int Class;
         public static string Subject;
 
@@ -45,7 +45,7 @@ namespace SerializerLib
             CheckForPathExist();
             using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
             {
-                TermList = (List<Term>)formatter.Deserialize(fs);
+                TermList = (List<SimpleTerm>)formatter.Deserialize(fs);
                 Console.WriteLine("Десериализован");
             }
         }
