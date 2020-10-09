@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="StartPage" Height="558" Width="965.6">
+        Title="StartPage" Height="558" Width="965.6" ResizeMode="NoResize">
+    
     <Grid Margin="0,0,3.6,-20" Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="63*"/>
-            <ColumnDefinition Width="727*"/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="440*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="Screenshot_1.png" Grid.Column="1" Margin="251,-157,553,156.8"/>
-        <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,456,0,0" FontSize="24" Grid.ColumnSpan="2"/>
-        <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="297,458,0,0" FontSize="24" Grid.Column="1"/>
-        <ComboBox HorizontalAlignment="Left" Margin="97,458,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="1">
+        <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
+        <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="297,458,0,0" FontSize="24" Grid.Column="2"/>
+        <ComboBox HorizontalAlignment="Left" Margin="97,458,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
             <TextBlock>Английский язык</TextBlock>
             <TextBlock>Биология</TextBlock>
             <TextBlock>География</TextBlock>
@@ -31,7 +33,7 @@
             <TextBlock>Французский язык</TextBlock>
             <TextBlock>Химия</TextBlock>
         </ComboBox>
-        <ComboBox HorizontalAlignment="Left" Margin="400,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="1">
+        <ComboBox HorizontalAlignment="Left" Margin="400,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
             <TextBlock>5 класс</TextBlock>
             <TextBlock>6 класс</TextBlock>
             <TextBlock>7 класс</TextBlock>
@@ -40,15 +42,15 @@
             <TextBlock>10 класс</TextBlock>
             <TextBlock>11 класс</TextBlock>
         </ComboBox>
-        <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="1"/>
-        <RichTextBox Background="White" BorderThickness="2" Grid.Column="1" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
+        <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="2"/>
+        <RichTextBox Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="Изменения в версиях" FontStyle="Italic"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Label Content="Приветствуем вас в программе" FontSize="26" FontWeight="SemiBold" Grid.Column="1" HorizontalAlignment="Left" Margin="187,23,0,0" VerticalAlignment="Top" Height="54" Width="427"/>
-        <Label Content="TEACHERRY" Foreground="#FFBD2525"  Grid.Column="1" FontSize="36" HorizontalAlignment="Left" Margin="332,99,0,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62" Width="263"/>
+        <Label Content="Приветствуем вас в программе" FontSize="26" FontWeight="SemiBold" Grid.Column="2" HorizontalAlignment="Left" Margin="187,23,0,0" VerticalAlignment="Top" Height="54" Width="427"/>
+        <Label Content="TEACHERRY" Foreground="#FFBD2525"  Grid.Column="2" FontSize="36" HorizontalAlignment="Left" Margin="332,99,0,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62" Width="263"/>
     </Grid>
 </Window>
