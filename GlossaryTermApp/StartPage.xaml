@@ -16,7 +16,7 @@
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="297,458,0,0" FontSize="24" Grid.Column="2"/>
-        <ComboBox HorizontalAlignment="Left" Margin="97,458,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
+        <ComboBox Name="ComboBoxSubject" HorizontalAlignment="Left" Margin="97,458,0,0" SelectedItem="Английский язык"  VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
             <TextBlock>Английский язык</TextBlock>
             <TextBlock>Биология</TextBlock>
             <TextBlock>География</TextBlock>
@@ -33,7 +33,7 @@
             <TextBlock>Французский язык</TextBlock>
             <TextBlock>Химия</TextBlock>
         </ComboBox>
-        <ComboBox HorizontalAlignment="Left" Margin="400,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
+        <ComboBox Name="ComboBoxGrade" HorizontalAlignment="Left" SelectedItem="5 класс" Margin="400,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
             <TextBlock>5 класс</TextBlock>
             <TextBlock>6 класс</TextBlock>
             <TextBlock>7 класс</TextBlock>
