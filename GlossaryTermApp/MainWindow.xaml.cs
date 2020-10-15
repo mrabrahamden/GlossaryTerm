@@ -1,5 +1,10 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using PdfSaver;
+using TermLib;
+using SerializerLib;
+using System.Windows.Controls;
+using System.Drawing;
 
 namespace GlossaryTermApp
 {
@@ -8,16 +13,42 @@ namespace GlossaryTermApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        internal Serializer serializer;
+        public MainWindow(Serializer ser)
         {
+            serializer = ser;
             InitializeComponent();
         }
+
 
         private void CrosswordItem_OnSelected(object sender, RoutedEventArgs e)
         {
             Export export = new Export();
             export.CaptureScreen();
             
+        }
+
+        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        {
+            if (serializer.TermList.Count > 0)
+            {
+                foreach (var term in serializer.TermList)
+                {
+                    string WordAndDiscription = term.ToString();
+                    TextBlock newWord = new TextBlock { Text = WordAndDiscription };
+                    Button deleteBtn = new Button
+                    {
+                        Content = "Удалить",
+                        Width = 20
+                    };
+                    StackPanelForWords.Children.Add(newWord);
+                    StackPanelForWords.Children.Add(deleteBtn);
+                    Separator separate = new Separator();
+                    StackPanelForWords.Children.Add(separate);
+                    //на форме есть ScrollViewer , а на нем StackPanel(безразмерная, чтобы работала прокрутка Scroll)
+                    // и в эту панель добавляем TextBlock  и Button, а потом разделитель.(У Панели ориентация вертикальная)
+                }
+            }
         }
     }
 }

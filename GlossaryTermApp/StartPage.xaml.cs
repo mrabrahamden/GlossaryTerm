@@ -29,7 +29,8 @@ namespace GlossaryTermApp
                 grade = int.Parse(regex.Match(input).ToString());
                 subject = ComboBoxSubject.Text;
             }
-            MainWindow mainWindow=new MainWindow();
+            Serializer serializer = new Serializer(grade, subject);
+            MainWindow mainWindow=new MainWindow(serializer);
             this.Hide();
             mainWindow.Show();
             this.Close();

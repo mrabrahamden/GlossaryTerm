@@ -10,12 +10,15 @@
 
     <Grid ShowGridLines="False" Background="White">
         <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="200">
-            <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="HamburgerMenuItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem  Icon="image/edit.png" Text="Редактор"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/search.png" Text="Поиск"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" Text="Сопоставление"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" Text="Дополнение"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/crossword.png" Text="Кроссворд" Selected="CrosswordItem_OnSelected"/>
         </HamburgerMenu:HamburgerMenu>
+        <ScrollViewer x:Name="ScrollDictionary" HorizontalAlignment="Left" Height="350" Margin="72,43,0,0" VerticalAlignment="Top" Width="692">
+            <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
+        </ScrollViewer>
     </Grid>
 </Window>
