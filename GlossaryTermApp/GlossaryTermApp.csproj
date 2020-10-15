@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EF477CE4-BEB1-4BA9-858A-AFF267E47423}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>GlossaryTermApp</RootNamespace>
     <AssemblyName>GlossaryTermApp</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -114,6 +114,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PdfSaver\PdfSaver.csproj">
+      <Project>{6bd2ec8e-7594-4bf6-8934-187031be9c44}</Project>
+      <Name>PdfSaver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serializer\SerializerLib.csproj">
       <Project>{c8b8a60b-f661-4098-9ec0-859f7adb625c}</Project>
       <Name>SerializerLib</Name>

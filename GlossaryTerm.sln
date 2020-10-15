@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializerLib", "Serializer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{14EFF900-B530-416C-BFD1-3FB1832B4A93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSaver", "PdfSaver\PdfSaver.csproj", "{6BD2EC8E-7594-4BF6-8934-187031BE9C44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14EFF900-B530-416C-BFD1-3FB1832B4A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD2EC8E-7594-4BF6-8934-187031BE9C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD2EC8E-7594-4BF6-8934-187031BE9C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD2EC8E-7594-4BF6-8934-187031BE9C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD2EC8E-7594-4BF6-8934-187031BE9C44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
