@@ -30,6 +30,7 @@ namespace GlossaryTermApp
                 subject = ComboBoxSubject.Text;
             }
             Serializer serializer = new Serializer(grade, subject);
+            serializer.Deserialize();
             MainWindow mainWindow=new MainWindow(serializer);
             this.Hide();
             mainWindow.Show();

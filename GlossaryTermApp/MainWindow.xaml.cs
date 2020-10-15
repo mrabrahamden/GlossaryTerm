@@ -13,10 +13,10 @@ namespace GlossaryTermApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal Serializer serializer;
+        public Serializer Serializer;
         public MainWindow(Serializer ser)
         {
-            serializer = ser;
+            Serializer = ser;
             InitializeComponent();
         }
 
@@ -30,9 +30,9 @@ namespace GlossaryTermApp
 
         private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
         {
-            if (serializer.TermList.Count > 0)
+            if (Serializer.TermList.Count > 0)
             {
-                foreach (var term in serializer.TermList)
+                foreach (var term in Serializer.TermList)
                 {
                     string WordAndDiscription = term.ToString();
                     TextBlock newWord = new TextBlock { Text = WordAndDiscription };

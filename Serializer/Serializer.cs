@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 using TermLib;
 
 namespace SerializerLib
@@ -26,6 +28,7 @@ namespace SerializerLib
             Subject = subj;
             FileName = Class + ".dat";
             Path = DefaultPath + Subject + "\\";
+            Deserialize();
         }
         public void Serialize()
         {
@@ -39,10 +42,25 @@ namespace SerializerLib
         public void Deserialize()
         {
             CheckForPathExist();
-            using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
+            try
             {
-                TermList = (List<SimpleTerm>)formatter.Deserialize(fs);
-                Console.WriteLine("Десериализован");
+                if (File.Exists(Path + FileName))
+                {
+                    using (FileStream fs = new FileStream(Path + FileName, FileMode.OpenOrCreate))
+                    {
+                        TermList = (List<SimpleTerm>) formatter.Deserialize(fs);
+                        Console.WriteLine("Десериализован");
+                    }
+                }
+                else
+                {
+                    Serialize();
+                    Deserialize();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка десериализации");
             }
         }
         private void CheckForPathExist()
