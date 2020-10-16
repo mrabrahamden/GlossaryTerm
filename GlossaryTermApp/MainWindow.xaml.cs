@@ -30,6 +30,7 @@ namespace GlossaryTermApp
 
         private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
         {
+            ScrollDictionary.Visibility = Visibility.Visible;
             if (Serializer.TermList.Count > 0)
             {
                 foreach (var term in Serializer.TermList)
