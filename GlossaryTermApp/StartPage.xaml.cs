@@ -20,21 +20,29 @@ namespace GlossaryTermApp
         internal string subject;
         private void ButtonStart_OnClick(object sender, RoutedEventArgs e)
         {
-            bool okayToContinue = false;
-            while (okayToContinue==false)
+            if (!String.IsNullOrEmpty(ComboBoxGrade.Text) && !String.IsNullOrEmpty(ComboBoxSubject.Text))
             {
-                okayToContinue = true;
-                string input = ComboBoxGrade.Text;
-                Regex regex = new Regex(@"(\d)+\D");
-                grade = int.Parse(regex.Match(input).ToString());
-                subject = ComboBoxSubject.Text;
+                bool okayToContinue = false;
+                while (okayToContinue == false)
+                {
+                    okayToContinue = true;
+                    string input = ComboBoxGrade.Text;
+                    Regex regex = new Regex(@"(\d)+\D");
+                    grade = int.Parse(regex.Match(input).ToString());
+                    subject = ComboBoxSubject.Text;
+                }
+
+                Serializer serializer = new Serializer(grade, subject);
+                serializer.Deserialize();
+                MainWindow mainWindow = new MainWindow(serializer);
+                this.Hide();
+                mainWindow.Show();
+                this.Close();
             }
-            Serializer serializer = new Serializer(grade, subject);
-            serializer.Deserialize();
-            MainWindow mainWindow=new MainWindow(serializer);
-            this.Hide();
-            mainWindow.Show();
-            this.Close();
+            else
+            {
+                MessageBox.Show("Выберите класс и предмет.");
+            }
         }
 
         private void SelectionCheck()
