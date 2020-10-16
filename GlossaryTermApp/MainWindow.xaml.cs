@@ -31,6 +31,7 @@ namespace GlossaryTermApp
         private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
         {
             ScrollDictionary.Visibility = Visibility.Visible;
+            StackPanelForWords.Children.Clear();
             if (Serializer.TermList.Count > 0)
             {
                 foreach (var term in Serializer.TermList)
@@ -48,6 +49,7 @@ namespace GlossaryTermApp
                     StackPanelForWords.Children.Add(separate);
                     //на форме есть ScrollViewer , а на нем StackPanel(безразмерная, чтобы работала прокрутка Scroll)
                     // и в эту панель добавляем TextBlock  и Button, а потом разделитель.(У Панели ориентация вертикальная)
+                    //во второй строке мы очищаем список детей, чтобы очистить панель, а не переписывать в неее снова старый список
                 }
             }
         }
