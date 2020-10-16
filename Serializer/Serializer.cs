@@ -46,16 +46,18 @@ namespace SerializerLib
             {
                 if (File.Exists(Path + FileName))
                 {
-                    using (FileStream fs = new FileStream(Path + FileName, FileMode.OpenOrCreate))
+                    if (TermList.Count == 0)
                     {
-                        TermList = (List<SimpleTerm>) formatter.Deserialize(fs);
-                        Console.WriteLine("Десериализован");
+                        using (FileStream fs = new FileStream(Path + FileName, FileMode.OpenOrCreate))
+                        {
+                            TermList = (List<SimpleTerm>) formatter.Deserialize(fs);
+                            Console.WriteLine("Десериализован");
+                        }
                     }
                 }
                 else
                 {
                     Serialize();
-                    Deserialize();
                 }
             }
             catch (Exception)

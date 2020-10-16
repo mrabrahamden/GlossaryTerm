@@ -1,7 +1,6 @@
 ﻿using System;
 using TermLib;
 using SerializerLib;
-using SubjectLib;
 
 namespace Test
 {
@@ -9,8 +8,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            var subj=new Subject(10);
-            Serializer serializer=new Serializer(9,subj.Name);
+            Serializer serializer=new Serializer(9,"Обществознание");
             serializer.TermList.Add(new SimpleTerm("termName1", "termDesc1"));
             serializer.TermList.Add(new SimpleTerm("termName2", "termDesc2"));
             serializer.TermList.Add(new SimpleTerm("termName3", "termDesc3"));
