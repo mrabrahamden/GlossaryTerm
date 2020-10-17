@@ -1,7 +1,5 @@
-﻿using System.Configuration;
-using System.Windows;
+﻿using System.Windows;
 using PdfSaver;
-using TermLib;
 using SerializerLib;
 using System.Windows.Controls;
 using System;
@@ -50,14 +48,22 @@ namespace GlossaryTermApp
                     StackPanel BtnPanel = new StackPanel();
                     Button deleteBtn = new Button
                     {
-                        Content = "Удалить",
-                        Width = 10
+                        Height = 15,
+                        Width = 15, 
+                        HorizontalAlignment = HorizontalAlignment.Right
                     };
+                    var brush = new ImageBrush();
+                    brush.ImageSource = new BitmapImage(new Uri("delete.png", UriKind.Relative));
+                    deleteBtn.Background = brush;
                     Button editBtn = new Button
                     {
-                        Content = "Ред.",
-                        Width = 10
+                        Height = 15,
+                        Width = 15,
+                        HorizontalAlignment = HorizontalAlignment.Right
                     };
+                    var brushEd = new ImageBrush();
+                    brushEd.ImageSource = new BitmapImage(new Uri("edit.png", UriKind.Relative));
+                    editBtn.Background = brushEd;
                     BtnPanel.Children.Add(deleteBtn);
                     BtnPanel.Children.Add(editBtn);
                     PanelForOneWord.Children.Add(BtnPanel);
@@ -84,8 +90,6 @@ namespace GlossaryTermApp
             Canvas.SetLeft(photo, 0);
             Canvas.SetTop(photo, 0);
             WorkPlace.Children.Add(Instructions);
-
-
         }
     }
 }

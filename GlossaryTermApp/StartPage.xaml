@@ -16,31 +16,31 @@
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="355,458,0,0" FontSize="24" Grid.Column="2" RenderTransformOrigin="0.513,0.96"/>
-        <ComboBox Name="ComboBoxSubject" HorizontalAlignment="Left" Margin="97,458,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2">
-            <TextBlock>Английский язык</TextBlock>
-            <TextBlock>Биология</TextBlock>
-            <TextBlock>География</TextBlock>
-            <TextBlock>Изобразительное искусство</TextBlock>
-            <TextBlock>Информатика</TextBlock>
-            <TextBlock>История</TextBlock>
-            <TextBlock>Математика</TextBlock>
-            <TextBlock>Музыка</TextBlock>
-            <TextBlock>МХК</TextBlock>
-            <TextBlock>Обществознание</TextBlock>
-            <TextBlock>Русский язык</TextBlock>
-            <TextBlock>Технология</TextBlock>
-            <TextBlock>Физика</TextBlock>
-            <TextBlock>Французский язык</TextBlock>
-            <TextBlock>Химия</TextBlock>
+        <ComboBox Name="ComboBoxSubject" SelectedIndex="9" HorizontalAlignment="Left" Margin="97,458,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2">
+            <ComboBoxItem>Английский язык</ComboBoxItem>
+            <ComboBoxItem>Биология</ComboBoxItem>
+            <ComboBoxItem>География</ComboBoxItem>
+            <ComboBoxItem>Изобразительное искусство</ComboBoxItem>
+            <ComboBoxItem>Информатика</ComboBoxItem>
+            <ComboBoxItem>История</ComboBoxItem>
+            <ComboBoxItem>Математика</ComboBoxItem>
+            <ComboBoxItem>Музыка</ComboBoxItem>
+            <ComboBoxItem>МХК</ComboBoxItem>
+            <ComboBoxItem>Обществознание</ComboBoxItem>
+            <ComboBoxItem>Русский язык</ComboBoxItem>
+            <ComboBoxItem>Технология</ComboBoxItem>
+            <ComboBoxItem>Физика</ComboBoxItem>
+            <ComboBoxItem>Французский язык</ComboBoxItem>
+            <ComboBoxItem>Химия</ComboBoxItem>
         </ComboBox>
-        <ComboBox Name="ComboBoxGrade" HorizontalAlignment="Left" SelectedItem="5 класс" Margin="446,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
-            <TextBlock>5 класс</TextBlock>
-            <TextBlock>6 класс</TextBlock>
-            <TextBlock>7 класс</TextBlock>
-            <TextBlock>8 класс</TextBlock>
-            <TextBlock>9 класс</TextBlock>
-            <TextBlock>10 класс</TextBlock>
-            <TextBlock>11 класс</TextBlock>
+        <ComboBox Name="ComboBoxGrade" HorizontalAlignment="Left" SelectedIndex="4"  Margin="446,460,0,0" VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
+            <ComboBoxItem>5 класс</ComboBoxItem>
+            <ComboBoxItem>6 класс</ComboBoxItem>
+            <ComboBoxItem>7 класс</ComboBoxItem>
+            <ComboBoxItem>8 класс</ComboBoxItem>
+            <ComboBoxItem>9 класс</ComboBoxItem>
+            <ComboBoxItem>10 класс</ComboBoxItem>
+            <ComboBoxItem>11 класс</ComboBoxItem>
         </ComboBox>
         <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="2" Click="ButtonStart_OnClick"/>
         <RichTextBox IsReadOnly="True" Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
