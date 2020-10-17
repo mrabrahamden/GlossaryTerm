@@ -156,5 +156,8 @@
   <ItemGroup>
     <None Include="Resources\Screenshot_1.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image\book.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

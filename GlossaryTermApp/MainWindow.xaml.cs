@@ -4,7 +4,11 @@ using PdfSaver;
 using TermLib;
 using SerializerLib;
 using System.Windows.Controls;
-using System.Drawing;
+using System;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Linq;
 
 namespace GlossaryTermApp
 {
@@ -28,30 +32,59 @@ namespace GlossaryTermApp
             
         }
 
-        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
+            WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));// !!!!!!!
             ScrollDictionary.Visibility = Visibility.Visible;
+            ScrollDictionary.Height = 350;
+            ScrollDictionary.Width = 692;
             StackPanelForWords.Children.Clear();
             if (Serializer.TermList.Count > 0)
             {
                 foreach (var term in Serializer.TermList)
                 {
                     string WordAndDiscription = term.ToString();
-                    TextBlock newWord = new TextBlock { Text = WordAndDiscription };
+                    TextBlock newWord = new TextBlock { Text = WordAndDiscription, TextWrapping=TextWrapping.Wrap };
+                    DockPanel PanelForOneWord = new DockPanel();
+                    PanelForOneWord.Children.Add(newWord);
+                    StackPanel BtnPanel = new StackPanel();
                     Button deleteBtn = new Button
                     {
                         Content = "Удалить",
-                        Width = 20
+                        Width = 10
                     };
-                    StackPanelForWords.Children.Add(newWord);
-                    StackPanelForWords.Children.Add(deleteBtn);
+                    Button editBtn = new Button
+                    {
+                        Content = "Ред.",
+                        Width = 10
+                    };
+                    BtnPanel.Children.Add(deleteBtn);
+                    BtnPanel.Children.Add(editBtn);
+                    PanelForOneWord.Children.Add(BtnPanel);
+                    StackPanelForWords.Children.Add(PanelForOneWord);
                     Separator separate = new Separator();
                     StackPanelForWords.Children.Add(separate);
-                    //на форме есть ScrollViewer , а на нем StackPanel(безразмерная, чтобы работала прокрутка Scroll)
-                    // и в эту панель добавляем TextBlock  и Button, а потом разделитель.(У Панели ориентация вертикальная)
-                    //во второй строке мы очищаем список детей, чтобы очистить панель, а не переписывать в неее снова старый список
                 }
             }
+        }
+
+        private void HomeItem_Selected(object sender, RoutedEventArgs e)
+        {
+            ScrollDictionary.Visibility = Visibility.Hidden;
+            ScrollDictionary.Height = 1;
+            ScrollDictionary.Width = 1;
+            WorkPlace.Visibility = Visibility.Visible;
+            Canvas Instructions = new Canvas { Height = 350, Width = 692 };
+            Rectangle photo = new Rectangle { Height = 30, Width = 30 };
+            ImageBrush brush = new ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute));
+            photo.Fill = brush;
+            Instructions.Children.Add(photo);
+            Canvas.SetLeft(photo, 0);
+            Canvas.SetTop(photo, 0);
+            WorkPlace.Children.Add(Instructions);
+
+
         }
     }
 }
