@@ -16,7 +16,7 @@
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="297,458,0,0" FontSize="24" Grid.Column="2"/>
-        <ComboBox Name="ComboBoxSubject" HorizontalAlignment="Left" Margin="97,458,0,0" SelectedItem="Английский язык"  VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
+        <ComboBox Name="ComboBoxSubject" HorizontalAlignment="Left" Margin="97,458,0,0"  VerticalAlignment="Top" Width="168" Height="40" FontSize="24" Grid.Column="2">
             <TextBlock>Английский язык</TextBlock>
             <TextBlock>Биология</TextBlock>
             <TextBlock>География</TextBlock>
@@ -43,7 +43,7 @@
             <TextBlock>11 класс</TextBlock>
         </ComboBox>
         <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="2" Click="ButtonStart_OnClick"/>
-        <RichTextBox Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
+        <RichTextBox IsReadOnly="True" Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="Изменения в версиях" FontStyle="Italic"/>
