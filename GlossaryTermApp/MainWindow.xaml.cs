@@ -71,6 +71,7 @@ namespace GlossaryTermApp
         private void HomeItem_Selected(object sender, RoutedEventArgs e)
         {
             ScrollDictionary.Visibility = Visibility.Hidden;
+            WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
             ScrollDictionary.Height = 1;
             ScrollDictionary.Width = 1;
             WorkPlace.Visibility = Visibility.Visible;
