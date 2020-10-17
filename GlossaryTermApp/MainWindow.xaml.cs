@@ -86,20 +86,24 @@ namespace GlossaryTermApp
             {
                 Rectangle photo = new Rectangle { Height = 32, Width = 32 };
                 ImageBrush brush = new ImageBrush();
+                TextBlock text = new TextBlock { FontSize=15,Width=570, TextWrapping = TextWrapping.Wrap };
                 if (i == 0)
                 {
-                    brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute));
+                    brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute)); text.Text = "Домашняя страница";
                 }
-                else if (i == 1) { brush.ImageSource = new BitmapImage(new Uri(@"edit.png", UriKind.RelativeOrAbsolute)); }
-                else if (i == 2) { brush.ImageSource = new BitmapImage(new Uri(@"book.png", UriKind.RelativeOrAbsolute)); }
-                else if (i == 3) { brush.ImageSource = new BitmapImage(new Uri(@"match.png", UriKind.RelativeOrAbsolute)); }
-                else if (i == 4) { brush.ImageSource = new BitmapImage(new Uri(@"fill in.png", UriKind.RelativeOrAbsolute)); }
-                else if (i == 5) { brush.ImageSource = new BitmapImage(new Uri(@"crossword.png", UriKind.RelativeOrAbsolute)); }
-                else  { brush.ImageSource = new BitmapImage(new Uri(@"exit.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 1) { brush.ImageSource = new BitmapImage(new Uri(@"edit.png", UriKind.RelativeOrAbsolute)); text.Text = "Редактор определений и ддобавление терминов"; }
+                else if (i == 2) { brush.ImageSource = new BitmapImage(new Uri(@"book.png", UriKind.RelativeOrAbsolute)); text.Text = "Словарь + поиск слов в нём"; }
+                else if (i == 3) { brush.ImageSource = new BitmapImage(new Uri(@"match.png", UriKind.RelativeOrAbsolute)); text.Text = "Сопоставление слов и определений"; }
+                else if (i == 4) { brush.ImageSource = new BitmapImage(new Uri(@"fill in.png", UriKind.RelativeOrAbsolute)); text.Text = "Вписать пропущенные слова "; }
+                else if (i == 5) { brush.ImageSource = new BitmapImage(new Uri(@"crossword.png", UriKind.RelativeOrAbsolute)); text.Text = "Решение кроссворда"; }
+                else  { brush.ImageSource = new BitmapImage(new Uri(@"exit.png", UriKind.RelativeOrAbsolute)); text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса"; }
                 photo.Fill = brush;
                 Instructions.Children.Add(photo);
                 Canvas.SetLeft(photo, 0);
                 Canvas.SetTop(photo,i*50);
+                Instructions.Children.Add(text);
+                Canvas.SetLeft(text, 50);
+                Canvas.SetTop(text, i * 50);
             }
             WorkPlace.Children.Add(Instructions);
         }
