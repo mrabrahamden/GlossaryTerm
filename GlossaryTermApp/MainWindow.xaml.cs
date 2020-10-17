@@ -91,5 +91,13 @@ namespace GlossaryTermApp
             Canvas.SetTop(photo, 0);
             WorkPlace.Children.Add(Instructions);
         }
+
+        private void ExitItem_OnSelected(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            StartPage startPage=new StartPage();
+            startPage.Show();
+            this.Close();
+        }
     }
 }
