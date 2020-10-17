@@ -9,12 +9,13 @@
 
     <Grid ShowGridLines="False" Background="White">
         <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="200">
-            <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="HomeItem_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" Text="Главная" SelectionCommand="{Binding ElementName=this_}" Selected="HomeItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem  Icon="image/edit.png" Text="Редактор"/>
-            <HamburgerMenu:HamburgerMenuItem Icon="image/search.png" Text="Поиск" SelectionCommand="{Binding ElementName=this_}" Selected="DictionaryItem_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/book.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="DictionaryItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" Text="Сопоставление"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" Text="Дополнение"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/crossword.png" Text="Кроссворд" Selected="CrosswordItem_OnSelected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/exit.png" Text="На главную" Selected="ExitItem_OnSelected"/>
         </HamburgerMenu:HamburgerMenu>
         <StackPanel x:Name="WorkPlace" Margin="55,0,-0.4,0">
             <ScrollViewer x:Name="ScrollDictionary" HorizontalAlignment="Left" Height="350" Margin="5,40,0,0" VerticalAlignment="Top" Width="692">
