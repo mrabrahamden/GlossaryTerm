@@ -82,13 +82,26 @@ namespace GlossaryTermApp
             ScrollDictionary.Width = 1;
             WorkPlace.Visibility = Visibility.Visible;
             Canvas Instructions = new Canvas { Height = 350, Width = 692 };
-            Rectangle photo = new Rectangle { Height = 30, Width = 30 };
-            ImageBrush brush = new ImageBrush();
-            brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute));
-            photo.Fill = brush;
-            Instructions.Children.Add(photo);
-            Canvas.SetLeft(photo, 0);
-            Canvas.SetTop(photo, 0);
+            for(int i=0;i<8;i++)
+            {
+                Rectangle photo = new Rectangle { Height = 30, Width = 30 };
+                ImageBrush brush = new ImageBrush();
+                if (i == 0)
+                {
+                    brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute));
+                }
+                else if (i == 1) { brush.ImageSource = new BitmapImage(new Uri(@"edit.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 2) { brush.ImageSource = new BitmapImage(new Uri(@"book.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 3) { brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 4) { brush.ImageSource = new BitmapImage(new Uri(@"match.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 5) { brush.ImageSource = new BitmapImage(new Uri(@"fill in.png", UriKind.RelativeOrAbsolute)); }
+                else if (i == 6) { brush.ImageSource = new BitmapImage(new Uri(@"crossword.png", UriKind.RelativeOrAbsolute)); }
+                else  { brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute)); }
+                photo.Fill = brush;
+                Instructions.Children.Add(photo);
+                Canvas.SetLeft(photo, 0);
+                Canvas.SetTop(photo,i*48);
+            }
             WorkPlace.Children.Add(Instructions);
         }
     }
