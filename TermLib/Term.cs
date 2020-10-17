@@ -19,7 +19,7 @@ namespace TermLib
             Description = descr;
         }
 
-        public string ToString() //можно здесь override написать? (Аня Н.)
+        public override string ToString() 
         {
             return Word + " -- " + Description;
         }
