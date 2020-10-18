@@ -4,20 +4,25 @@ using SerializerLib;
 using System.Windows.Controls;
 using System;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Threading;
 using System.Windows.Interop;
+using TermLib;
 
 namespace GlossaryTermApp
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
 
         public Serializer Serializer;
+
         public MainWindow(Serializer ser)
         {
             Serializer = ser;
@@ -32,6 +37,7 @@ namespace GlossaryTermApp
             }
             //WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
         }
+
 
         private ImageBrush getBrushFromImage(string path)
         {
@@ -60,6 +66,7 @@ namespace GlossaryTermApp
         {
             ClearWorkPlace();
             ScrollDictionary.Visibility = Visibility.Visible;
+            StackPanelForWords.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 350;
             ScrollDictionary.Width = 692;
             StackPanelForWords.Children.Clear();
@@ -77,18 +84,16 @@ namespace GlossaryTermApp
                         Height = 15,
                         Width = 15, 
                         HorizontalAlignment = HorizontalAlignment.Right
+                        
                     };
-                   
-                    //brush.ImageSource = new BitmapImage(new Uri("delete.png", UriKind.Relative));
                     deleteBtn.Background = getBrushFromImage("image/delete.png");
                     Button editBtn = new Button
                     {
                         Height = 15,
                         Width = 15,
                         HorizontalAlignment = HorizontalAlignment.Right
+
                     };
-                   // var brushEd = new ImageBrush();
-                   // brushEd.ImageSource = new BitmapImage(new Uri("edit.png", UriKind.Relative));
                     editBtn.Background = getBrushFromImage("image/edit.png");
                     BtnPanel.Children.Add(deleteBtn);
                     BtnPanel.Children.Add(editBtn);
@@ -100,13 +105,18 @@ namespace GlossaryTermApp
             }
         }
 
+        private void BtnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void HomeItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
+            ScrollDictionary.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 1;
             ScrollDictionary.Width = 1;
-            Canvas Instructions = new Canvas { Height = 350, Width = 692 };
+            Canvas Instructions = new Canvas { Height = 350, Width = 692, Visibility = Visibility.Visible};
             for(int i=0;i<7;i++)
             {
                 ImageBrush brush;
@@ -167,6 +177,46 @@ namespace GlossaryTermApp
             StartPage startPage=new StartPage();
             startPage.Show();
             this.Close();
+        }
+
+        private void EditItem_Selected(object sender, RoutedEventArgs e)
+        {
+            ClearWorkPlace();
+            EditBTN.Content = "Добавить";
+            EditStackPanel.Visibility = Visibility.Visible;
+
+        }
+
+        private void EditBTN_Click(object sender, RoutedEventArgs e)
+        {
+            if (EditBTN.Content == "Добавить")
+            {
+                if(!(string.IsNullOrEmpty(TermTB.Text)|| string.IsNullOrEmpty(DescriptionTB.Text)))
+                {
+                    try
+                    {
+                        Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Не удалось добавить новый термин.");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Нужно заполнить поля термин и описание перед добавлением.");
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        private void CancelBTN_Click(object sender, RoutedEventArgs e)
+        {
+            EditItem_Selected(sender,e);
         }
     }
 }

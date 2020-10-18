@@ -10,17 +10,25 @@
     <Grid ShowGridLines="False" Background="White">
         <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="200" Panel.ZIndex="-1">
             <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" Text="Главная" SelectionCommand="{Binding ElementName=this_}" Selected="HomeItem_Selected"/>
-            <HamburgerMenu:HamburgerMenuItem  Icon="image/edit.png" Text="Редактор"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/edit.png" Text="Редактор" Selected="EditItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/book.png" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="DictionaryItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" Text="Сопоставление"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" Text="Дополнение"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/crossword.png" Text="Кроссворд" Selected="CrosswordItem_OnSelected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/exit.png" Text="На главную" Selected="ExitItem_OnSelected"/>
         </HamburgerMenu:HamburgerMenu>
-        <StackPanel x:Name="WorkPlace" Margin="55,0,-0.4,0">
+        <Grid x:Name="WorkPlace" Margin="55,0,-0.4,0">
+            <StackPanel x:Name="EditStackPanel" Visibility="Hidden" Height="351" Margin="15,40,15,0">
+                <TextBlock TextWrapping="Wrap" Text="Термин: " Height="34" Margin="10,10,0,0" Width="697" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox x:Name="TermTB" Height="34" TextWrapping="Wrap" FontSize="20" Margin="10,0"/>
+                <TextBlock TextWrapping="Wrap" Text="Описание: " Height="34" Margin="10,10,0,0" Width="697" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox x:Name="DescriptionTB" Height="128" TextWrapping="Wrap" FontSize="20" Margin="10,0"/>
+                <Button x:Name="EditBTN" Content="Изменить" IsHitTestVisible="True" Margin="478,10,28,0" Height="35" FontSize="20" Click="EditBTN_Click"/>
+                <Button x:Name="CancelBTN" Content="Отмена" Margin="478,10,28,0" Height="33" FontSize="20" Click="CancelBTN_Click"/>
+            </StackPanel>
             <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden" HorizontalAlignment="Left" Height="350" Margin="5,40,0,0" VerticalAlignment="Top" Width="692">
-                <StackPanel Name="StackPanelForWords" Orientation="Vertical"/>
+                <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
             </ScrollViewer>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>
