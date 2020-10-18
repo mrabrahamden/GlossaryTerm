@@ -58,6 +58,7 @@ namespace GlossaryTermApp
 
         private void CrosswordItem_OnSelected(object sender, RoutedEventArgs e)
         {
+            ClearWorkPlace();
             Export export = new Export();
             export.CaptureScreen();
         }
@@ -114,56 +115,7 @@ namespace GlossaryTermApp
         private void HomeItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            ScrollDictionary.Visibility = Visibility.Visible;
-            ScrollDictionary.Height = 1;
-            ScrollDictionary.Width = 1;
-            Canvas instructions = new Canvas { Height = 350, Width = 692, Visibility = Visibility.Visible};
-            for(int i=0;i<7;i++)
-            {
-                ImageBrush brush;
-
-                Rectangle photo = new Rectangle { Height = 32, Width = 32 };
-                TextBlock text = new TextBlock { FontSize=15,Width=570, TextWrapping = TextWrapping.Wrap };
-                switch (i)
-                {
-                    case 0:
-                        brush = getBrushFromImage("image/home.png");
-                        text.Text = "Домашняя страница";
-                        break;
-                    case 1:
-                        brush = getBrushFromImage("image/edit.png");
-                        text.Text = "Редактор определений и добавление терминов";
-                        break;
-                    case 2:
-                        brush = getBrushFromImage("image/book.png");
-                        text.Text = "Словарь + поиск слов в нём";
-                        break;
-                    case 3:
-                        brush = getBrushFromImage("image/match.png");
-                        text.Text = "Сопоставление слов и определений";
-                        break;
-                    case 4:
-                        brush = getBrushFromImage("image/fill in.png");
-                        text.Text = "Вписать пропущенные слова ";
-                        break;
-                    case 5:
-                        brush = getBrushFromImage("image/crossword.png");
-                        text.Text = "Решение кроссворда";
-                        break;
-                    default:
-                        brush = getBrushFromImage("image/exit.png");
-                        text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса";
-                        break;
-                }
-                photo.Fill = brush;
-                instructions.Children.Add(photo);
-                Canvas.SetLeft(photo, 0);
-                Canvas.SetTop(photo,i*50);
-                instructions.Children.Add(text);
-                Canvas.SetLeft(text, 50);
-                Canvas.SetTop(text, i * 50);
-            }
-            WorkPlace.Children.Add(instructions);
+            instructions.Visibility = Visibility.Visible;
         }
 
         private void ExitItem_OnSelected(object sender, RoutedEventArgs e)
