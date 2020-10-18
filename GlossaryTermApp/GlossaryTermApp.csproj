@@ -128,24 +128,40 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\Screenshot_1.png" />
+    <Content Include="image\Screenshot_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\favorite.png" />
-    <Resource Include="image\home.png" />
-    <Resource Include="image\search.png" />
+    <Content Include="image\favorite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\search.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\crossword.png" />
+    <Content Include="image\crossword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\edit.png" />
+    <Content Include="image\edit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\match.png" />
+    <Content Include="image\match.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\fill in.png" />
+    <Content Include="image\fill in.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Screenshot_1.png" />
@@ -157,13 +173,19 @@
     <None Include="Resources\Screenshot_1.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\book.png" />
+    <Content Include="image\book.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\delete.png" />
+    <Content Include="image\delete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="image\exit.png" />
+    <Content Include="image\exit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
