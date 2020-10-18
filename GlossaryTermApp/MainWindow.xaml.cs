@@ -85,18 +85,25 @@ namespace GlossaryTermApp
                     {
                         Height = 15,
                         Width = 15, 
-                        HorizontalAlignment = HorizontalAlignment.Right
-                        
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                        Content = "\xF78A",
+                        Foreground = Brushes.Red,
+                        Background = Brushes.White
+
                     };
-                    deleteBtn.Background = getBrushFromImage("image/delete.png");
+                    //deleteBtn.Background = getBrushFromImage("image/delete.png");
                     Button editBtn = new Button
                     {
                         Height = 15,
                         Width = 15,
-                        HorizontalAlignment = HorizontalAlignment.Right
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                        Content = "\xE70F",
+                        Background = Brushes.White
 
                     };
-                    editBtn.Background = getBrushFromImage("image/edit.png");
+                    //editBtn.Background = getBrushFromImage("image/edit.png");
                     btnPanel.Children.Add(deleteBtn);
                     btnPanel.Children.Add(editBtn);
                     panelForOneWord.Children.Add(btnPanel);
