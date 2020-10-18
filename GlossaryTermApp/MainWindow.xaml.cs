@@ -3,14 +3,17 @@ using PdfSaver;
 using SerializerLib;
 using System.Windows.Controls;
 using System;
+using System.Drawing;
+using System.Windows.Automation;
+using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Linq;
-using System.Threading;
 using System.Windows.Interop;
 using TermLib;
+using Brushes = System.Windows.Media.Brushes;
+using FontFamily = System.Windows.Media.FontFamily;
+using Image = System.Drawing.Image;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace GlossaryTermApp
 {
@@ -41,9 +44,7 @@ namespace GlossaryTermApp
 
         private ImageBrush getBrushFromImage(string path)
         {
-            ImageBrush brush=new ImageBrush();
-            System.Drawing.Image image;
-            image = System.Drawing.Image.FromFile(path);
+            var image = System.Drawing.Image.FromFile(path);
             var bitmap = new System.Drawing.Bitmap(image);
             var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
                 IntPtr.Zero,
@@ -51,7 +52,7 @@ namespace GlossaryTermApp
                 BitmapSizeOptions.FromEmptyOptions()
             );
             bitmap.Dispose();
-            brush = new ImageBrush(bitmapSource);
+            var brush = new ImageBrush(bitmapSource);
             return brush;
         }
 
@@ -59,7 +60,6 @@ namespace GlossaryTermApp
         {
             Export export = new Export();
             export.CaptureScreen();
-            
         }
 
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
@@ -75,11 +75,11 @@ namespace GlossaryTermApp
             {
                 foreach (var term in Serializer.TermList)
                 {
-                    string WordAndDiscription = term.ToString();
-                    TextBlock newWord = new TextBlock { Text = WordAndDiscription, TextWrapping=TextWrapping.Wrap };
-                    DockPanel PanelForOneWord = new DockPanel();
-                    PanelForOneWord.Children.Add(newWord);
-                    StackPanel BtnPanel = new StackPanel();
+                    string wordAndDescription = term.ToString();
+                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping=TextWrapping.Wrap };
+                    DockPanel panelForOneWord = new DockPanel();
+                    panelForOneWord.Children.Add(newWord);
+                    StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
                     {
                         Height = 15,
@@ -96,10 +96,10 @@ namespace GlossaryTermApp
 
                     };
                     editBtn.Background = getBrushFromImage("image/edit.png");
-                    BtnPanel.Children.Add(deleteBtn);
-                    BtnPanel.Children.Add(editBtn);
-                    PanelForOneWord.Children.Add(BtnPanel);
-                    StackPanelForWords.Children.Add(PanelForOneWord);
+                    btnPanel.Children.Add(deleteBtn);
+                    btnPanel.Children.Add(editBtn);
+                    panelForOneWord.Children.Add(btnPanel);
+                    StackPanelForWords.Children.Add(panelForOneWord);
                     Separator separate = new Separator();
                     StackPanelForWords.Children.Add(separate);
                 }
@@ -117,59 +117,53 @@ namespace GlossaryTermApp
             ScrollDictionary.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 1;
             ScrollDictionary.Width = 1;
-            Canvas Instructions = new Canvas { Height = 350, Width = 692, Visibility = Visibility.Visible};
+            Canvas instructions = new Canvas { Height = 350, Width = 692, Visibility = Visibility.Visible};
             for(int i=0;i<7;i++)
             {
                 ImageBrush brush;
 
                 Rectangle photo = new Rectangle { Height = 32, Width = 32 };
                 TextBlock text = new TextBlock { FontSize=15,Width=570, TextWrapping = TextWrapping.Wrap };
-                if (i == 0)
+                switch (i)
                 {
-                    brush=getBrushFromImage("image/home.png");
-                    text.Text = "Домашняя страница";
-                }
-                else if (i == 1) 
-                {
-                    brush = getBrushFromImage("image/edit.png"); 
-                    text.Text = "Редактор определений и добавление терминов";
-
-                }
-                else if (i == 2) 
-                {
-                    brush = getBrushFromImage("image/book.png");
-                    text.Text = "Словарь + поиск слов в нём";
-                }
-                else if (i == 3)
-                {
-                    brush = getBrushFromImage("image/match.png");
-                    text.Text = "Сопоставление слов и определений";
-                }
-                else if (i == 4)
-                {
-                    brush = getBrushFromImage("image/fill in.png");
-                    text.Text = "Вписать пропущенные слова ";
-                }
-                else if (i == 5)
-                {
-                    brush = getBrushFromImage("image/crossword.png"); 
-                    text.Text = "Решение кроссворда";
-
-                }
-                else  
-                { 
-                    brush = getBrushFromImage("image/exit.png"); 
-                    text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса";
+                    case 0:
+                        brush = getBrushFromImage("image/home.png");
+                        text.Text = "Домашняя страница";
+                        break;
+                    case 1:
+                        brush = getBrushFromImage("image/edit.png");
+                        text.Text = "Редактор определений и добавление терминов";
+                        break;
+                    case 2:
+                        brush = getBrushFromImage("image/book.png");
+                        text.Text = "Словарь + поиск слов в нём";
+                        break;
+                    case 3:
+                        brush = getBrushFromImage("image/match.png");
+                        text.Text = "Сопоставление слов и определений";
+                        break;
+                    case 4:
+                        brush = getBrushFromImage("image/fill in.png");
+                        text.Text = "Вписать пропущенные слова ";
+                        break;
+                    case 5:
+                        brush = getBrushFromImage("image/crossword.png");
+                        text.Text = "Решение кроссворда";
+                        break;
+                    default:
+                        brush = getBrushFromImage("image/exit.png");
+                        text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса";
+                        break;
                 }
                 photo.Fill = brush;
-                Instructions.Children.Add(photo);
+                instructions.Children.Add(photo);
                 Canvas.SetLeft(photo, 0);
                 Canvas.SetTop(photo,i*50);
-                Instructions.Children.Add(text);
+                instructions.Children.Add(text);
                 Canvas.SetLeft(text, 50);
                 Canvas.SetTop(text, i * 50);
             }
-            WorkPlace.Children.Add(Instructions);
+            WorkPlace.Children.Add(instructions);
         }
 
         private void ExitItem_OnSelected(object sender, RoutedEventArgs e)
@@ -183,7 +177,9 @@ namespace GlossaryTermApp
         private void EditItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            EditBTN.Content = "Добавить";
+            ReadyToAddAWord(sender, e);
+            TermTB.Text = null;
+            DescriptionTB.Text = null;
             EditStackPanel.Visibility = Visibility.Visible;
 
         }
@@ -197,6 +193,11 @@ namespace GlossaryTermApp
                     try
                     {
                         Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
+                        EditBTN.FontFamily = new FontFamily("Segoe MDL2 Assets");
+                        EditBTN.Foreground = Brushes.MediumSeaGreen;
+                        EditBTN.FontWeight = FontWeights.Bold;
+                        EditBTN.Content = "\xE73E" + " ";
+                        EditBTN.IsEnabled = false;
                     }
                     catch (Exception)
                     {
@@ -211,13 +212,22 @@ namespace GlossaryTermApp
             }
             else
             {
-
             }
         }
 
-        private void CancelBTN_Click(object sender, RoutedEventArgs e)
+        private void ClearBTN_Click(object sender, RoutedEventArgs e)
         {
             EditItem_Selected(sender,e);
         }
+
+        private void ReadyToAddAWord(object sender, RoutedEventArgs e)
+        {
+            EditBTN.FontFamily = new FontFamily("Segoe UI");
+            EditBTN.Content = "Добавить";
+            EditBTN.IsEnabled = true;
+            EditBTN.Foreground = Brushes.Black;
+            EditBTN.FontWeight = FontWeights.Regular;
+        }
+
     }
 }
