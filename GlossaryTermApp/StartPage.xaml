@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
         Title="StartPage" Height="558" Width="965.6" ResizeMode="NoResize">
-    
+
     <Grid Margin="0,0,3.6,-20" Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="23*"/>
@@ -14,6 +14,7 @@
             <ColumnDefinition Width="440*"/>
         </Grid.ColumnDefinitions>
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
+        <Image Source="help.png" Margin="0,-238,9.6,262.8"  ToolTip="Здесь должно быть обращение к пользователю." RenderTransformOrigin="0.495,0.438"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="355,458,0,0" FontSize="24" Grid.Column="2" RenderTransformOrigin="0.513,0.96"/>
         <ComboBox Name="ComboBoxSubject" SelectedIndex="9" HorizontalAlignment="Left" Margin="97,458,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2">
