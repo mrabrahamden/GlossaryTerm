@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Linq;
+using System.Windows.Interop;
 
 namespace GlossaryTermApp
 {
@@ -15,6 +16,7 @@ namespace GlossaryTermApp
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public Serializer Serializer;
         public MainWindow(Serializer ser)
         {
@@ -22,6 +24,30 @@ namespace GlossaryTermApp
             InitializeComponent();
         }
 
+        private void ClearWorkPlace()
+        {
+            foreach (UIElement workPlaceChild in WorkPlace.Children)
+            {
+                if (workPlaceChild.Visibility == Visibility.Visible) workPlaceChild.Visibility = Visibility.Hidden;
+            }
+            //WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
+        }
+
+        private ImageBrush getBrushFromImage(string path)
+        {
+            ImageBrush brush=new ImageBrush();
+            System.Drawing.Image image;
+            image = System.Drawing.Image.FromFile(path);
+            var bitmap = new System.Drawing.Bitmap(image);
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions()
+            );
+            bitmap.Dispose();
+            brush = new ImageBrush(bitmapSource);
+            return brush;
+        }
 
         private void CrosswordItem_OnSelected(object sender, RoutedEventArgs e)
         {
@@ -32,7 +58,7 @@ namespace GlossaryTermApp
 
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
-            WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));// !!!!!!!
+            ClearWorkPlace();
             ScrollDictionary.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 350;
             ScrollDictionary.Width = 692;
@@ -52,18 +78,18 @@ namespace GlossaryTermApp
                         Width = 15, 
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
-                    var brush = new ImageBrush();
-                    brush.ImageSource = new BitmapImage(new Uri("delete.png", UriKind.Relative));
-                    deleteBtn.Background = brush;
+                   
+                    //brush.ImageSource = new BitmapImage(new Uri("delete.png", UriKind.Relative));
+                    deleteBtn.Background = getBrushFromImage("image/delete.png");
                     Button editBtn = new Button
                     {
                         Height = 15,
                         Width = 15,
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
-                    var brushEd = new ImageBrush();
-                    brushEd.ImageSource = new BitmapImage(new Uri("edit.png", UriKind.Relative));
-                    editBtn.Background = brushEd;
+                   // var brushEd = new ImageBrush();
+                   // brushEd.ImageSource = new BitmapImage(new Uri("edit.png", UriKind.Relative));
+                    editBtn.Background = getBrushFromImage("image/edit.png");
                     BtnPanel.Children.Add(deleteBtn);
                     BtnPanel.Children.Add(editBtn);
                     PanelForOneWord.Children.Add(BtnPanel);
@@ -76,27 +102,54 @@ namespace GlossaryTermApp
 
         private void HomeItem_Selected(object sender, RoutedEventArgs e)
         {
-            ScrollDictionary.Visibility = Visibility.Hidden;
+            ClearWorkPlace();
             WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
             ScrollDictionary.Height = 1;
             ScrollDictionary.Width = 1;
-            WorkPlace.Visibility = Visibility.Visible;
             Canvas Instructions = new Canvas { Height = 350, Width = 692 };
             for(int i=0;i<7;i++)
             {
+                ImageBrush brush;
+
                 Rectangle photo = new Rectangle { Height = 32, Width = 32 };
-                ImageBrush brush = new ImageBrush();
                 TextBlock text = new TextBlock { FontSize=15,Width=570, TextWrapping = TextWrapping.Wrap };
                 if (i == 0)
                 {
-                    brush.ImageSource = new BitmapImage(new Uri(@"home.png", UriKind.RelativeOrAbsolute)); text.Text = "Домашняя страница";
+                    brush=getBrushFromImage("image/home.png");
+                    text.Text = "Домашняя страница";
                 }
-                else if (i == 1) { brush.ImageSource = new BitmapImage(new Uri(@"edit.png", UriKind.RelativeOrAbsolute)); text.Text = "Редактор определений и ддобавление терминов"; }
-                else if (i == 2) { brush.ImageSource = new BitmapImage(new Uri(@"book.png", UriKind.RelativeOrAbsolute)); text.Text = "Словарь + поиск слов в нём"; }
-                else if (i == 3) { brush.ImageSource = new BitmapImage(new Uri(@"match.png", UriKind.RelativeOrAbsolute)); text.Text = "Сопоставление слов и определений"; }
-                else if (i == 4) { brush.ImageSource = new BitmapImage(new Uri(@"fill in.png", UriKind.RelativeOrAbsolute)); text.Text = "Вписать пропущенные слова "; }
-                else if (i == 5) { brush.ImageSource = new BitmapImage(new Uri(@"crossword.png", UriKind.RelativeOrAbsolute)); text.Text = "Решение кроссворда"; }
-                else  { brush.ImageSource = new BitmapImage(new Uri(@"exit.png", UriKind.RelativeOrAbsolute)); text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса"; }
+                else if (i == 1) 
+                {
+                    brush = getBrushFromImage("image/edit.png"); 
+                    text.Text = "Редактор определений и добавление терминов";
+
+                }
+                else if (i == 2) 
+                {
+                    brush = getBrushFromImage("image/book.png");
+                    text.Text = "Словарь + поиск слов в нём";
+                }
+                else if (i == 3)
+                {
+                    brush = getBrushFromImage("image/match.png");
+                    text.Text = "Сопоставление слов и определений";
+                }
+                else if (i == 4)
+                {
+                    brush = getBrushFromImage("image/fill in.png");
+                    text.Text = "Вписать пропущенные слова ";
+                }
+                else if (i == 5)
+                {
+                    brush = getBrushFromImage("image/crossword.png"); 
+                    text.Text = "Решение кроссворда";
+
+                }
+                else  
+                { 
+                    brush = getBrushFromImage("image/exit.png"); 
+                    text.Text = "Вернуться на начальную страницу приложения с выбором предмета и класса";
+                }
                 photo.Fill = brush;
                 Instructions.Children.Add(photo);
                 Canvas.SetLeft(photo, 0);
