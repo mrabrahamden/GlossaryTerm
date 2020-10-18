@@ -128,7 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="help.png" />
+    <Resource Include="image\help.png" />
     <Content Include="image\Screenshot_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

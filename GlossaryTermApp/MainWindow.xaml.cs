@@ -65,6 +65,7 @@ namespace GlossaryTermApp
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
+            DictionaryStackPanel.Visibility = Visibility.Visible;
             ScrollDictionary.Visibility = Visibility.Visible;
             StackPanelForWords.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 350;
