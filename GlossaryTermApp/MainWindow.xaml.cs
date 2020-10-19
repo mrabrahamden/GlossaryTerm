@@ -4,7 +4,9 @@ using SerializerLib;
 using System.Windows.Controls;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Automation;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -29,6 +31,7 @@ namespace GlossaryTermApp
         public MainWindow(Serializer ser)
         {
             Serializer = ser;
+            Serializer.SortList();
             InitializeComponent();
         }
 
@@ -38,7 +41,6 @@ namespace GlossaryTermApp
             {
                 if (workPlaceChild.Visibility == Visibility.Visible) workPlaceChild.Visibility = Visibility.Hidden;
             }
-            //WorkPlace.Children.OfType<Canvas>().ToList().ForEach(x => WorkPlace.Children.Remove(x));
         }
 
 
@@ -90,9 +92,8 @@ namespace GlossaryTermApp
                         Content = "\xE711",
                         Foreground = Brushes.Red,
                         Background = Brushes.White
-
                     };
-                    //deleteBtn.Background = getBrushFromImage("image/delete.png");
+                    deleteBtn.Click += DeleteBtn_Click;
                     Button editBtn = new Button
                     {
                         Height = 15,
@@ -103,20 +104,49 @@ namespace GlossaryTermApp
                         Background = Brushes.White
 
                     };
-                    //editBtn.Background = getBrushFromImage("image/edit.png");
+                    editBtn.Click += EditBtn_Click;
                     btnPanel.Children.Add(deleteBtn);
                     btnPanel.Children.Add(editBtn);
-                    panelForOneWord.Children.Add(btnPanel);
-                    StackPanelForWords.Children.Add(panelForOneWord);
+                    panelForOneWord.Children.Add(btnPanel); 
                     Separator separate = new Separator();
+                    StackPanelForWords.Children.Add(panelForOneWord);
                     StackPanelForWords.Children.Add(separate);
                 }
             }
         }
 
-        private void BtnClick(object sender, RoutedEventArgs e)
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var button = (Button)sender;
+            var btnPanel = (StackPanel)button.Parent;
+            var panelForOneWord = (DockPanel)btnPanel.Parent;
+            var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
+            MenuEditBTN.IsSelected = true;
+            var wordAndDescr =newWord.Text;
+            editMode = true;
+            EditBTN.Content = "Изменить";
+            ClearWorkPlace();
+            ReadyToAddAWord(sender, e);
+            TermTB.Text = null;
+            DescriptionTB.Text = null;
+            EditStackPanel.Visibility = Visibility.Visible;
+            TermTB.Text = Serializer.GetTermNameByString(wordAndDescr);
+            DescriptionTB.Text = Serializer.GetTermDescriptionByString(wordAndDescr);
+            editedTerm = Serializer.GetTermByString(wordAndDescr);
+        }
+
+        private bool editMode = false;
+        private SimpleTerm editedTerm;
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button) sender;
+            var btnPanel =(StackPanel) button.Parent;
+            var panelForOneWord = (DockPanel) btnPanel.Parent;
+            var newWord = (TextBlock) panelForOneWord.Children.OfType<TextBlock>().First();
+            panelForOneWord.Visibility = Visibility.Hidden; 
+            Serializer.DeleteTermByString(newWord.Text);
+            DictionaryItem_Selected(null, null);
+            Serializer.Serialize();
         }
 
         private void HomeItem_Selected(object sender, RoutedEventArgs e)
@@ -135,28 +165,28 @@ namespace GlossaryTermApp
 
         private void EditItem_Selected(object sender, RoutedEventArgs e)
         {
+            editMode = false;
+            EditBTN.Content = "Добавить";
             ClearWorkPlace();
             ReadyToAddAWord(sender, e);
             TermTB.Text = null;
             DescriptionTB.Text = null;
             EditStackPanel.Visibility = Visibility.Visible;
-
         }
 
         private void EditBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (EditBTN.Content == "Добавить")
+
+            bool editingSuccess = false;
+
+            if (!editMode)
             {
-                if(!(string.IsNullOrEmpty(TermTB.Text)|| string.IsNullOrEmpty(DescriptionTB.Text)))
+                if((!(string.IsNullOrEmpty(TermTB.Text)|| string.IsNullOrEmpty(DescriptionTB.Text))))
                 {
                     try
                     {
                         Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
-                        EditBTN.FontFamily = new FontFamily("Segoe MDL2 Assets");
-                        EditBTN.Foreground = Brushes.MediumSeaGreen;
-                        EditBTN.FontWeight = FontWeights.Bold;
-                        EditBTN.Content = "\xE73E" + " ";
-                        EditBTN.IsEnabled = false;
+                        editingSuccess = true;
                     }
                     catch (Exception)
                     {
@@ -171,18 +201,40 @@ namespace GlossaryTermApp
             }
             else
             {
+                editedTerm.Word = TermTB.Text;
+                editedTerm.Description = DescriptionTB.Text;
+                editingSuccess = true;
+            }
+
+            if (editingSuccess)
+            {
+                Serializer.SortList();
+                Serializer.Serialize();
+                EditBTN.FontFamily = new FontFamily("Segoe MDL2 Assets");
+                EditBTN.Foreground = Brushes.MediumSeaGreen;
+                EditBTN.FontWeight = FontWeights.Bold;
+                EditBTN.Content = "\xE73E" + " ";
+                EditBTN.IsEnabled = false;
             }
         }
 
         private void ClearBTN_Click(object sender, RoutedEventArgs e)
         {
-            EditItem_Selected(sender,e);
+            TermTB.Clear();
+            DescriptionTB.Clear();
         }
 
         private void ReadyToAddAWord(object sender, RoutedEventArgs e)
         {
             EditBTN.FontFamily = new FontFamily("Segoe UI");
-            EditBTN.Content = "Добавить";
+            if (editMode)
+            {
+                EditBTN.Content = "Изменить";
+            }
+            else
+            {
+                EditBTN.Content = "Добавить";
+            }
             EditBTN.IsEnabled = true;
             EditBTN.Foreground = Brushes.Black;
             EditBTN.FontWeight = FontWeights.Regular;
