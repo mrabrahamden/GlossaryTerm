@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Teacherry" Height="450" Width="800">
+        Title="Teacherry" Height="450" Width="800" ResizeMode="NoResize">
 
     <Grid ShowGridLines="False" Background="White">
         <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="200" Panel.ZIndex="-1">
@@ -45,13 +45,13 @@
             <StackPanel x:Name="DictionaryStackPanel" Visibility="Hidden" RenderTransformOrigin="0.508,0.613" >
                 <DockPanel Margin="0,10,0.2,0">
                     <TextBox Height="23" TextWrapping="Wrap" Text="" Width="600" RenderTransformOrigin="0.5,0.406" Margin="0" />
-                    <Button  HorizontalAlignment="Left" Height="24"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Foreground="Black" Content="&#xF78B;">
+                    <Button  HorizontalAlignment="Left" Height="24"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Foreground="Black" Content="&#xE721;">
                         <!--<StackPanel>
                             <Image Source="image/search.png" Stretch="Uniform"/>
                         </StackPanel>-->
                     </Button>
                 </DockPanel>
-                <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,25,0,0" VerticalAlignment="Top" Width="692">
+                <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,25,0,0" VerticalAlignment="Top" Width="700">
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
                 </ScrollViewer>
             </StackPanel>

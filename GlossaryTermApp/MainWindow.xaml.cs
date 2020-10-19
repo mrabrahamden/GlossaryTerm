@@ -70,7 +70,7 @@ namespace GlossaryTermApp
             ScrollDictionary.Visibility = Visibility.Visible;
             StackPanelForWords.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 350;
-            ScrollDictionary.Width = 692;
+            ScrollDictionary.Width = 715;
             StackPanelForWords.Children.Clear();
             if (Serializer.TermList.Count > 0)
             {
@@ -87,7 +87,7 @@ namespace GlossaryTermApp
                         Width = 15, 
                         HorizontalAlignment = HorizontalAlignment.Right,
                         FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                        Content = "\xF78A",
+                        Content = "\xE711",
                         Foreground = Brushes.Red,
                         Background = Brushes.White
 
