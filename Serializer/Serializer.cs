@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -63,6 +62,14 @@ namespace SerializerLib
             var result= TermList.Find(term =>
                 term.Word == GetTermNameByString(wordAndDescr) &&
                 term.Description == GetTermDescriptionByString(wordAndDescr));
+            return result;
+        }
+
+        public List<SimpleTerm> LookForAWord(string word)
+        {
+            var result = new List<SimpleTerm>();
+            result = TermList.FindAll(term => term.Word.ToLower().Contains(word.ToLower()));
+            result.AddRange(TermList.FindAll(term=> term.Description.ToLower().Contains(word.ToLower())));
             return result;
         }
         public void SortList()

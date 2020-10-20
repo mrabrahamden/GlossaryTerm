@@ -3,19 +3,14 @@ using PdfSaver;
 using SerializerLib;
 using System.Windows.Controls;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Automation;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using TermLib;
 using Brushes = System.Windows.Media.Brushes;
-using FontFamily = System.Windows.Media.FontFamily;
-using Image = System.Drawing.Image;
-using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace GlossaryTermApp
 {
@@ -41,9 +36,10 @@ namespace GlossaryTermApp
             {
                 if (workPlaceChild.Visibility == Visibility.Visible) workPlaceChild.Visibility = Visibility.Hidden;
             }
+            SearchTB.Clear();
         }
 
-
+        private bool searchMode = false;
         private ImageBrush getBrushFromImage(string path)
         {
             var image = System.Drawing.Image.FromFile(path);
@@ -67,52 +63,8 @@ namespace GlossaryTermApp
 
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
-            ClearWorkPlace();
-            DictionaryStackPanel.Visibility = Visibility.Visible;
-            ScrollDictionary.Visibility = Visibility.Visible;
-            StackPanelForWords.Visibility = Visibility.Visible;
-            ScrollDictionary.Height = 350;
-            ScrollDictionary.Width = 715;
-            StackPanelForWords.Children.Clear();
-            if (Serializer.TermList.Count > 0)
-            {
-                foreach (var term in Serializer.TermList)
-                {
-                    string wordAndDescription = term.ToString();
-                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping=TextWrapping.Wrap };
-                    DockPanel panelForOneWord = new DockPanel();
-                    panelForOneWord.Children.Add(newWord);
-                    StackPanel btnPanel = new StackPanel();
-                    Button deleteBtn = new Button
-                    {
-                        Height = 15,
-                        Width = 15, 
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                        Content = "\xE711",
-                        Foreground = Brushes.Red,
-                        Background = Brushes.White
-                    };
-                    deleteBtn.Click += DeleteBtn_Click;
-                    Button editBtn = new Button
-                    {
-                        Height = 15,
-                        Width = 15,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
-                        Content = "\xE70F",
-                        Background = Brushes.White
-
-                    };
-                    editBtn.Click += EditBtn_Click;
-                    btnPanel.Children.Add(deleteBtn);
-                    btnPanel.Children.Add(editBtn);
-                    panelForOneWord.Children.Add(btnPanel); 
-                    Separator separate = new Separator();
-                    StackPanelForWords.Children.Add(panelForOneWord);
-                    StackPanelForWords.Children.Add(separate);
-                }
-            }
+            searchMode = false;
+            PerformDictionaryPrint(Serializer.TermList);
         }
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
@@ -122,7 +74,7 @@ namespace GlossaryTermApp
             var panelForOneWord = (DockPanel)btnPanel.Parent;
             var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
             MenuEditBTN.IsSelected = true;
-            var wordAndDescr =newWord.Text;
+            var wordAndDescr = newWord.Text;
             editMode = true;
             EditBTN.Content = "Изменить";
             ClearWorkPlace();
@@ -240,5 +192,94 @@ namespace GlossaryTermApp
             EditBTN.FontWeight = FontWeights.Regular;
         }
 
+        private void SearchButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var request = SearchTB.Text;
+            var result = Serializer.LookForAWord(request);
+            searchMode = true;
+            PerformDictionaryPrint(result);
+            SearchTB.Text = request;
+        }
+
+        private void PerformDictionaryPrint(List<SimpleTerm> list)
+        {
+            ClearWorkPlace();
+            DictionaryStackPanel.Visibility = Visibility.Visible;
+            ScrollDictionary.Visibility = Visibility.Visible;
+            StackPanelForWords.Visibility = Visibility.Visible;
+            ScrollDictionary.Height = 350;
+            ScrollDictionary.Width = 715;
+            StackPanelForWords.Children.Clear();
+            if (list.Count > 0)
+            {
+                foreach (var term in list)
+                {
+                    string wordAndDescription = term.ToString();
+                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap };
+                    DockPanel panelForOneWord = new DockPanel();
+                    panelForOneWord.Children.Add(newWord);
+                    StackPanel btnPanel = new StackPanel();
+                    Button deleteBtn = new Button
+                    {
+                        Height = 15,
+                        Width = 15,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                        Content = "\xE711",
+                        Foreground = Brushes.Red,
+                        Background = Brushes.White
+                    };
+                    deleteBtn.Click += DeleteBtn_Click;
+                    Button editBtn = new Button
+                    {
+                        Height = 15,
+                        Width = 15,
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        FontFamily = new FontFamily("Segoe MDL2 Assets"),
+                        Content = "\xE70F",
+                        Background = Brushes.White
+
+                    };
+                    editBtn.Click += EditBtn_Click;
+                    btnPanel.Children.Add(deleteBtn);
+                    btnPanel.Children.Add(editBtn);
+                    panelForOneWord.Children.Add(btnPanel);
+                    Separator separate = new Separator();
+                    StackPanelForWords.Children.Add(panelForOneWord);
+                    StackPanelForWords.Children.Add(separate);
+                }
+            }
+            else
+            {
+                TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap};
+
+                if (searchMode)
+                {
+                    newWord.Text =
+                        "По Вашему запросу ничего не найдено. Возможно, Вам стоит сначала добавить термин в словарь?";
+                }
+                else
+                {
+                    newWord.Text =
+                        "Похоже, что в словаре пусто...Возможно, Вам стоит сначала добавить термин в словарь?";
+                }
+                DockPanel panelForOneWord = new DockPanel();
+                panelForOneWord.Children.Add(newWord);
+                StackPanelForWords.Children.Add(panelForOneWord);
+            }
+        }
+
+        private void Search_KeyUp(object sender, KeyEventArgs e)  //чтобы поиск работал не только по кнопке, но и по enter
+        {
+            if (e.Key == Key.Enter)
+            {
+                SearchButton_OnClick(null, null);
+            }
+        }
+
+        private void SearchEmptyButton_Click(object sender, RoutedEventArgs e)
+        {
+            DictionaryItem_Selected(null, null);
+        }
     }
 }
