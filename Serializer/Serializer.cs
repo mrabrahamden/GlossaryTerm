@@ -91,8 +91,6 @@ namespace SerializerLib
                 TermList = list;
                 return true;
             }
-            
-            
         }
         public void SortList()
         {

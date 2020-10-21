@@ -141,18 +141,15 @@ namespace GlossaryTermApp
                     try
                     {
                         var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
-                       // if(Serializer.TermList.Contains(term,new SimpleTermEqualityComparer()))
-                      //  {
-                        //    MessageBox.Show("Данный термин уже внесён в словарь!");
-                        //}
-                        //else 
-                        //{
                         Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
-                        if(Serializer.DeleteSimilarTerms())
-                                MessageBox.Show("Данный термин уже внесён в словарь!");
-                        editingSuccess = true;
-                       // }
-                        
+                        if (Serializer.DeleteSimilarTerms())
+                        {
+                            MessageBox.Show("Данный термин уже внесён в словарь!");
+                        }
+                        else
+                        {
+                            editingSuccess = true;
+                        }
                     }
                     catch (Exception)
                     {
@@ -180,6 +177,14 @@ namespace GlossaryTermApp
                 EditBTN.Foreground = Brushes.MediumSeaGreen;
                 EditBTN.FontWeight = FontWeights.Bold;
                 EditBTN.Content = "\xE73E" + " ";
+                EditBTN.IsEnabled = false;
+            }
+            else
+            {
+                EditBTN.FontFamily = new FontFamily("Segoe MDL2 Assets");
+                EditBTN.Foreground = Brushes.Red;
+                EditBTN.FontWeight = FontWeights.Bold;
+                EditBTN.Content = "\xE711" + " ";
                 EditBTN.IsEnabled = false;
             }
         }
