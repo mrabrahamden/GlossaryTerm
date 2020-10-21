@@ -26,10 +26,13 @@ namespace GlossaryTermApp
         public MainWindow(Serializer ser)
         {
             Serializer = ser;
+            Serializer.DeleteSimilarTerms();
+            //Serializer.TermList = Serializer.DeleteSimilarTerms(Serializer.TermList);
             Serializer.SortList();
             InitializeComponent();
         }
 
+       
         private void ClearWorkPlace()
         {
             foreach (UIElement workPlaceChild in WorkPlace.Children)
@@ -137,8 +140,17 @@ namespace GlossaryTermApp
                 {
                     try
                     {
-                        Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
-                        editingSuccess = true;
+                        var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
+                        if(Serializer.TermList.Contains(term,new SimpleTermEqualityComparer()))
+                        {
+                            MessageBox.Show("Данный термин уже внесён в словарь!");
+                        }
+                        else 
+                        {
+                            Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
+                            editingSuccess = true;
+                        }
+                        
                     }
                     catch (Exception)
                     {

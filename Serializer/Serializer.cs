@@ -37,7 +37,8 @@ namespace SerializerLib
             Regex regex=new Regex(@"((\w)+\s?)+");
             var term =regex.Match(wordAndDescrString).ToString();
             term = term.Substring(0, term.Length - 1);
-            TermList.RemoveAll((simpleTerm => simpleTerm.Word==term));
+            var descr = GetTermDescriptionByString(wordAndDescrString);
+            TermList.RemoveAll((simpleTerm => simpleTerm.Word==term && simpleTerm.Description==descr));
         }
 
         public string GetTermNameByString(string wordAndDescrString)
@@ -69,8 +70,18 @@ namespace SerializerLib
         {
             var result = new List<SimpleTerm>();
             result = TermList.FindAll(term => term.Word.ToLower().Contains(word.ToLower()));
-            result.AddRange(TermList.FindAll(term=> term.Description.ToLower().Contains(word.ToLower())));
-            return result;
+            result.AddRange(TermList.FindAll(term=> term.Description.ToLower().Contains(word.ToLower())));         
+            return DeleteSimilarTerms(result);
+        }
+        public List<SimpleTerm> DeleteSimilarTerms(List<SimpleTerm> list)
+        {
+            var resultList = list.Distinct().ToList();
+            return resultList;
+        }
+        public void DeleteSimilarTerms()
+        {
+            var list = TermList.Distinct(new SimpleTermEqualityComparer()).ToList();
+            TermList = list;
         }
         public void SortList()
         {

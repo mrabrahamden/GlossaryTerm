@@ -1,8 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 
 
 namespace TermLib
 {
+    public class SimpleTermEqualityComparer : IEqualityComparer<SimpleTerm>
+    {
+        public bool Equals(SimpleTerm t1, SimpleTerm t2)
+        {
+            if (t2 == null && t1 == null)
+                return true;
+            else if (t1 == null || t2 == null)
+                return false;
+            else if (t1.Word == t2.Word && t1.Description == t2.Description)
+                return true;
+            else return false;
+        }
+
+        public int GetHashCode(SimpleTerm obj)
+        {
+            int hCode = obj.ToString().GetHashCode();
+            return hCode.GetHashCode();
+        }
+    }
     [Serializable]
     public abstract class Term
     {
