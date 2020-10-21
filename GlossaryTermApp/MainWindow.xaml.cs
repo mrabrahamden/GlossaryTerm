@@ -141,15 +141,17 @@ namespace GlossaryTermApp
                     try
                     {
                         var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
-                        if(Serializer.TermList.Contains(term,new SimpleTermEqualityComparer()))
-                        {
-                            MessageBox.Show("Данный термин уже внесён в словарь!");
-                        }
-                        else 
-                        {
-                            Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
-                            editingSuccess = true;
-                        }
+                       // if(Serializer.TermList.Contains(term,new SimpleTermEqualityComparer()))
+                      //  {
+                        //    MessageBox.Show("Данный термин уже внесён в словарь!");
+                        //}
+                        //else 
+                        //{
+                        Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
+                        if(Serializer.DeleteSimilarTerms())
+                                MessageBox.Show("Данный термин уже внесён в словарь!");
+                        editingSuccess = true;
+                       // }
                         
                     }
                     catch (Exception)

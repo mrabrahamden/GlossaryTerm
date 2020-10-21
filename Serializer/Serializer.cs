@@ -78,10 +78,21 @@ namespace SerializerLib
             var resultList = list.Distinct().ToList();
             return resultList;
         }
-        public void DeleteSimilarTerms()
+        public bool DeleteSimilarTerms()
         {
             var list = TermList.Distinct(new SimpleTermEqualityComparer()).ToList();
-            TermList = list;
+            if (TermList.Count == list.Count)
+            {
+                TermList = list;
+                return false;
+            }
+            else
+            {
+                TermList = list;
+                return true;
+            }
+            
+            
         }
         public void SortList()
         {
