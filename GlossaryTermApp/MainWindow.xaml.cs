@@ -194,11 +194,14 @@ namespace GlossaryTermApp
 
         private void SearchButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var request = SearchTB.Text;
-            var result = Serializer.LookForAWord(request);
-            searchMode = true;
-            PerformDictionaryPrint(result);
-            SearchTB.Text = request;
+            if (!string.IsNullOrEmpty(SearchTB.Text))
+            {
+                var request = SearchTB.Text;
+                var result = Serializer.LookForAWord(request);
+                searchMode = true;
+                PerformDictionaryPrint(result);
+                SearchTB.Text = request;
+            }
         }
 
         private void PerformDictionaryPrint(List<SimpleTerm> list)
