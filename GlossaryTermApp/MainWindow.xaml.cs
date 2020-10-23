@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using TermLib;
+using FillGameLib;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace GlossaryTermApp
@@ -302,6 +303,73 @@ namespace GlossaryTermApp
         private void SearchEmptyButton_Click(object sender, RoutedEventArgs e)
         {
             DictionaryItem_Selected(null, null);
+        }
+
+        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        {
+            ClearWorkPlace();
+            FillGameEditorPanel.Visibility = Visibility.Visible;
+
+        }
+
+        private List<SimpleTerm> fillGameList;
+        private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
+        {
+            FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(Serializer.TermList);
+            fillGameEditorPage.ShowDialog();
+        }
+
+        private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
+        {
+            bool IsCreated = false;
+            FillGame fillGame;
+            try
+            {
+                int lvl = 0;
+                bool fixedLength = false;
+                bool trainingMode = false;
+                if (FillGameEasyLvl.IsChecked == true)
+                {
+                    lvl = 1;
+                }
+                else if (FillGameNormalLvl.IsChecked == true)
+                {
+                    lvl = 2;
+                }
+                else
+                {
+                    lvl = 3;
+                }
+
+                if (FillGameFixedLength.IsChecked == true)
+                {
+                    fixedLength = true;
+                }
+
+                if (FillGameTrainingMode.IsChecked == true)
+                {
+                    trainingMode = true;
+                }
+
+                fillGame = new FillGame(fillGameList, lvl, fixedLength,trainingMode);
+                IsCreated = true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось создать игру, попробуйте снова.");
+            }
+
+            if (IsCreated)
+            {
+                FillGamePage fillGamePage = new FillGamePage();
+                this.Hide();
+                fillGamePage.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Не удалось создать игру, попробуйте снова.");
+            }
         }
     }
 }

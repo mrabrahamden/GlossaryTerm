@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace TermLib
@@ -32,11 +34,19 @@ namespace TermLib
     public class SimpleTerm : Term
     {
         public string Description;
+        public bool[] KeyWordBools;
+        public bool ReadyForFillGame;
+        public List<string> DescriptionWordsList;
+        public List<string> DescriptionWordsAndSplittersList;
 
         public SimpleTerm(string word, string descr)
         {
             Word = word;
             Description = descr;
+            ReadyForFillGame = false;
+            DescriptionWordsAndSplittersList=new List<string>();
+            DescriptionWordsList = FillingDescriptionWordsList();
+            KeyWordBools=new bool[DescriptionWordsList.Count];
         }
 
         public override string ToString() 
@@ -47,5 +57,25 @@ namespace TermLib
             }
             return Word + " -- " + Description;
         }
+
+        private List<string> FillingDescriptionWordsList()
+        {
+            Regex regexForWordAndSplit=new Regex(@"(\w)+(\W)+");
+            Regex regexForWord=new Regex(@"(\w)+");
+            Regex regexForSplit=new Regex(@"(\W)+");
+            var matches = regexForWordAndSplit.Matches(Description);
+            var result = new List<string>();
+            foreach (var wordAndSplitter in matches)
+            {
+                var stringword = wordAndSplitter.ToString();
+                var word = regexForWord.Match(stringword).ToString();
+                var splitter = regexForSplit.Match(stringword).ToString();
+                DescriptionWordsList.Add(word);
+                result.Add(word);
+                result.Add(splitter);
+            }
+            return result;
+        }
+
     }
 }

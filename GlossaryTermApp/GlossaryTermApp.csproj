@@ -48,6 +48,12 @@
     <Reference Include="HamburgerMenu, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\HamburgerMenu.0.1.0\lib\net40\HamburgerMenu.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=18.3460.0.42, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.18.3.0.42\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.WPF, Version=18.3460.0.42, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Shared.WPF.18.3.0.42\lib\net46\Syncfusion.Shared.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -69,9 +75,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FillGameEditorPage.xaml.cs">
+      <DependentUpon>FillGameEditorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FillGamePage.xaml.cs">
+      <DependentUpon>FillGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="FillGameEditorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FillGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,6 +148,10 @@
     <ProjectReference Include="..\TermLib\TermLib.csproj">
       <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
       <Name>TermLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordSkipGame\FillGame.csproj">
+      <Project>{100ee1b9-a373-488c-b6c4-a474c43c0d52}</Project>
+      <Name>FillGame</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
