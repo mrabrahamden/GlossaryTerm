@@ -43,8 +43,8 @@ namespace GlossaryTermApp
             SearchTB.Clear();
         }
 
-        private bool searchMode = false;
-        private ImageBrush getBrushFromImage(string path)
+        private bool _searchMode = false;
+        private ImageBrush GetBrushFromImage(string path)
         {
             var image = System.Drawing.Image.FromFile(path);
             var bitmap = new System.Drawing.Bitmap(image);
@@ -67,7 +67,7 @@ namespace GlossaryTermApp
 
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
-            searchMode = false;
+            _searchMode = false;
             PerformDictionaryPrint(Serializer.TermList);
         }
 
@@ -79,7 +79,7 @@ namespace GlossaryTermApp
             var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
             MenuEditBTN.IsSelected = true;
             var wordAndDescr = newWord.Text;
-            editMode = true;
+            _editMode = true;
             EditBTN.Content = "Изменить";
             ClearWorkPlace();
             ReadyToAddAWord(sender, e);
@@ -88,11 +88,11 @@ namespace GlossaryTermApp
             EditStackPanel.Visibility = Visibility.Visible;
             TermTB.Text = Serializer.GetTermNameByString(wordAndDescr);
             DescriptionTB.Text = Serializer.GetTermDescriptionByString(wordAndDescr);
-            editedTerm = Serializer.GetTermByString(wordAndDescr);
+            _editedTerm = Serializer.GetTermByString(wordAndDescr);
         }
 
-        private bool editMode = false;
-        private SimpleTerm editedTerm;
+        private bool _editMode = false;
+        private SimpleTerm _editedTerm;
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button) sender;
@@ -121,7 +121,7 @@ namespace GlossaryTermApp
 
         private void EditItem_Selected(object sender, RoutedEventArgs e)
         {
-            editMode = false;
+            _editMode = false;
             EditBTN.Content = "Добавить";
             ClearWorkPlace();
             ReadyToAddAWord(sender, e);
@@ -132,10 +132,9 @@ namespace GlossaryTermApp
 
         private void EditBTN_Click(object sender, RoutedEventArgs e)
         {
-
             bool editingSuccess = false;
 
-            if (!editMode)
+            if (!_editMode)
             {
                 if((!(string.IsNullOrEmpty(TermTB.Text)|| string.IsNullOrEmpty(DescriptionTB.Text))))
                 {
@@ -165,8 +164,8 @@ namespace GlossaryTermApp
             }
             else
             {
-                editedTerm.Word = TermTB.Text;
-                editedTerm.Description = DescriptionTB.Text;
+                _editedTerm.Word = TermTB.Text;
+                _editedTerm.Description = DescriptionTB.Text;
                 editingSuccess = true;
             }
 
@@ -199,7 +198,7 @@ namespace GlossaryTermApp
         private void ReadyToAddAWord(object sender, RoutedEventArgs e)
         {
             EditBTN.FontFamily = new FontFamily("Segoe UI");
-            if (editMode)
+            if (_editMode)
             {
                 EditBTN.Content = "Изменить";
             }
@@ -218,7 +217,7 @@ namespace GlossaryTermApp
             {
                 var request = SearchTB.Text;
                 var result = Serializer.LookForAWord(request);
-                searchMode = true;
+                _searchMode = true;
                 PerformDictionaryPrint(result);
                 SearchTB.Text = request;
             }
@@ -276,7 +275,7 @@ namespace GlossaryTermApp
             {
                 TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap};
 
-                if (searchMode)
+                if (_searchMode)
                 {
                     newWord.Text =
                         "По Вашему запросу ничего не найдено. Возможно, Вам стоит сначала добавить термин в словарь?";
@@ -312,7 +311,7 @@ namespace GlossaryTermApp
 
         }
 
-        private List<SimpleTerm> fillGameList;
+        private List<SimpleTerm> _fillGameList;
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
         {
             FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(Serializer.TermList);
@@ -321,7 +320,7 @@ namespace GlossaryTermApp
 
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
-            bool IsCreated = false;
+            bool isCreated = false;
             FillGame fillGame;
             try
             {
@@ -351,15 +350,15 @@ namespace GlossaryTermApp
                     trainingMode = true;
                 }
 
-                fillGame = new FillGame(fillGameList, lvl, fixedLength,trainingMode);
-                IsCreated = true;
+                fillGame = new FillGame(_fillGameList, lvl, fixedLength,trainingMode);
+                isCreated = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("Не удалось создать игру, попробуйте снова.");
             }
 
-            if (IsCreated)
+            if (isCreated)
             {
                 FillGamePage fillGamePage = new FillGamePage();
                 this.Hide();

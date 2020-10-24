@@ -24,4 +24,5 @@ namespace GlossaryTermApp
             InitializeComponent();
         }
     }
+    ////https://github.com/xceedsoftware/wpftoolkit/wiki/IntegerUpDown про UpDown
 }
