@@ -34,10 +34,10 @@ namespace TermLib
     public class SimpleTerm : Term
     {
         public string Description;
-        public bool[] KeyWordBools;
+        public List<bool> KeyWordBools;
         public bool ReadyForFillGame;
-        public List<string> DescriptionWordsList;
-        public List<string> DescriptionWordsAndSplittersList;
+        public List<string> DescriptionWordsList = new List<string>();
+        public List<string> DescriptionWordsAndSplittersList = new List<string>();
 
         public SimpleTerm(string word, string descr)
         {
@@ -45,8 +45,8 @@ namespace TermLib
             Description = descr;
             ReadyForFillGame = false;
             DescriptionWordsAndSplittersList=new List<string>();
+            KeyWordBools = new List<bool>();
             DescriptionWordsList = FillingDescriptionWordsList();
-            KeyWordBools=new bool[DescriptionWordsList.Count];
         }
 
         public override string ToString() 
