@@ -315,6 +315,7 @@ namespace GlossaryTermApp
         {
             FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(Serializer.TermList);
             fillGameEditorPage.ShowDialog();
+            fillGameEditorPage.DataContext = _fillGameList;
         }
 
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)

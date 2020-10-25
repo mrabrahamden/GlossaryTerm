@@ -32,7 +32,7 @@ namespace GlossaryTermApp
                         {
                             Button button = new Button()
                             {
-                                Content = word, FontSize = 20
+                                Content = word, FontSize = 20, Tag = descriptionWord
                             };
                             if (descriptionWord.IsKeyWord)
                                 button.Background = Brushes.LightGreen;
@@ -61,14 +61,15 @@ namespace GlossaryTermApp
         private void ButtonOnClick(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button) sender;
-            var partOfDescription = clickedButton.Content.ToString();  //слово по которому кликнули
-            var panelForOneWord = (WrapPanel)clickedButton.Parent;
-            var newWord = panelForOneWord.Children.OfType<TextBlock>().First();
-            var wordAndDescr = newWord.Text;
-            Regex regexForWord = new Regex(@"(\w)+");
-            var termWord = regexForWord.Match(wordAndDescr).ToString();     //термин к которому относится слово по которому кликнули
-            var curTerm = _termList.Find(term => term.Word == termWord);
-            var descriptionWord = curTerm.DescriptionWordsAndSplittersList.Find(w => w.Word == partOfDescription);
+            var descriptionWord = (DescriptionWord) clickedButton.Tag;
+            //var partOfDescription = clickedButton.Content.ToString();  //слово по которому кликнули
+           // var panelForOneWord = (WrapPanel)clickedButton.Parent;
+           // var newWord = panelForOneWord.Children.OfType<TextBlock>().First();
+            //var wordAndDescr = newWord.Text;
+           // Regex regexForWord = new Regex(@"(\w)+");
+           // var termWord = regexForWord.Match(wordAndDescr).ToString();     //термин к которому относится слово по которому кликнули
+           // var curTerm = _termList.Find(term => term.Word == termWord);
+          //  var descriptionWord = curTerm.DescriptionWordsAndSplittersList.Find(w => w.Word == partOfDescription);
             if (clickedButton.Background == Brushes.LightGreen)
             {
                 
@@ -81,6 +82,7 @@ namespace GlossaryTermApp
                 descriptionWord.IsKeyWord = true;
             }
 
+            
             //дальше мы как-то используем полученное для игры
         }
     }
