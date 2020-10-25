@@ -28,7 +28,6 @@ namespace GlossaryTermApp
         {
             Serializer = ser;
             Serializer.DeleteSimilarTerms();
-            //Serializer.TermList = Serializer.DeleteSimilarTerms(Serializer.TermList);
             Serializer.SortList();
             InitializeComponent();
         }
@@ -304,14 +303,14 @@ namespace GlossaryTermApp
             DictionaryItem_Selected(null, null);
         }
 
-        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        private List<SimpleTerm> _fillGameList=new List<SimpleTerm>();
+        private void FillGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
+            FillGameCountUpDown.Maximum = _fillGameList.Count;
             FillGameEditorPanel.Visibility = Visibility.Visible;
-
         }
 
-        private List<SimpleTerm> _fillGameList;
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
         {
             FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(Serializer.TermList);

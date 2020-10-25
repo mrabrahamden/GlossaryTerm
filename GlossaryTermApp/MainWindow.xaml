@@ -14,7 +14,7 @@
             <HamburgerMenu:HamburgerMenuItem x:Name="MenuEditBTN" Icon="image/edit.png" ToolTip="Редактор" Text="Редактор" Selected="EditItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem x:Name="DictionaryBTN" Icon="image/book.png" ToolTip="Словарь" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="DictionaryItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" ToolTip="Сопоставление" Text="Сопоставление"/>
-            <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" ToolTip="Дополнить определения" Text="Дополнение" Selected="HamburgerMenuItem_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" ToolTip="Дополнить определения" Text="Дополнение" Selected="FillGameItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/crossword.png" ToolTip="Кроссворд" Text="Кроссворд" Selected="CrosswordItem_OnSelected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/exit.png" ToolTip="В начало" Text="На главную" Selected="ExitItem_OnSelected"/>
         </HamburgerMenu:HamburgerMenu>
@@ -62,7 +62,7 @@
                 </GroupBox>
                 <StackPanel Orientation="Horizontal" Margin="40,0,39,0">
                     <TextBlock Text="  Количество слов:      " FontSize="20"></TextBlock>
-                    <xctk:IntegerUpDown x:Name="FillGameCountUpDown" FormatString="N0" Value="3"  Increment="1"  Width="100" Height="29" FontSize="20" Maximum="8" Minimum="2"/>
+                    <xctk:IntegerUpDown x:Name="FillGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Maximum="8" Minimum="1"/>
                 </StackPanel>
                 <Grid Height="139">
                     <Button x:Name="FillGameStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameStartBTN_Click"/>

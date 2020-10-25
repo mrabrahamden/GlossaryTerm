@@ -12,8 +12,6 @@ namespace GlossaryTermApp
 {
     public partial class FillGameEditorPage : Window
     {
-        private List<string> DefNotKeyWords = new List<string>()
-            {"это", "так", "которое", "которая", "который", "которые"};
         public FillGameEditorPage(List<SimpleTerm> list)
         {
             InitializeComponent();
@@ -23,22 +21,23 @@ namespace GlossaryTermApp
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
                 WrapPanel panelForOneWord = new WrapPanel();
                 panelForOneWord.Children.Add(newWord);
-                foreach (var word in term.DescriptionWordsList)
+                foreach (var descriptionWord in term.DescriptionWordsAndSplittersList)
                 {
+                    var word = descriptionWord.Word;
                     if (word.Length > 0)
                     {
-                        if (Char.IsLetter(word[0]))
+                        if (!descriptionWord.IsSplitter)
                         {
                             Button button = new Button()
                             {
                                 Content = word, FontSize = 20
                             };
-                            if (word.Length > 2 && !DefNotKeyWords.Contains(word))
-                            {
+                            if (descriptionWord.IsKeyWord)
                                 button.Background = Brushes.LightGreen;
-                                button.Click += ButtonOnClick;
-                            }
-                            else button.IsEnabled = false;
+                            else
+                                button.Background = Brushes.LightGray;
+                            button.Click += ButtonOnClick;
+
                             panelForOneWord.Children.Add(button);
                         }
                         else
@@ -67,7 +66,8 @@ namespace GlossaryTermApp
             var termWord = regexForWord.Match(wordAndDescr).ToString();
             if (clickedButton.Background == Brushes.LightGreen)
             {
-                clickedButton.Background = default;
+                
+                clickedButton.Background = Brushes.LightGray;
             }
             else clickedButton.Background = Brushes.LightGreen;
 

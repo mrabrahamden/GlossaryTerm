@@ -34,19 +34,16 @@ namespace TermLib
     public class SimpleTerm : Term
     {
         public string Description;
-        public List<bool> KeyWordBools;
         public bool ReadyForFillGame;
-        public List<string> DescriptionWordsList = new List<string>();
-        public List<string> DescriptionWordsAndSplittersList = new List<string>();
+        public List<DescriptionWord> DescriptionWordsAndSplittersList;
 
         public SimpleTerm(string word, string descr)
         {
             Word = word;
             Description = descr;
             ReadyForFillGame = false;
-            DescriptionWordsAndSplittersList=new List<string>();
-            KeyWordBools = new List<bool>();
-            DescriptionWordsList = FillingDescriptionWordsList();
+            DescriptionWordsAndSplittersList=new List<DescriptionWord>();
+            FillingListsForFillGame();
         }
 
         public override string ToString() 
@@ -58,24 +55,43 @@ namespace TermLib
             return Word + " -- " + Description;
         }
 
-        private List<string> FillingDescriptionWordsList()
+        private void FillingListsForFillGame()
         {
             Regex regexForWordAndSplit=new Regex(@"(\w)+(\W)+");
             Regex regexForWord=new Regex(@"(\w)+");
             Regex regexForSplit=new Regex(@"(\W)+");
             var matches = regexForWordAndSplit.Matches(Description);
-            var result = new List<string>();
             foreach (var wordAndSplitter in matches)
             {
                 var stringword = wordAndSplitter.ToString();
                 var word = regexForWord.Match(stringword).ToString();
                 var splitter = regexForSplit.Match(stringword).ToString();
-                DescriptionWordsList.Add(word);
-                result.Add(word);
-                result.Add(splitter);
+                DescriptionWordsAndSplittersList.Add(new DescriptionWord(word,false,false));
+                DescriptionWordsAndSplittersList.Add(new DescriptionWord(splitter,false,true));
             }
-            return result;
         }
+    }
+    [Serializable]
+    public class DescriptionWord
+    {
+        //private List<string> DefNotKeyWords = new List<string>()
+        //    {"это", "так", "которое", "которая", "который", "которые"};
+        public string Word;
+        public bool IsKeyWord;
+        public bool IsSplitter;
+        public DescriptionWord(string word, bool iskeyword,bool issplitter)
+        {
+            Word = word;
+            IsKeyWord = iskeyword;
+           // if (DefNotKeyWords.Contains(Word))
+          //  {
 
+          //  }
+            IsSplitter = issplitter;
+            if (IsSplitter)
+            {
+                IsKeyWord = false;
+            }
+        }
     }
 }
