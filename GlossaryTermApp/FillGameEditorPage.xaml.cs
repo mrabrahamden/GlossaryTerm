@@ -12,9 +12,11 @@ namespace GlossaryTermApp
 {
     public partial class FillGameEditorPage : Window
     {
+        List<SimpleTerm> _termList = new List<SimpleTerm>();
         public FillGameEditorPage(List<SimpleTerm> list)
         {
             InitializeComponent();
+            _termList = list;
             foreach (var term in list)
             {
                 string wordAndDescription = term.Word + " -- ";
@@ -59,17 +61,25 @@ namespace GlossaryTermApp
         private void ButtonOnClick(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button) sender;
+            var partOfDescription = clickedButton.Content.ToString();  //слово по которому кликнули
             var panelForOneWord = (WrapPanel)clickedButton.Parent;
             var newWord = panelForOneWord.Children.OfType<TextBlock>().First();
             var wordAndDescr = newWord.Text;
             Regex regexForWord = new Regex(@"(\w)+");
-            var termWord = regexForWord.Match(wordAndDescr).ToString();
+            var termWord = regexForWord.Match(wordAndDescr).ToString();     //термин к которому относится слово по которому кликнули
+            var curTerm = _termList.Find(term => term.Word == termWord);
+            var descriptionWord = curTerm.DescriptionWordsAndSplittersList.Find(w => w.Word == partOfDescription);
             if (clickedButton.Background == Brushes.LightGreen)
             {
                 
                 clickedButton.Background = Brushes.LightGray;
+                descriptionWord.IsKeyWord = false;
             }
-            else clickedButton.Background = Brushes.LightGreen;
+            else
+            {
+                clickedButton.Background = Brushes.LightGreen;
+                descriptionWord.IsKeyWord = true;
+            }
 
             //дальше мы как-то используем полученное для игры
         }
