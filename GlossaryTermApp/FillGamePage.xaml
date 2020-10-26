@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="FillGamePage" Height="450" Width="800">
     <Grid>
-        
+        <ScrollViewer x:Name="scrollViewer" Visibility="Visible"  HorizontalAlignment="Left" Height="410" VerticalAlignment="Top" Width="774" Margin="10,10,0,0">
+            <StackPanel x:Name="stackPanelOutput" Orientation="Vertical"/>
+        </ScrollViewer>
     </Grid>
 </Window>

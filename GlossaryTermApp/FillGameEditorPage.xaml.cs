@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using SerializerLib;
 using TermLib;
+using Xceed.Wpf.Toolkit.Core.Converters;
 
 namespace GlossaryTermApp
 {
@@ -57,7 +58,6 @@ namespace GlossaryTermApp
                 StackPanelForWords.Children.Add(separate);
             }
         }
-
         private void ButtonOnClick(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button) sender;
@@ -81,9 +81,6 @@ namespace GlossaryTermApp
                 clickedButton.Background = Brushes.LightGreen;
                 descriptionWord.IsKeyWord = true;
             }
-
-            
-            //дальше мы как-то используем полученное для игры
         }
     }
 }

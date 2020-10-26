@@ -322,11 +322,11 @@ namespace GlossaryTermApp
         {
             bool isCreated = false;
             FillGame fillGame;
+            int lvl = 0;
+            bool fixedLength = false;
+            bool trainingMode = false;
             try
             {
-                int lvl = 0;
-                bool fixedLength = false;
-                bool trainingMode = false;
                 if (FillGameEasyLvl.IsChecked == true)
                 {
                     lvl = 1;
@@ -350,7 +350,6 @@ namespace GlossaryTermApp
                     trainingMode = true;
                 }
 
-                fillGame = new FillGame(_fillGameList, lvl, fixedLength,trainingMode);
                 isCreated = true;
             }
             catch (Exception)
@@ -360,9 +359,10 @@ namespace GlossaryTermApp
 
             if (isCreated)
             {
-                FillGamePage fillGamePage = new FillGamePage();
+                fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
+                FillGamePage fillGamePage = new FillGamePage(fillGame);
                 this.Hide();
-                fillGamePage.Show();
+                fillGamePage.ShowDialog();
                 this.Close();
             }
             else
