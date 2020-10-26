@@ -57,7 +57,7 @@
                 <GroupBox Header="Другие настройки" Height="88" Width="630" Margin="40,0,39,0" FontSize="20">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,-86">
                         <CheckBox x:Name="FillGameFixedLength" VerticalContentAlignment="Center"  Content="Ограничение длины вводимых слов"/>
-                        <CheckBox x:Name="FillGameTrainingMode" VerticalContentAlignment="Center" Content="CheckBox"/>
+                        <CheckBox x:Name="FillGameTrainingMode" VerticalContentAlignment="Center" Content="Режим тренировки"/>
                     </StackPanel>
                 </GroupBox>
                 <StackPanel Orientation="Horizontal" Margin="40,0,39,0">

@@ -1,0 +1,15 @@
+﻿<Window x:Class="GlossaryTermApp.FillGameResult"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlossaryTermApp"
+        mc:Ignorable="d"
+        Title="FillGameResult" Height="377.679" Width="800">
+    <Grid>
+        <TextBlock x:Name="Result" Margin="187,60,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="75" FontSize="40" TextAlignment="Center" Foreground="Green" FontWeight="Bold"/>
+        <TextBlock x:Name="NumOfRightAnswers" Margin="187,139,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="63" FontSize="40" TextAlignment="Center" Foreground="Green"/>
+        <TextBlock x:Name="NumOfWrongAnswers" Margin="187,207,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="61" FontSize="40" TextAlignment="Center" Foreground="Red"/>
+
+    </Grid>
+</Window>

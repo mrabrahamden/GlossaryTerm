@@ -307,13 +307,14 @@ namespace GlossaryTermApp
         private void FillGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            FillGameCountUpDown.Maximum = _fillGameList.Count;
+            FillGameCountUpDown.Maximum = Serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
+            FillGameCountUpDown.Value = FillGameCountUpDown.Maximum;
             FillGameEditorPanel.Visibility = Visibility.Visible;
         }
 
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
         {
-            FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(Serializer.TermList);
+            FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(this);
             fillGameEditorPage.ShowDialog();
             fillGameEditorPage.DataContext = _fillGameList;
         }
@@ -362,9 +363,7 @@ namespace GlossaryTermApp
             {
                 fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
                 FillGamePage fillGamePage = new FillGamePage(fillGame);
-                this.Hide();
                 fillGamePage.ShowDialog();
-                this.Close();
             }
             else
             {

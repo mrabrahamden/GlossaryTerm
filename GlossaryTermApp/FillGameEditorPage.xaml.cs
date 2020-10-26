@@ -13,22 +13,26 @@ namespace GlossaryTermApp
 {
     public partial class FillGameEditorPage : Window
     {
-        List<SimpleTerm> _termList = new List<SimpleTerm>();
-        public FillGameEditorPage(List<SimpleTerm> list)
+        private Serializer serializer;
+        private MainWindow mainWindow;
+        public FillGameEditorPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            _termList = list;
-            foreach (var term in list)
+            this.mainWindow = mainWindow;
+            this.serializer = mainWindow.Serializer;
+            this.Closing += FillGameEditorPage_Closing;
+            foreach (var term in serializer.TermList)
             {
                 string wordAndDescription = term.Word + " -- ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
                 WrapPanel panelForOneWord = new WrapPanel();
-                CheckBox  isKey=new CheckBox();
+                CheckBox  isKey=new CheckBox(){ Tag = term };
                 if (term.ReadyForFillGame)
                 {
                     isKey.IsChecked = true;
                     VerticalContentAlignment = VerticalAlignment.Center;
                 }
+                isKey.Click += IsKey_Click;
                 panelForOneWord.Children.Add(isKey);
                 panelForOneWord.Children.Add(newWord);
                 foreach (var descriptionWord in term.DescriptionWordsAndSplittersList)
@@ -65,18 +69,49 @@ namespace GlossaryTermApp
                 StackPanelForWords.Children.Add(separate);
             }
         }
+
+        private void FillGameEditorPage_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+                string msg = "Сохранить?";
+                MessageBoxResult result =
+                    MessageBox.Show(
+                        msg,
+                        "Внимание",
+                        MessageBoxButton.OKCancel,
+                        MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+                else Button_Click(null, null);
+
+        }
+
+        private void IsKey_Click(object sender, RoutedEventArgs e)
+        {
+            var clickedCheckBox = (CheckBox) sender;
+            var term = (SimpleTerm) clickedCheckBox.Tag;
+            if (clickedCheckBox.IsChecked==true)
+            {
+                term.ReadyForFillGame = true;
+            }
+            else
+            {
+                term.ReadyForFillGame = false;
+            }
+        }
+
         private void ButtonOnClick(object sender, RoutedEventArgs e)
         {
+            this.Closing -= FillGameEditorPage_Closing;
+            this.Closing += FillGameEditorPage_Closing;
+            BtnOk.FontFamily = new FontFamily("Segoe UI");
+            BtnOk.Foreground = Brushes.Black;
+            BtnOk.FontWeight = FontWeights.Regular;
+            BtnOk.Content = "Готово";
+            BtnOk.IsEnabled = true;
             Button clickedButton = (Button) sender;
             var descriptionWord = (DescriptionWord) clickedButton.Tag;
-            //var partOfDescription = clickedButton.Content.ToString();  //слово по которому кликнули
-           // var panelForOneWord = (WrapPanel)clickedButton.Parent;
-           // var newWord = panelForOneWord.Children.OfType<TextBlock>().First();
-            //var wordAndDescr = newWord.Text;
-           // Regex regexForWord = new Regex(@"(\w)+");
-           // var termWord = regexForWord.Match(wordAndDescr).ToString();     //термин к которому относится слово по которому кликнули
-           // var curTerm = _termList.Find(term => term.Word == termWord);
-          //  var descriptionWord = curTerm.DescriptionWordsAndSplittersList.Find(w => w.Word == partOfDescription);
             if (clickedButton.Background == Brushes.LightGreen)
             {
                 
@@ -92,13 +127,15 @@ namespace GlossaryTermApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Closing -= FillGameEditorPage_Closing;
             BtnOk.FontFamily = new FontFamily("Segoe MDL2 Assets");
             BtnOk.Foreground = Brushes.MediumSeaGreen;
             BtnOk.FontWeight = FontWeights.Bold;
             BtnOk.Content = "\xE73E" + " ";
             BtnOk.IsEnabled = false;
-            //System.Threading.Thread.Sleep(1000);
-            //this.Close();
+            serializer.Serialize();
+            mainWindow.FillGameCountUpDown.Maximum = serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
+            mainWindow.FillGameCountUpDown.Value = mainWindow.FillGameCountUpDown.Maximum;
         }
     }
 }
