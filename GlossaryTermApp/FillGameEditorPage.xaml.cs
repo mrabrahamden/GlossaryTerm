@@ -82,5 +82,16 @@ namespace GlossaryTermApp
                 descriptionWord.IsKeyWord = true;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BtnOk.FontFamily = new FontFamily("Segoe MDL2 Assets");
+            BtnOk.Foreground = Brushes.MediumSeaGreen;
+            BtnOk.FontWeight = FontWeights.Bold;
+            BtnOk.Content = "\xE73E" + " ";
+            BtnOk.IsEnabled = false;
+            //System.Threading.Thread.Sleep(1000);
+            //this.Close();
+        }
     }
 }

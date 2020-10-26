@@ -37,9 +37,15 @@ namespace GlossaryTermApp
                     {
                         if (wordPart.IsKeyWord)
                         {
+                            
                             TextBox skippedWord = new TextBox()
-                                {FontSize = 20, TextWrapping = TextWrapping.Wrap, Width = 30};
+                                {FontSize = 20, MinWidth=20};
+                            if(game.FixedLength)
+                            {
+                                skippedWord.MaxLength = wordPart.Word.Length;
+                            }
                             panelForOneWord.Children.Add(skippedWord);
+                            
                         }
                         else
                         {
