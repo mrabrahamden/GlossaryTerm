@@ -318,6 +318,7 @@ namespace GlossaryTermApp
             fillGameEditorPage.DataContext = _fillGameList;
         }
 
+        
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
             bool isCreated = false;

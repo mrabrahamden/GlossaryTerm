@@ -23,6 +23,13 @@ namespace GlossaryTermApp
                 string wordAndDescription = term.Word + " -- ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
                 WrapPanel panelForOneWord = new WrapPanel();
+                CheckBox  isKey=new CheckBox();
+                if (term.ReadyForFillGame)
+                {
+                    isKey.IsChecked = true;
+                    VerticalContentAlignment = VerticalAlignment.Center;
+                }
+                panelForOneWord.Children.Add(isKey);
                 panelForOneWord.Children.Add(newWord);
                 foreach (var descriptionWord in term.DescriptionWordsAndSplittersList)
                 {
