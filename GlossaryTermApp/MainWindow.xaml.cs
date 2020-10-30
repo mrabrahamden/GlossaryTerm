@@ -30,6 +30,12 @@ namespace GlossaryTermApp
             Serializer.DeleteSimilarTerms();
             Serializer.SortList();
             InitializeComponent();
+            //foreach (var term in Serializer.TermList)
+            //{
+            //    term.DescriptionWordsAndSplittersList.Clear();
+            //    term.FillingListsForFillGame();
+            //} чиним TermList
+            _editedTerm = new SimpleTerm("", "");
         }
 
        
@@ -132,11 +138,11 @@ namespace GlossaryTermApp
         private void EditBTN_Click(object sender, RoutedEventArgs e)
         {
             bool editingSuccess = false;
-
-            if (!_editMode)
+            if ((!(string.IsNullOrEmpty(TermTB.Text) || string.IsNullOrEmpty(DescriptionTB.Text))))
             {
-                if((!(string.IsNullOrEmpty(TermTB.Text)|| string.IsNullOrEmpty(DescriptionTB.Text))))
+                if (!_editMode)
                 {
+                
                     try
                     {
                         var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
@@ -155,19 +161,19 @@ namespace GlossaryTermApp
                         MessageBox.Show("Не удалось добавить новый термин.");
                     }
 
+               
                 }
                 else
                 {
-                    MessageBox.Show("Нужно заполнить поля термин и описание перед добавлением.");
+                    _editedTerm.Word = TermTB.Text;
+                    _editedTerm.Description = DescriptionTB.Text;
+                    editingSuccess = true;
                 }
             }
             else
             {
-                _editedTerm.Word = TermTB.Text;
-                _editedTerm.Description = DescriptionTB.Text;
-                editingSuccess = true;
+                MessageBox.Show("Нужно заполнить поля термин и описание перед добавлением.");
             }
-
             if (editingSuccess)
             {
                 Serializer.SortList();

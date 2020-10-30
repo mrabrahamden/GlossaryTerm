@@ -55,9 +55,9 @@ namespace TermLib
             return Word + " -- " + Description;
         }
 
-        private void FillingListsForFillGame()
+        public void FillingListsForFillGame()
         {
-            Regex regexForWordAndSplit=new Regex(@"(\w)+(\W)+");
+            Regex regexForWordAndSplit=new Regex(@"(\w)+((\W)+)?");
             Regex regexForWord=new Regex(@"(\w)+");
             Regex regexForSplit=new Regex(@"(\W)+");
             var matches = regexForWordAndSplit.Matches(Description);

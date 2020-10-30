@@ -23,7 +23,7 @@ namespace GlossaryTermApp
     {
         private FillGame game;
 
-        private int numOfSkippedWords = 0;
+        private int numOfSkipWords = 0;
         public FillGamePage(FillGame game)
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace GlossaryTermApp
                     var listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
                         gameWord.DescriptionWordsAndSplittersList
                             .FindAll((descriptionWord => descriptionWord.IsKeyWord)).Count);
-                    numOfSkippedWords = listOfSkippedWords.FindAll((b =>b==true )).Count;
+                    numOfSkipWords += listOfSkippedWords.FindAll((b =>b==true )).Count;
                     TextBlock newWord = new TextBlock { Text = word + " -- ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold};
                     WrapPanel panelForOneWord = new WrapPanel();
                     panelForOneWord.VerticalAlignment = VerticalAlignment.Top;
@@ -92,8 +92,7 @@ namespace GlossaryTermApp
         private List<bool> GetNumOfSkippedWords(int lvl, int num)
         {
             List<bool> listOfBools=new List<bool>();
-            int numOfSkippedWords=0;
-
+            int numOfSkippedWords = 0;
             if (lvl == 1)
             {
                 numOfSkippedWords = (int)(num * 0.3);
@@ -180,7 +179,7 @@ namespace GlossaryTermApp
 
             if (!game.TrainingMode)
             {
-                FillGameResult fillGameResult=new FillGameResult(numOfErrors,numOfSkippedWords);
+                FillGameResult fillGameResult=new FillGameResult(numOfErrors,numOfSkipWords);
                 fillGameResult.ShowDialog();
                 this.Close();
             }
