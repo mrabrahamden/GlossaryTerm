@@ -93,6 +93,9 @@
     <Compile Include="FillGameResult.xaml.cs">
       <DependentUpon>FillGameResult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MatchGamePage.xaml.cs">
+      <DependentUpon>MatchGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MatchGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,6 +160,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MatchGameLib\MatchGameLib.csproj">
+      <Project>{66af6e37-6bb6-42cb-8fb1-76955b8146d0}</Project>
+      <Name>MatchGameLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PdfSaver\PdfSaver.csproj">
       <Project>{6bd2ec8e-7594-4bf6-8934-187031be9c44}</Project>
       <Name>PdfSaver</Name>

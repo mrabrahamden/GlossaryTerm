@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using TermLib;
 using FillGameLib;
+using MatchGameLib;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace GlossaryTermApp
@@ -375,6 +376,28 @@ namespace GlossaryTermApp
             {
                 MessageBox.Show("Не удалось создать игру, попробуйте снова.");
             }
+        }
+
+        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        {
+            ClearWorkPlace();
+            if (Serializer.TermList.Count < 8)
+            {
+                MatchGameCountUpDown.Maximum = Serializer.TermList.Count;
+            }
+            else
+            {
+                MatchGameCountUpDown.Maximum = 8;
+            }
+            MatchGameEditorPanel.Visibility = Visibility.Visible;
+
+        }
+
+        private void MatchGameStartBTN_OnClickGameStartBTN_Click(object sender, RoutedEventArgs e)
+        {
+            MatchGame matchGame=new MatchGame(Serializer.TermList,(int)MatchGameCountUpDown.Value,(bool)MatchGameTrainingMode.IsChecked);
+            MatchGamePage matchGamePage=new MatchGamePage(matchGame);
+            matchGamePage.ShowDialog();
         }
     }
 }

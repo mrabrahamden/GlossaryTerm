@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSaver", "PdfSaver\PdfSav
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FillGame", "WordSkipGame\FillGame.csproj", "{100EE1B9-A373-488C-B6C4-A474C43C0D52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchGameLib", "MatchGameLib\MatchGameLib.csproj", "{66AF6E37-6BB6-42CB-8FB1-76955B8146D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{100EE1B9-A373-488C-B6C4-A474C43C0D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{100EE1B9-A373-488C-B6C4-A474C43C0D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{100EE1B9-A373-488C-B6C4-A474C43C0D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66AF6E37-6BB6-42CB-8FB1-76955B8146D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AF6E37-6BB6-42CB-8FB1-76955B8146D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AF6E37-6BB6-42CB-8FB1-76955B8146D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AF6E37-6BB6-42CB-8FB1-76955B8146D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
