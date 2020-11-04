@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="MatchGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MatchTextBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TermLib\TermLib.csproj">

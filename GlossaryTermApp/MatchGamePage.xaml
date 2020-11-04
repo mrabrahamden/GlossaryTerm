@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MatchGamePage" MinHeight="497.543" MinWidth="800" Width="788.943">
     <Grid x:Name="Grid">
+        <!--<Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform/>
+                <TranslateTransform x:Name="LocalTranslateTransform"/>
+            </TransformGroup>
+        </Grid.RenderTransform>-->
         <ScrollViewer x:Name="ForStackPanelScrollViewer"  Margin="10,10,10,154"/>
         <WrapPanel  x:Name="WordsWrapPanel" Background="#F5EEF8" Height="92" VerticalAlignment="Bottom" Margin="10,0,10,57"/>
         <Button  x:Name="CheckBTN" Content="Проверить" FontSize="20" Height="42" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="123" Margin="0,0,10,10"/>
