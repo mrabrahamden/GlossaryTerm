@@ -14,6 +14,8 @@ namespace GlossaryTermApp
     /// </summary>
     public partial class MatchGamePage : Window
     {
+        //private UIElement _captured;
+        //private Point? _movePoint;
         public MatchGame MatchGame;
         public MatchGamePage(MatchGame matchGame)
         {
@@ -29,6 +31,10 @@ namespace GlossaryTermApp
             //в каждой док панели слева - прямоугольник, куда можно будет термин перетащить
             //а справа - врап панель
             //и так как у нас стоит lastChildFill==true то при resize окна всё будет все равно чётко
+            //< StackPanel x: Name = "WordsCanvas" Background = "#F2F3F4" Visibility = "Visible" Height = "340" Width = "762" />
+           StackPanel WordsCanvas=new StackPanel();
+           WordsCanvas.Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F2F3F4");
+           ForStackPanelScrollViewer.Content = WordsCanvas;
             foreach (var term in MatchGame.TermList)
             {
                 StackPanel termStackPanel=new StackPanel()
@@ -80,10 +86,9 @@ namespace GlossaryTermApp
                     Padding = new Thickness(5, 1, 5, 1)
                 };
 
-                wordTextBlock.MouseDown += WordTextBlock_MouseDown;
-                wordTextBlock.MouseUp += WordTextBlock_MouseUp;
-                wordTextBlock.MouseMove += WordTextBlock_MouseMove;
-
+                //wordTextBlock.MouseDown += WordTextBlock_MouseDown;
+                //wordTextBlock.MouseUp += WordTextBlock_MouseUp;
+                //wordTextBlock.MouseMove += WordTextBlock_MouseMove;
                 Border forTextBlock = new Border()
                 {
                     BorderThickness = new Thickness(2),
@@ -91,21 +96,45 @@ namespace GlossaryTermApp
                     Margin = new Thickness(10, 10, 0, 0),
                     Child = wordTextBlock
                 };
-                
                 WordsWrapPanel.Children.Add(forTextBlock);
+                //HelperClassForControlMover.Init((System.Windows.Forms.Control)wordTextBlock);
             }
         }
 
-        private void WordTextBlock_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
+        //private void WordTextBlock_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (_captured != null)
+        //    {
+        //        var pos = Mouse.GetPosition(Grid);
+        //        if (_movePoint == null)
+        //            return;
+        //        var p = e.GetPosition(this) - (Vector)_movePoint.Value;
+        //        Canvas.SetLeft(Grid, p.X);
+        //        Canvas.SetTop(btn, p.Y);
+        //        //e.GetPosition()
+        //        //Mouse.
+        //        //Point Center = CenterMiddle(_captured.GetPositionFromPoint());      // вычисление центра координат перетаскиваемого объекта
+        //        //PointCollection ch = new PointCollection();
+        //        //for (int i = 0; i < _captured.Points.Count; i++)    // вычисление новых координат
+        //        //{
+        //        //    ch.Add(new Point(_captured.Points[i].X + (pos.X - Center.X), _captured.Points[i].Y + (pos.Y - Center.Y)));
+        //        //}
+        //        //_captured.Points = new PointCollection(ch);         // занесение в параметр Points нового значения
+        //    }
+        //}
 
-        private void WordTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-        }
+        //private void WordTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    _movePoint = null;
+        //    Grid.ReleaseMouseCapture();
+        //    //_captured = null;
+        //}
 
-        private void WordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
+        //private void WordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    _movePoint = e.GetPosition(Grid);
+        //    Grid.CaptureMouse();
+        //    //_captured = e.GetPosition();
+        //}
     }
 }
