@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MatchGamePage" MinHeight="497.543" MinWidth="800" Width="788.943">
     <Grid>
-        <Canvas x:Name="WordsCanvas" Background="#FFE2D8D8" Margin="10,14,10,154" OpacityMask="Black"/>
-        <WrapPanel x:Name="WordsWrapPanel" Background="#FFE2D8D8" Height="92" Margin="10,0,10,57" VerticalAlignment="Bottom"/>
+        <StackPanel Visibility="Visible" x:Name="WordsCanvas" Background="#F2F3F4" Margin="10,14,10,154"/>
+        <WrapPanel x:Name="WordsWrapPanel" Background="#F5EEF8" Height="92" Margin="10,0,10,57" VerticalAlignment="Bottom"/>
         <Button x:Name="CheckBTN" Content="Проверить" Margin="0,0,10,10" FontSize="20" Height="42" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="123"/>
     </Grid>
 </Window>

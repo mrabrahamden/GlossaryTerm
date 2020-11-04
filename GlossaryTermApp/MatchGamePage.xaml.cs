@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using MatchGameLib;
-using Brushes = System.Drawing.Brushes;
 using Color = System.Windows.Media.Color;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
@@ -33,52 +24,88 @@ namespace GlossaryTermApp
 
         private void PrepareForm()
         {
-            double height = 0;
+            //double height = 0;
+            //схема такая: у нас есть большаая стэк панель. в ней лежат док панели - по количеству слов
+            //в каждой док панели слева - прямоугольник, куда можно будет термин перетащить
+            //а справа - врап панель
+            //и так как у нас стоит lastChildFill==true то при resize окна всё будет все равно чётко
             foreach (var term in MatchGame.TermList)
             {
                 StackPanel termStackPanel=new StackPanel()
                 {
                     Orientation = Orientation.Horizontal
                 };
-
+                DockPanel dockPanel = new DockPanel()
+                {
+                    LastChildFill = true
+                };
+                WrapPanel wrapPanel = new WrapPanel();
                 TextBlock descriptionTextBlock = new TextBlock()
                 {
                     Text = term.Description,
                     FontSize = 18,
                     Tag = term,
-                    Background = System.Windows.Media.Brushes.Brown,
-                    TextWrapping = TextWrapping.Wrap
+                    Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F9F7A8"),
+                    TextWrapping = TextWrapping.Wrap,
+                    Padding = new Thickness(5, 2, 5, 2),
+                    Margin = new Thickness(10, 10, 5, 0)
+                    //Width = 550
                 };
-                descriptionTextBlock.Margin=new Thickness(10,10,10,0);
-
                 Rectangle placeForWordRectangle = new Rectangle()
                 {
                     AllowDrop = true,
-                    Tag = term
+                    Tag = term,
+                    Fill = new SolidColorBrush(Color.FromRgb(202, 207, 210)),
+                    Margin = new Thickness(30, 10, 10, 0),
+                    Width = 200
                 };
-                placeForWordRectangle.Fill = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                placeForWordRectangle.Margin = new Thickness(10, 10, 10, 0);
-                placeForWordRectangle.Width = 200;
-
-                Canvas.SetLeft(placeForWordRectangle,5);
-                Canvas.SetTop(placeForWordRectangle,height);
-                WordsCanvas.Children.Add(placeForWordRectangle);
-                Canvas.SetLeft(descriptionTextBlock, placeForWordRectangle.Width+5);
-                Canvas.SetTop(descriptionTextBlock, height);
-                WordsCanvas.Children.Add(descriptionTextBlock);
-
-               // height+=
+                
+                wrapPanel.Children.Add(descriptionTextBlock);
+                termStackPanel.Children.Add(placeForWordRectangle);
+                dockPanel.Children.Add(termStackPanel);
+                dockPanel.Children.Add(wrapPanel);
+                WordsCanvas.Children.Add(dockPanel);
+                //descriptionTextBlock.UpdateLayout();
+                //WordsCanvas.UpdateLayout();
+                //descriptionTextBlock.Measure(new System.Windows.Size(Double.PositiveInfinity, Double.PositiveInfinity));
+                //var desiredSizeNew = descriptionTextBlock.DesiredSize;
+                //height += desiredSizeNew.Height;
 
                 TextBlock wordTextBlock = new TextBlock()
                 {
                     Text = term.Word,
                     FontSize = 18,
                     Tag = term,
-                    Background = System.Windows.Media.Brushes.Brown
+                    Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F08080"),
+                    Padding = new Thickness(5, 1, 5, 1)
                 };
-                wordTextBlock.Margin = new Thickness(10, 10, 0, 0);
-                WordsWrapPanel.Children.Add(wordTextBlock);
+
+                wordTextBlock.MouseDown += WordTextBlock_MouseDown;
+                wordTextBlock.MouseUp += WordTextBlock_MouseUp;
+                wordTextBlock.MouseMove += WordTextBlock_MouseMove;
+
+                Border forTextBlock = new Border()
+                {
+                    BorderThickness = new Thickness(2),
+                    BorderBrush = new SolidColorBrush(Color.FromRgb(202, 207, 210)),
+                    Margin = new Thickness(10, 10, 0, 0),
+                    Child = wordTextBlock
+                };
+                
+                WordsWrapPanel.Children.Add(forTextBlock);
             }
+        }
+
+        private void WordTextBlock_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void WordTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void WordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
         }
     }
 }
