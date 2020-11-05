@@ -97,9 +97,9 @@ namespace GlossaryTermApp
                 senderTextBlock = (Border) sender;
                 // we want to move it based on the position of the mouse
                 // moveUserControl(e);
-                Point mousePos = e.GetPosition(Grid);
-                Double newX = Math.Abs(mousePos.X - DragOffset.X);
-                Double newY =  Math.Abs(mousePos.Y - DragOffset.Y); 
+                Point mousePos = e.GetPosition(WordsWrapPanel);           //потом поменять на грид!!
+                Double newX = Math.Max(mousePos.X,DragOffset.X)- Math.Min(mousePos.X, DragOffset.X);
+                Double newY = Math.Max(mousePos.Y, DragOffset.Y) - Math.Min(mousePos.Y, DragOffset.Y);
                 senderTextBlock.RenderTransform = new TranslateTransform(newX,newY);
             }
         }
@@ -115,7 +115,7 @@ namespace GlossaryTermApp
         {
             senderTextBlock = (Border)sender;
             _captured = true;
-            DragOffset = e.GetPosition(Grid);
+            DragOffset = e.GetPosition(WordsWrapPanel);           //потом поменять на грид!!
             senderTextBlock.CaptureMouse();
         }
 
