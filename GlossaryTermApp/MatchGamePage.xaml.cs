@@ -5,7 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using MatchGameLib;
+using TermLib;
 using Color = System.Windows.Media.Color;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
@@ -26,11 +28,16 @@ namespace GlossaryTermApp
             PrepareForm();
         }
 
+        private StackPanel WordsStackPanel;
+        private List<TextBlock> listTextBlocksForCheck;
+        private List<Border> listOfWordBorders;
         private void PrepareForm()
-        {
-            StackPanel WordsCanvas = new StackPanel();
-           WordsCanvas.Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F2F3F4");
-           ForStackPanelScrollViewer.Content = WordsCanvas;
+        { 
+            WordsStackPanel = new StackPanel();
+            listTextBlocksForCheck=new List<TextBlock>();
+            listOfWordBorders=new List<Border>();
+            WordsStackPanel.Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F2F3F4");
+            ForStackPanelScrollViewer.Content = WordsStackPanel;
             foreach (var term in MatchGame.TermList)
             {
                 StackPanel termStackPanel=new StackPanel()
@@ -45,27 +52,31 @@ namespace GlossaryTermApp
                 TextBlock descriptionTextBlock = new TextBlock()
                 {
                     Text = term.Description,
-                    FontSize = 18,
+                    FontSize = 20,
                     Tag = term,
+                    TextAlignment = TextAlignment.Center,
                     Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F9F7A8"),
                     TextWrapping = TextWrapping.Wrap,
                     Padding = new Thickness(5, 2, 5, 2),
                     Margin = new Thickness(10, 10, 5, 0)
                 };
-                Rectangle placeForWordRectangle = new Rectangle()
+                TextBlock placeForWordCanvas = new TextBlock()
                 {
                     AllowDrop = true,
                     Tag = term,
-                    Fill = new SolidColorBrush(Color.FromRgb(202, 207, 210)),
+                    Background = new SolidColorBrush(Color.FromRgb(202, 207, 210)),
                     Margin = new Thickness(30, 10, 10, 0),
                     Width = 200
                 };
-                
+                listTextBlocksForCheck.Add(placeForWordCanvas);
+                //placeForWordCanvas.DragEnter += PlaceForWordRectangle_DragEnter;
+                placeForWordCanvas.Drop += PlaceForWordRectangle_Drop;
+
                 wrapPanel.Children.Add(descriptionTextBlock);
-                termStackPanel.Children.Add(placeForWordRectangle);
+                termStackPanel.Children.Add(placeForWordCanvas);
                 dockPanel.Children.Add(termStackPanel);
                 dockPanel.Children.Add(wrapPanel);
-                WordsCanvas.Children.Add(dockPanel);
+                WordsStackPanel.Children.Add(dockPanel);
 
                 TextBlock wordTextBlock = new TextBlock()
                 {
@@ -76,7 +87,6 @@ namespace GlossaryTermApp
                     Padding = new Thickness(5, 1, 5, 1)
                 };
 
-                
                 Border forTextBlock = new Border()
                 {
                     BorderThickness = new Thickness(2),
@@ -85,85 +95,67 @@ namespace GlossaryTermApp
                     Child = wordTextBlock,
                     Tag = wordTextBlock.Tag
                 };
-                forTextBlock.MouseDown += WordTextBlock_MouseDown;
-                forTextBlock.MouseUp += WordTextBlock_MouseUp;
-                forTextBlock.MouseMove += WordTextBlock_MouseMove;
-                WordsWrapPanel.Children.Add(forTextBlock);
-            }
-        }
 
-        private Border _senderTextBlock;
-        private Rectangle _hitRectangle=new Rectangle();
-        private void WordTextBlock_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_captured)
+                forTextBlock.MouseDown += ForTextBlock_MouseDown;
+
+                listOfWordBorders.Add(forTextBlock);
+            }
+            ShuffleList();
+            foreach (var border in listOfWordBorders)
             {
-                _hitRectangle = new Rectangle();
-                _senderTextBlock = (Border) sender;
-                Point mousePos = e.GetPosition(this);
-                double newX = mousePos.X - DragOffset.X;
-                double newY = mousePos.Y - DragOffset.Y;
-                _senderTextBlock.RenderTransform = new TranslateTransform(newX, newY);
-                _senderTextBlock.RenderTransformOrigin = new Point(newX, newY);
-
-                VisualTreeHelper.HitTest(ForStackPanelScrollViewer, null /*HitFilter*/, HitResult,
-                    new PointHitTestParameters(new Point(newX, newY)));
-                //HitTestResult result = VisualTreeHelper.HitTest(ForStackPanelScrollViewer, new Point(newY, newY));
-
-                if (_hitRectangle != null)
-                {
-                    if (_hitRectangle.Tag == _senderTextBlock.Tag)
-                    {
-                        _senderTextBlock.Tag = "true";
-                    }
-                }
+                WordsWrapPanel.Children.Add(border);
             }
         }
 
-        //HitTestFilterBehavior HitFilter(DependencyObject o)
+        private void ShuffleList()
+        {
+            List<Border> newList=new List<Border>();
+            Random random=new Random(DateTime.Now.Millisecond);
+            while(listOfWordBorders.Count>0)
+            {
+                int count= random.Next() % listOfWordBorders.Count;
+                newList.Add(listOfWordBorders[count]);
+                listOfWordBorders.RemoveAt(count);
+            }
+            listOfWordBorders=new List<Border>(newList);
+        }
+        private void PlaceForWordRectangle_Drop(object sender, DragEventArgs e)
+        {
+            ((TextBlock)sender).Text = (string)e.Data.GetData(DataFormats.Text);
+        }
+
+        private void ForTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var border = (Border) sender;
+            var textblock = (TextBlock) border.Child;
+            DragDrop.DoDragDrop(border,textblock.Text, DragDropEffects.Copy);
+        }
+
+        //private void PlaceForWordRectangle_DragEnter(object sender, DragEventArgs e)
         //{
-        //    if (!(o is Rectangle)) return HitTestFilterBehavior.ContinueSkipChildren;
-        //    return HitTestFilterBehavior.Continue;
+        //    throw new NotImplementedException();
         //}
-        //docs.microsoft.com/ru-ru/dotnet/api/system.windows.media.visualtreehelper.hittest?redirectedfrom=MSDN&view=netcore-3.1#System_Windows_Media_VisualTreeHelper_HitTest_System_Windows_Media_Visual_System_Windows_Media_HitTestFilterCallback_System_Windows_Media_HitTestResultCallback_System_Windows_Media_HitTestParameters_
-
-        HitTestResultBehavior HitResult(HitTestResult result)
-        {
-            if (result.VisualHit is Rectangle)
-            {
-                _hitRectangle = result.VisualHit as Rectangle;
-                return HitTestResultBehavior.Stop;
-            }
-
-            return HitTestResultBehavior.Continue;
-        }
-
-        private void WordTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            _senderTextBlock = (Border)sender;
-            _captured = false;
-            _senderTextBlock.ReleaseMouseCapture();
-        }
-
-        private void WordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _senderTextBlock = (Border)sender;
-            _captured = true;
-            DragOffset = e.GetPosition(this);
-            _senderTextBlock.CaptureMouse();
-        }
 
         private void CheckBTN_OnClick(object sender, RoutedEventArgs e)
         {
             var countTrue = 0;
-            foreach (var child in WordsWrapPanel.Children)
+            foreach (var textBlock in listTextBlocksForCheck)
             {
-                var termWithBorder = (Border) child;
-                if (termWithBorder.Tag == "true")
+                var term = (SimpleTerm) textBlock.Tag;
+                if ( term.Word == textBlock.Text)
                 {
                     countTrue++;
                 }
             }
+
+            if (!MatchGame.TrainingMode)
+            {
+                FillGameResult resultWindow =
+                    new FillGameResult(MatchGame.NumOfTerms - countTrue, MatchGame.NumOfTerms);
+                resultWindow.ShowDialog();
+                this.Close();
+            }
         }
     }
+
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="FillGameResult" Height="377.679" Width="800">
+        Title="Результаты" Height="377.679" Width="800">
     <Grid>
         <TextBlock x:Name="Result" Margin="187,60,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="75" FontSize="40" TextAlignment="Center" Foreground="Green" FontWeight="Bold"/>
         <TextBlock x:Name="NumOfRightAnswers" Margin="187,139,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="63" FontSize="40" TextAlignment="Center" Foreground="Green"/>

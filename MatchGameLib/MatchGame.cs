@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using TermLib;
 
 namespace MatchGameLib
@@ -31,6 +32,5 @@ namespace MatchGameLib
                 TermList.RemoveAt(numNext);
             }
         }
-
     }
 }
