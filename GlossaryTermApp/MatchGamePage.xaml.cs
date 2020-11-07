@@ -89,34 +89,33 @@ namespace GlossaryTermApp
             }
         }
 
-        private Border senderTextBlock;
+        private Border _senderTextBlock;
         private void WordTextBlock_MouseMove(object sender, MouseEventArgs e)
         {
             if (_captured)
             {
-                senderTextBlock = (Border) sender;
-                // we want to move it based on the position of the mouse
-                // moveUserControl(e);
-                Point mousePos = e.GetPosition(WordsWrapPanel);           //потом поменять на грид!!
-                Double newX = Math.Max(mousePos.X,DragOffset.X)- Math.Min(mousePos.X, DragOffset.X);
-                Double newY = Math.Max(mousePos.Y, DragOffset.Y) - Math.Min(mousePos.Y, DragOffset.Y);
-                senderTextBlock.RenderTransform = new TranslateTransform(newX,newY);
+                _senderTextBlock = (Border) sender;
+                Point mousePos = e.GetPosition(this);
+                double newX = mousePos.X - DragOffset.X;
+                double newY = mousePos.Y - DragOffset.Y;
+                _senderTextBlock.RenderTransform = new TranslateTransform(newX,newY);
+                _senderTextBlock.RenderTransformOrigin = new Point(newX,newY);
             }
         }
 
         private void WordTextBlock_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            senderTextBlock = (Border)sender;
+            _senderTextBlock = (Border)sender;
             _captured = false;
-            senderTextBlock.ReleaseMouseCapture();
+            _senderTextBlock.ReleaseMouseCapture();
         }
 
         private void WordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            senderTextBlock = (Border)sender;
+            _senderTextBlock = (Border)sender;
             _captured = true;
-            DragOffset = e.GetPosition(WordsWrapPanel);           //потом поменять на грид!!
-            senderTextBlock.CaptureMouse();
+            DragOffset = e.GetPosition(this);
+            _senderTextBlock.CaptureMouse();
         }
 
     }
