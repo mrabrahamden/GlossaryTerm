@@ -179,6 +179,11 @@ namespace GlossaryTermApp
                 if ( term.Word == textBlock.Text)
                 {
                     countTrue++;
+                    textBlock.Background = Brushes.LightGreen;
+                }
+                else
+                {
+                    textBlock.Background = Brushes.LightCoral;
                 }
             }
 
