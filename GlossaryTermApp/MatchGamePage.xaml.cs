@@ -60,20 +60,23 @@ namespace GlossaryTermApp
                     Padding = new Thickness(5, 2, 5, 2),
                     Margin = new Thickness(10, 10, 5, 0)
                 };
-                TextBlock placeForWordCanvas = new TextBlock()
+                TextBlock placeForWordTextBlock = new TextBlock()
                 {
                     AllowDrop = true,
+                    FontSize = 18,
                     Tag = term,
                     Background = new SolidColorBrush(Color.FromRgb(202, 207, 210)),
                     Margin = new Thickness(30, 10, 10, 0),
-                    Width = 200
+                    Width = 200,
+                    TextAlignment = TextAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
                 };
-                listTextBlocksForCheck.Add(placeForWordCanvas);
+                listTextBlocksForCheck.Add(placeForWordTextBlock);
                 //placeForWordCanvas.DragEnter += PlaceForWordRectangle_DragEnter;
-                placeForWordCanvas.Drop += PlaceForWordRectangle_Drop;
-
+                placeForWordTextBlock.Drop += PlaceForWordRectangle_Drop;
+                placeForWordTextBlock.MouseDown += PlaceForWordTextBlock_MouseDown;
                 wrapPanel.Children.Add(descriptionTextBlock);
-                termStackPanel.Children.Add(placeForWordCanvas);
+                termStackPanel.Children.Add(placeForWordTextBlock);
                 dockPanel.Children.Add(termStackPanel);
                 dockPanel.Children.Add(wrapPanel);
                 WordsStackPanel.Children.Add(dockPanel);
@@ -107,6 +110,20 @@ namespace GlossaryTermApp
             }
         }
 
+        private void PlaceForWordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var textblock = (TextBlock) sender;
+            foreach (var border in listOfWordBorders)
+            {
+                var term = (SimpleTerm)border.Tag;
+                if (term.Word == textblock.Text)
+                    border.Visibility = Visibility.Visible;
+            }
+            textblock.Text = "";
+            textblock.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
+
+        }
+
         private void ShuffleList()
         {
             List<Border> newList=new List<Border>();
@@ -121,7 +138,24 @@ namespace GlossaryTermApp
         }
         private void PlaceForWordRectangle_Drop(object sender, DragEventArgs e)
         {
-            ((TextBlock)sender).Text = (string)e.Data.GetData(DataFormats.Text);
+            var textblock = (TextBlock) sender;
+            if (textblock.Text.Length > 0)
+            {
+                foreach (var border in listOfWordBorders)
+                {
+                    var term = (SimpleTerm)border.Tag;
+                    if (term.Word == textblock.Text)
+                        border.Visibility = Visibility.Visible;
+                }
+            }
+            textblock.Text = (string)e.Data.GetData(DataFormats.Text);
+            textblock.Background = (SolidColorBrush) new BrushConverter().ConvertFromString("#F08080");
+            foreach (var border in listOfWordBorders)
+            {
+                var term = (SimpleTerm) border.Tag;
+                if (term.Word == textblock.Text)
+                    border.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ForTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
@@ -150,8 +184,8 @@ namespace GlossaryTermApp
 
             if (!MatchGame.TrainingMode)
             {
-                FillGameResult resultWindow =
-                    new FillGameResult(MatchGame.NumOfTerms - countTrue, MatchGame.NumOfTerms);
+                GameResult resultWindow =
+                    new GameResult(MatchGame.NumOfTerms - countTrue, MatchGame.NumOfTerms);
                 resultWindow.ShowDialog();
                 this.Close();
             }

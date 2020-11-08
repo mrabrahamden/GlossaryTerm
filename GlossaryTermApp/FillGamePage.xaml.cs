@@ -179,8 +179,8 @@ namespace GlossaryTermApp
 
             if (!game.TrainingMode)
             {
-                FillGameResult fillGameResult=new FillGameResult(numOfErrors,numOfSkipWords);
-                fillGameResult.ShowDialog();
+                GameResult gameResult=new GameResult(numOfErrors,numOfSkipWords);
+                gameResult.ShowDialog();
                 this.Close();
             }
 

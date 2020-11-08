@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace GlossaryTermApp
 {
     /// <summary>
-    /// Логика взаимодействия для FillGameResult.xaml
+    /// Логика взаимодействия для GameResult.xaml
     /// </summary>
-    public partial class FillGameResult : Window
+    public partial class GameResult : Window
     {
-        public FillGameResult(int numofErrors,int numOfWords)
+        public GameResult(int numofErrors,int numOfWords)
         {
             InitializeComponent();
 
@@ -29,7 +29,6 @@ namespace GlossaryTermApp
                 Result.Text = "Молодец!";
                 NumOfRightAnswers.Text = "Всё верно!";
                 NumOfWrongAnswers.Text = "";
-
             }
             else
             {

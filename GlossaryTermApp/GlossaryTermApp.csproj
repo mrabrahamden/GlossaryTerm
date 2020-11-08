@@ -91,8 +91,8 @@
     <Compile Include="FillGamePage.xaml.cs">
       <DependentUpon>FillGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FillGameResult.xaml.cs">
-      <DependentUpon>FillGameResult.xaml</DependentUpon>
+    <Compile Include="GameResult.xaml.cs">
+      <DependentUpon>GameResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="MatchGamePage.xaml.cs">
       <DependentUpon>MatchGamePage.xaml</DependentUpon>
@@ -108,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FillGameResult.xaml">
+    <Page Include="GameResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

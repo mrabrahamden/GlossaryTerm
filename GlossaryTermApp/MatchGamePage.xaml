@@ -10,7 +10,7 @@
         <ScrollViewer x:Name="ForStackPanelScrollViewer"  Margin="10,10,10,154" Panel.ZIndex="-2"/>
         <WrapPanel  x:Name="WordsWrapPanel" Background="#F5EEF8" Height="92" VerticalAlignment="Bottom" Margin="10,0,10,57" Panel.ZIndex="-2"/>
         <Grid>
-            <Image Source="image/help.png" Margin="10,0,0,9.6" ToolTip="Здесь должны быть ПРАВИЛА ИГРЫ." VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="0.851,9.6" Width="41" />
+            <Image Source="image/help.png" Margin="10,0,0,9.6" ToolTip="Перетащите слова в серые прямоугольники выше и нажмите 'Проверить'" VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="0.851,9.6" Width="41" />
         <Button  x:Name="CheckBTN" Content="Проверить" FontSize="20" Height="42" Click="CheckBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="123" Margin="0,0,10,10"/>
         </Grid>
     </Grid>
