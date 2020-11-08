@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="FillGameEditorPage" MinHeight="450" MinWidth="800" Height="457.321">
+        Title="FillGameEditorPage" MinHeight="450" MinWidth="800" Height="457.321" Width="778.703">
     <Grid Margin="0,0,0,-1">
-        <ScrollViewer x:Name="ScrollEditor" Visibility="Visible"  HorizontalAlignment="Left"   VerticalAlignment="Top" MinHeight="369" MinWidth="772" Margin="10,10,0,0" >
+        <ScrollViewer x:Name="ScrollEditor" Visibility="Visible"   VerticalAlignment="Top" MinHeight="369" MinWidth="772" Margin="10,10,10,0" >
             <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
         </ScrollViewer>
-        <Button x:Name="BtnOk" Content="Готово" Height="33" FontSize="20" Margin="0,384,30,0" VerticalAlignment="Top" Click="Button_Click" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="BtnOk" Content="Готово" Height="33" FontSize="20" Margin="0,0,30,10" VerticalAlignment="Bottom" Click="Button_Click" HorizontalAlignment="Right" Width="75"/>
 
     </Grid>
 </Window>

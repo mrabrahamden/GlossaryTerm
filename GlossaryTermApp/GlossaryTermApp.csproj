@@ -183,6 +183,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="image\false.png" />
+    <Resource Include="image\true.png" />
     <Resource Include="image\help.png" />
     <Content Include="image\Screenshot_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
