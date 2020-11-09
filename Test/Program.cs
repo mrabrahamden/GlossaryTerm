@@ -23,9 +23,13 @@ namespace Test
             //{
             //    Console.WriteLine(term.ToString());
             //}
-
-            CrosswordGame crosswordGame=new CrosswordGame(serializer.TermList);
-            crosswordGame.GetMatrixOnConsole();
+            CrosswordGame crosswordGame;
+            for (int i = 0; i < 100; i++)
+            {
+                crosswordGame = new CrosswordGame(serializer.TermList);
+                crosswordGame.GetMatrixOnConsole();
+                Console.WriteLine();
+            }
 
             Console.ReadKey();
         }

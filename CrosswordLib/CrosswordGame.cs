@@ -21,10 +21,11 @@ namespace CrosswordLib
         private int verticalSize;
         private int horizontalSize;
         private int halfHorizontalSize;
+        private int maxLength=0;
 
         public CrosswordGame(List<SimpleTerm> list)
         {
-            List = list;
+            List = new List<SimpleTerm>(list);
             IsReady = false;
             PrepareGame();
         }
@@ -35,19 +36,19 @@ namespace CrosswordLib
             if (mainWord != null)
             {
                 verticalSize = mainWord.Word.Length;
-                horizontalSize = verticalSize * 2 + 1;
+                horizontalSize = maxLength * 2 + 1;
                 CrossWordTerms = new SimpleTerm[verticalSize+1];
                 CrossWordTerms[0] = mainWord;
-                halfHorizontalSize = verticalSize + 1;
-                PreparingMatrix = new char[verticalSize,(verticalSize*2)+1];
+                halfHorizontalSize = maxLength + 1;
+                PreparingMatrix = new char[verticalSize,horizontalSize];
                 for (int i = 0; i < verticalSize; i++)
                 {
                     PreparingMatrix[i, halfHorizontalSize] = mainWord.Word[i];
                 }
 
                 int count = 0;
-                for (int i = 0; i < verticalSize; i++)
-                {
+                while(count<verticalSize)
+                {   
                     int rand = GetRandom(verticalSize)+1;
                     if (CrossWordTerms[rand] == null)
                     {
@@ -66,6 +67,14 @@ namespace CrosswordLib
             maxLengthWords = (from t in List where (t.Word.Length > 6) orderby t.Word.Length select t).ToList();
             if (maxLengthWords.Count > 0)
             {
+                foreach (var term in maxLengthWords)
+                {
+                    int length = term.Word.Length;
+                    if (length > maxLength)
+                    {
+                        maxLength = length;
+                    }
+                }
                 mainWord = maxLengthWords[GetRandom(maxLengthWords.Count)];
                 List.Remove(mainWord);
             }
