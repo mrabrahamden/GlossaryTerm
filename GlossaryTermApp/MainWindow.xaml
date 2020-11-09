@@ -85,7 +85,7 @@
             </StackPanel>
             <StackPanel x:Name="MatchGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
                 <Grid Height="63">
-                    <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Заполни пропуски'"/></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Соответствия'"/></TextBlock>
                 </Grid>
                 <GroupBox Header="Настройки" Height="88" Width="630" Margin="40,0,39,0" FontSize="20">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,-86">
