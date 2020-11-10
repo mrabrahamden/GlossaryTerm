@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using CrosswordLib;
 using TermLib;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
@@ -20,9 +11,6 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для CrosswordGamePage.xaml
-    /// </summary>
     public partial class CrosswordGamePage : Window
     {
         private CrosswordGame _crosswordGame;
@@ -31,6 +19,7 @@ namespace GlossaryTermApp
         private int _width;
         private int _height;
         private List<Border> listOfBorders=new List<Border>();
+
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
             InitializeComponent();
@@ -57,7 +46,7 @@ namespace GlossaryTermApp
             StackPanel _wordsStackPanel=new StackPanel();
             _wordsStackPanel.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F2F3F4");
             AnswersScrollViewer.Content = _wordsStackPanel;
-            bool firstHorisontalWord = true;
+            bool firstHorizontalWord = true;
             for (int i = 0; i < _crosswordTerms.Length; i++)
             {
                 var term = _crosswordTerms[i];
@@ -67,10 +56,10 @@ namespace GlossaryTermApp
                     {
                         _wordsStackPanel.Children.Add(new TextBlock() {Text = "По вертикали: ", FontSize = 20});
                     }
-                    else if (firstHorisontalWord)
+                    else if (firstHorizontalWord)
                     {
                         _wordsStackPanel.Children.Add(new TextBlock() { Text = "По горизонтали: ", FontSize = 20 });
-                        firstHorisontalWord = false;
+                        firstHorizontalWord = false;
                     }
 
                     StackPanel termStackPanel = new StackPanel()
@@ -146,12 +135,12 @@ namespace GlossaryTermApp
                         Height = borderHeight
                     };
 
-                    if (j == _crosswordGame.mainWordHorizantalIndex)
+                    if (j == _crosswordGame.mainWordHorizontalIndex)
                     {
                         border.Background= Brushes.LightGoldenrodYellow;
                     }
-                    char ch = '\0';
-                    if ((_matrix[i, j] != '\0'))//тут параша
+                    char ch = ' ';
+                    if ((_matrix[i, j] != '\0') && (_matrix[i, j] != ch))
                     {
                         ch = _matrix[i, j];
                     }

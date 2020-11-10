@@ -20,7 +20,7 @@ namespace CrosswordLib
         private char[,] PreparingMatrix;
         private int verticalSize;
         private int horizontalSize;
-        public int mainWordHorizantalIndex;
+        public int mainWordHorizontalIndex;
         private int maxLength=0;
 
         public CrosswordGame(List<SimpleTerm> list)
@@ -40,11 +40,11 @@ namespace CrosswordLib
                 horizontalSize = maxLength * 2 + 1;
                 CrossWordTerms = new SimpleTerm[verticalSize+1];
                 CrossWordTerms[0] = mainWord;
-                mainWordHorizantalIndex = maxLength + 1;
+                mainWordHorizontalIndex = maxLength + 1;
                 PreparingMatrix = new char[verticalSize,horizontalSize];
                 for (int i = 0; i < verticalSize; i++)
                 {
-                    PreparingMatrix[i, mainWordHorizantalIndex] = mainWord.Word[i];
+                    PreparingMatrix[i, mainWordHorizontalIndex] = mainWord.Word[i];
                 }
 
                 int count = 0;
@@ -128,7 +128,7 @@ namespace CrosswordLib
                 int length = term.Word.Length;
                 for (int k = 0; k < length; k++)
                 {
-                    PreparingMatrix[i - 1, k + mainWordHorizantalIndex - index] = term.Word[k];
+                    PreparingMatrix[i - 1, k + mainWordHorizontalIndex - index] = term.Word[k];
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace CrosswordLib
                 l--;
             }
 
-            mainWordHorizantalIndex = mainWordHorizantalIndex - m+1;
+            mainWordHorizontalIndex = mainWordHorizontalIndex - m+1;
             CrosswordMatrix=new char[verticalSize,l-m+3];
             for (int i = m; i <= l+2; i++)
             {
