@@ -85,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CrosswordGamePage.xaml.cs">
+      <DependentUpon>CrosswordGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FillGameEditorPage.xaml.cs">
       <DependentUpon>FillGameEditorPage.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
     <Compile Include="StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="CrosswordGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FillGameEditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +168,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrosswordLib\CrosswordLib.csproj">
+      <Project>{922e6f04-15b5-492c-bf8a-a749b93a9bfc}</Project>
+      <Name>CrosswordLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MatchGameLib\MatchGameLib.csproj">
       <Project>{66af6e37-6bb6-42cb-8fb1-76955b8146d0}</Project>
       <Name>MatchGameLib</Name>

@@ -43,6 +43,13 @@
                 <Button x:Name="EditBTN" Content="Изменить" IsHitTestVisible="True" Margin="478,10,28,0" Height="35" FontSize="20" Click="EditBTN_Click"/>
                 <Button x:Name="ClearBTN" Content="Очистить" Margin="478,10,28,0" Height="33" FontSize="20" Click="ClearBTN_Click"/>
             </StackPanel>
+            <StackPanel x:Name="CrosswordStackPanel" Visibility="Visible" Height="351" Margin="15,40,15,0">
+                <Grid Height="63">
+                    <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"><Run Text="Игра 'Кроссворд'"/></TextBlock>
+                </Grid>
+                <Button x:Name="CrosswordStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,220,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_OnClickStartBTN_Click"/>
+
+            </StackPanel>
             <StackPanel x:Name="FillGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Заполни пропуски'"/></TextBlock>
@@ -83,7 +90,7 @@
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
                 </ScrollViewer>
             </StackPanel>
-            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
+            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Соответствия'"/></TextBlock>
                 </Grid>

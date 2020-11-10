@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
+using CrosswordLib;
 using TermLib;
 using FillGameLib;
 using MatchGameLib;
@@ -67,8 +68,9 @@ namespace GlossaryTermApp
         private void CrosswordItem_OnSelected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            Export export = new Export();
-            export.CaptureScreen();
+            //Export export = new Export();
+            //export.CaptureScreen();
+            CrosswordStackPanel.Visibility = Visibility.Visible;
         }
 
         private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
@@ -398,6 +400,20 @@ namespace GlossaryTermApp
             MatchGame matchGame=new MatchGame(Serializer.TermList,(int)MatchGameCountUpDown.Value,(bool)MatchGameTrainingMode.IsChecked);
             MatchGamePage matchGamePage=new MatchGamePage(matchGame);
             matchGamePage.ShowDialog();
+        }
+
+        private void CrosswordStartBTN_OnClickStartBTN_Click(object sender, RoutedEventArgs e)
+        {
+            CrosswordGame crosswordGame=new CrosswordGame(Serializer.TermList);
+            if (crosswordGame.IsReady)
+            {
+                CrosswordGamePage crosswordGamePage=new CrosswordGamePage(crosswordGame);
+                crosswordGamePage.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Не удалось создать кроссворд, попробуйте добавить больше слов в словарь.");
+            }
         }
     }
 }

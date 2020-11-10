@@ -20,7 +20,7 @@ namespace CrosswordLib
         private char[,] PreparingMatrix;
         private int verticalSize;
         private int horizontalSize;
-        private int halfHorizontalSize;
+        public int mainWordHorizantalIndex;
         private int maxLength=0;
 
         public CrosswordGame(List<SimpleTerm> list)
@@ -29,6 +29,7 @@ namespace CrosswordLib
             IsReady = false;
             PrepareGame();
         }
+
         private void PrepareGame()
         {
             var list = new List<SimpleTerm>();
@@ -39,11 +40,11 @@ namespace CrosswordLib
                 horizontalSize = maxLength * 2 + 1;
                 CrossWordTerms = new SimpleTerm[verticalSize+1];
                 CrossWordTerms[0] = mainWord;
-                halfHorizontalSize = maxLength + 1;
+                mainWordHorizantalIndex = maxLength + 1;
                 PreparingMatrix = new char[verticalSize,horizontalSize];
                 for (int i = 0; i < verticalSize; i++)
                 {
-                    PreparingMatrix[i, halfHorizontalSize] = mainWord.Word[i];
+                    PreparingMatrix[i, mainWordHorizantalIndex] = mainWord.Word[i];
                 }
 
                 int count = 0;
@@ -52,7 +53,8 @@ namespace CrosswordLib
                     int rand = GetRandom(verticalSize)+1;
                     if (CrossWordTerms[rand] == null)
                     {
-                        TryAddWordToCrossword(rand);
+                        if(mainWord.Word[rand-1]!=' ')
+                            TryAddWordToCrossword(rand);
                         count++;
                     }
                 } 
@@ -126,22 +128,68 @@ namespace CrosswordLib
                 int length = term.Word.Length;
                 for (int k = 0; k < length; k++)
                 {
-                    PreparingMatrix[i - 1, k + halfHorizontalSize - index] = term.Word[k];
+                    PreparingMatrix[i - 1, k + mainWordHorizantalIndex - index] = term.Word[k];
                 }
             }
         }
+
         private void PerformMatrix()
         {
+            for (int i = 0; i < verticalSize; i++)
+            {
+                for (int j = 0; j < horizontalSize; j++)
+                {
+                    PreparingMatrix[i, j] = char.ToUpper(PreparingMatrix[i, j]);
+                }
+                Console.WriteLine();
+            }
+            //удаляем пустые столбцы слева
+            bool emptyColumn = true;
+            int m = 0;//отрезаем всё до m
+            while(emptyColumn)
+            {
+                for (int n = 0; n < verticalSize; n++)
+                {
+                    if (PreparingMatrix[n, m] != '\0')
+                    {
+                        emptyColumn = false;
+                    }
+                }
+                m++;
+            }
+            //удаляем пустые столбцы справа
+            emptyColumn = true;
+            int l = horizontalSize-1;//отрезаем всё после l
+            while (emptyColumn)
+            {
+                for (int k = 0; k < verticalSize; k++)
+                {
+                    if (PreparingMatrix[k, l] != '\0')
+                    {
+                        emptyColumn = false;
+                    }
+                }
+                l--;
+            }
 
+            mainWordHorizantalIndex = mainWordHorizantalIndex - m+1;
+            CrosswordMatrix=new char[verticalSize,l-m+3];
+            for (int i = m; i <= l+2; i++)
+            {
+                for (int j = 0; j < verticalSize; j++)
+                {
+                    CrosswordMatrix[j,i - m] = PreparingMatrix[j,i-1];
+                }
+            }
         }
 
         public void GetMatrixOnConsole()
         {
             for(int i=0;i<verticalSize;i++)
             {
-                for (int j = 0; j < horizontalSize; j++)
+                for (int j = 0; j < CrosswordMatrix.GetLength(1); j++)
                 {
-                    Console.Write(PreparingMatrix[i,j]+" ");
+                    Console.Write(CrosswordMatrix[i,j]+" ");
                 }
                 Console.WriteLine();
             }
