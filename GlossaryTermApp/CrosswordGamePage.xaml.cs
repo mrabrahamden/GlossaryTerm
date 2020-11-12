@@ -15,11 +15,14 @@ namespace GlossaryTermApp
     {
         private CrosswordGame _crosswordGame;
         private SimpleTerm[] _crosswordTerms;
-        private char[,] _matrix;
+        private LetterFromWord[,] _matrix;
         private int _width;
         private int _height;
         private List<Border> listOfBorders=new List<Border>();
-
+        private List<TextBlock> listOfLetters=new List<TextBlock>();
+        private List<TextBlock> listOfMainWordLetters=new List<TextBlock>();
+        private List<TextBox>placeForWordsList=new List<TextBox>();
+        private object mainWordTag;
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
             InitializeComponent();
@@ -32,6 +35,7 @@ namespace GlossaryTermApp
             _height = _matrix.GetLength(0);
             CrosswordCanvas.Width = this.Width;
             CrosswordCanvas.Height = this.Height * 0.6;
+            mainWordTag = _crosswordTerms[0];
             PrepareForm();
         }
 
@@ -82,7 +86,7 @@ namespace GlossaryTermApp
                         Padding = new Thickness(5, 2, 5, 2),
                         Margin = new Thickness(10, 10, 5, 0)
                     };
-                    TextBox placeForWordTextBlock = new TextBox()
+                    TextBox placeForWordTextBox = new TextBox()
                     {
                         FontSize = 18,
                         Tag = term,
@@ -92,8 +96,10 @@ namespace GlossaryTermApp
                         TextAlignment = TextAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center
                     };
+                    placeForWordsList.Add(placeForWordTextBox);
+                    placeForWordTextBox.TextChanged += PlaceForWordTextBox_TextChanged;
                     wrapPanel.Children.Add(descriptionTextBlock);
-                    termStackPanel.Children.Add(placeForWordTextBlock);
+                    termStackPanel.Children.Add(placeForWordTextBox);
                     dockPanel.Children.Add(termStackPanel);
                     dockPanel.Children.Add(wrapPanel);
                     _wordsStackPanel.Children.Add(dockPanel);
@@ -101,6 +107,61 @@ namespace GlossaryTermApp
             }
         }
 
+        private void PlaceForWordTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox= (TextBox) sender;
+            var term = (SimpleTerm) textBox.Tag;
+            if (textBox.Text.ToUpper() == term.Word.ToUpper())
+            {
+                textBox.IsEnabled = false;
+                if (textBox.Tag == mainWordTag)
+                {
+                    ShowMainWord();
+                }
+                else
+                {
+                    ShowRightWord(textBox.Tag);
+                }
+            }
+        }
+
+        private void ShowRightWord(object tag)
+        {
+            foreach (var textBlock in listOfLetters)
+            {
+                if (textBlock.Tag == tag)
+                {
+                    textBlock.Visibility = Visibility.Visible;
+                }
+            }
+            CheckTaskComplete();
+        }
+
+        private void ShowMainWord()
+        {
+            foreach (var textBlock in listOfMainWordLetters)
+            {
+                textBlock.Visibility = Visibility.Visible;
+            }
+            CheckTaskComplete();
+        }
+
+        private void CheckTaskComplete()
+        {
+            bool IsTaskComplete = true;
+            foreach (var textBox in placeForWordsList)
+            {
+                if (textBox.IsEnabled)
+                    IsTaskComplete = false;
+            }
+
+            if (IsTaskComplete)
+            {
+                GameResult gameResult=new GameResult(0,0);
+                gameResult.ShowDialog();
+                this.Close();
+            }
+        }
         private void PrepareCrossword()
         {
             var borderWidth =  CrosswordCanvas.Width / _width;
@@ -122,7 +183,8 @@ namespace GlossaryTermApp
                     {
                         TextAlignment = TextAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        //Tag = _matrix[i,j].Term
                     };
 
                     Border border = new Border()
@@ -132,25 +194,33 @@ namespace GlossaryTermApp
                         Margin = new Thickness(10, 10, 0, 0),
                         Child = letter,
                         Width = borderWidth,
-                        Height = borderHeight
+                        Height = borderHeight,
+                        //Tag = letter.Tag
                     };
+                    if (_matrix[i, j] != null)
+                    {
+                        letter.Tag = _matrix[i, j].Term;
+                        border.Tag = letter.Tag;
+                    }
+
 
                     if (j == _crosswordGame.mainWordHorizontalIndex)
                     {
                         border.Background= Brushes.LightGoldenrodYellow;
+                        listOfMainWordLetters.Add(letter);
                     }
                     char ch = ' ';
-                    if ((_matrix[i, j] != '\0') && (_matrix[i, j] != ch))
+                    if ((_matrix[i, j] != null ) && (_matrix[i, j].Letter != ch))
                     {
-                        ch = _matrix[i, j];
+                        ch = _matrix[i, j].Letter;
                     }
                     else
                     {
                         border.Visibility = Visibility.Hidden;
                     }
-
                     letter.Text = ch.ToString();
-
+                    letter.Visibility = Visibility.Hidden;
+                    listOfLetters.Add(letter);
                     listOfBorders.Add(border);
                     Canvas.SetLeft(border,x);
                     Canvas.SetTop(border,y);

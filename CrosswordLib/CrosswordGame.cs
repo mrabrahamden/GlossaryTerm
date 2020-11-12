@@ -15,9 +15,9 @@ namespace CrosswordLib
         public SimpleTerm[] CrossWordTerms;
         private SimpleTerm mainWord;
         public bool IsReady;
-        public char[,] CrosswordMatrix;
+        public LetterFromWord[,] CrosswordMatrix;
         Random random=new Random(DateTime.Now.Millisecond);
-        private char[,] PreparingMatrix;
+        private LetterFromWord[,] PreparingMatrix;
         private int verticalSize;
         private int horizontalSize;
         public int mainWordHorizontalIndex;
@@ -41,10 +41,10 @@ namespace CrosswordLib
                 CrossWordTerms = new SimpleTerm[verticalSize+1];
                 CrossWordTerms[0] = mainWord;
                 mainWordHorizontalIndex = maxLength + 1;
-                PreparingMatrix = new char[verticalSize,horizontalSize];
+                PreparingMatrix = new LetterFromWord[verticalSize,horizontalSize];
                 for (int i = 0; i < verticalSize; i++)
                 {
-                    PreparingMatrix[i, mainWordHorizontalIndex] = mainWord.Word[i];
+                    PreparingMatrix[i, mainWordHorizontalIndex] = new LetterFromWord(mainWord.Word[i],mainWord);
                 }
 
                 int count = 0;
@@ -128,7 +128,7 @@ namespace CrosswordLib
                 int length = term.Word.Length;
                 for (int k = 0; k < length; k++)
                 {
-                    PreparingMatrix[i - 1, k + mainWordHorizontalIndex - index] = term.Word[k];
+                    PreparingMatrix[i - 1, k + mainWordHorizontalIndex - index] = new LetterFromWord(term.Word[k],term);
                 }
             }
         }
@@ -139,7 +139,8 @@ namespace CrosswordLib
             {
                 for (int j = 0; j < horizontalSize; j++)
                 {
-                    PreparingMatrix[i, j] = char.ToUpper(PreparingMatrix[i, j]);
+                    if(PreparingMatrix[i,j]!=null)
+                        PreparingMatrix[i, j].Letter = char.ToUpper(PreparingMatrix[i, j].Letter);
                 }
                 Console.WriteLine();
             }
@@ -150,7 +151,7 @@ namespace CrosswordLib
             {
                 for (int n = 0; n < verticalSize; n++)
                 {
-                    if (PreparingMatrix[n, m] != '\0')
+                    if ((PreparingMatrix[n,m] != null) &&(PreparingMatrix[n, m].Letter != '\0'))
                     {
                         emptyColumn = false;
                     }
@@ -164,7 +165,7 @@ namespace CrosswordLib
             {
                 for (int k = 0; k < verticalSize; k++)
                 {
-                    if (PreparingMatrix[k, l] != '\0')
+                    if ((PreparingMatrix[k,l] != null) && (PreparingMatrix[k, l].Letter != '\0'))
                     {
                         emptyColumn = false;
                     }
@@ -173,7 +174,7 @@ namespace CrosswordLib
             }
 
             mainWordHorizontalIndex = mainWordHorizontalIndex - m+1;
-            CrosswordMatrix=new char[verticalSize,l-m+3];
+            CrosswordMatrix=new LetterFromWord[verticalSize,l-m+3];
             for (int i = m; i <= l+2; i++)
             {
                 for (int j = 0; j < verticalSize; j++)
@@ -193,6 +194,18 @@ namespace CrosswordLib
                 }
                 Console.WriteLine();
             }
+        }
+    }
+
+    public class LetterFromWord
+    {
+        public char Letter;
+        public SimpleTerm Term;
+
+        public LetterFromWord(char letter, SimpleTerm term)
+        {
+            Letter = letter;
+            Term = term;
         }
     }
 }
