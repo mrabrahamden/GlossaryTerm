@@ -38,7 +38,7 @@ namespace GlossaryTermApp
                         gameWord.DescriptionWordsAndSplittersList
                             .FindAll((descriptionWord => descriptionWord.IsKeyWord)).Count);
                     numOfSkipWords += listOfSkippedWords.FindAll((b =>b==true )).Count;
-                    TextBlock newWord = new TextBlock { Text = word + " -- ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold};
+                    TextBlock newWord = new TextBlock { Text = word + " ⸺ ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold};
                     WrapPanel panelForOneWord = new WrapPanel();
                     panelForOneWord.VerticalAlignment = VerticalAlignment.Top;
                     panelForOneWord.Children.Add(newWord);                                       

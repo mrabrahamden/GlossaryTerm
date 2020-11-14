@@ -23,7 +23,7 @@ namespace GlossaryTermApp
             this.Closing += FillGameEditorPage_Closing;
             foreach (var term in serializer.TermList)
             {
-                string wordAndDescription = term.Word + " -- ";
+                string wordAndDescription = term.Word + " ⸺ ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
                 WrapPanel panelForOneWord = new WrapPanel();
                 CheckBox  isKey=new CheckBox(){ Tag = term };

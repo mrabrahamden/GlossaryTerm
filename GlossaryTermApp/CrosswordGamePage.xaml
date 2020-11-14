@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="Кроссворд" WindowState="Maximized" ResizeMode="NoResize">
+        Title="Кроссворд" WindowState="Maximized" ResizeMode="NoResize" Closing="CrosswordGamePage_OnClosing">
     <DockPanel LastChildFill="True">
         <Canvas x:Name="CrosswordCanvas" Margin="15,15,15,15" DockPanel.Dock="Top">
         </Canvas>

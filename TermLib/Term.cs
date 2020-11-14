@@ -52,7 +52,7 @@ namespace TermLib
             {
                 Word = Word.Substring(0, 1).ToUpper() + Word.Substring(1, Word.Length - 1).ToLower();
             }
-            return Word + " -- " + Description;
+            return Word + " ⸺ " + Description;
         }
 
         public void FillingListsForFillGame()

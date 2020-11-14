@@ -22,11 +22,13 @@ namespace CrosswordLib
         private int horizontalSize;
         public int mainWordHorizontalIndex;
         private int maxLength=0;
+        private int lvl;
 
-        public CrosswordGame(List<SimpleTerm> list)
+        public CrosswordGame(List<SimpleTerm> list, int lvl)
         {
             List = new List<SimpleTerm>(list);
             IsReady = false;
+            this.lvl = lvl;
             PrepareGame();
         }
 
@@ -65,19 +67,36 @@ namespace CrosswordLib
 
         private void ChooseRandomMainWord()
         {
-            List<SimpleTerm> maxLengthWords=new List<SimpleTerm>();
-            maxLengthWords = (from t in List where (t.Word.Length > 6) orderby t.Word.Length select t).ToList();
-            if (maxLengthWords.Count > 0)
+            int min, max;
+            min = (from t in List orderby t.Word.Length select t).ToList().First().Word.Length;
+            max = (from t in List orderby t.Word.Length select t).ToList().Last().Word.Length;
+            int dif = (max - min)/3;
+            
+            if (lvl == 1)
             {
-                foreach (var term in maxLengthWords)
-                {
-                    int length = term.Word.Length;
-                    if (length > maxLength)
-                    {
-                        maxLength = length;
-                    }
-                }
-                mainWord = maxLengthWords[GetRandom(maxLengthWords.Count)];
+                max = min + dif;
+            }
+            else if (lvl == 2)
+            {
+                min = min + dif;
+                max = max - dif;
+            }
+            else
+            {
+                min = max - dif;
+            }
+
+            List<SimpleTerm> mainWordCandidates = (from t in List where (t.Word.Length >= min)&& (t.Word.Length <= max) orderby t.Word.Length select t).ToList();
+            while (mainWordCandidates.Count == 0)
+            {
+                min--;
+                max++;
+                mainWordCandidates=(from t in List where (t.Word.Length >= min) && (t.Word.Length <= max) orderby t.Word.Length select t).ToList();
+            }
+            if (mainWordCandidates.Count > 0)
+            {
+                maxLength = (from t in List orderby t.Word.Length select t).ToList().Last().Word.Length;
+                mainWord = mainWordCandidates[GetRandom(mainWordCandidates.Count)];
                 List.Remove(mainWord);
             }
         }

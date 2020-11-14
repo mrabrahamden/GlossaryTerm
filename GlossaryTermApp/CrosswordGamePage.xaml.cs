@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -230,6 +231,17 @@ namespace GlossaryTermApp
                 y += borderHeight-2;
                 x = 0;
             }
+        }
+
+        private void CrosswordGamePage_OnClosing(object sender, CancelEventArgs e)
+        {
+            int errors = 0;
+            foreach (var textBox in placeForWordsList)
+            {
+                if (textBox.IsEnabled)
+                    errors++;
+            }
+            new GameResult(errors,placeForWordsList.Count).ShowDialog();
         }
     }
 }

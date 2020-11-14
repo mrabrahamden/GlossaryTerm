@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿ using System.Windows;
 using PdfSaver;
 using SerializerLib;
 using System.Windows.Controls;
@@ -319,6 +319,7 @@ namespace GlossaryTermApp
             FillGameCountUpDown.Maximum = Serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
             FillGameCountUpDown.Value = FillGameCountUpDown.Maximum;
             FillGameEditorPanel.Visibility = Visibility.Visible;
+
         }
 
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
@@ -331,52 +332,59 @@ namespace GlossaryTermApp
         
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
-            bool isCreated = false;
-            FillGame fillGame;
-            int lvl = 0;
-            bool fixedLength = false;
-            bool trainingMode = false;
-            try
+            if (Serializer.TermList.Count > 0)
             {
-                if (FillGameEasyLvl.IsChecked == true)
+                bool isCreated = false;
+                FillGame fillGame;
+                int lvl = 0;
+                bool fixedLength = false;
+                bool trainingMode = false;
+                try
                 {
-                    lvl = 1;
+                    if (FillGameEasyLvl.IsChecked == true)
+                    {
+                        lvl = 1;
+                    }
+                    else if (FillGameNormalLvl.IsChecked == true)
+                    {
+                        lvl = 2;
+                    }
+                    else
+                    {
+                        lvl = 3;
+                    }
+
+                    if (FillGameFixedLength.IsChecked == true)
+                    {
+                        fixedLength = true;
+                    }
+
+                    if (FillGameTrainingMode.IsChecked == true)
+                    {
+                        trainingMode = true;
+                    }
+
+                    isCreated = true;
                 }
-                else if (FillGameNormalLvl.IsChecked == true)
+                catch (Exception)
                 {
-                    lvl = 2;
+                    MessageBox.Show("Не удалось создать игру, попробуйте снова.");
+                }
+
+                if (isCreated)
+                {
+                    fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
+                    FillGamePage fillGamePage = new FillGamePage(fillGame);
+                    fillGamePage.ShowDialog();
                 }
                 else
                 {
-                    lvl = 3;
+                    MessageBox.Show("Не удалось создать игру, попробуйте снова.");
                 }
-
-                if (FillGameFixedLength.IsChecked == true)
-                {
-                    fixedLength = true;
-                }
-
-                if (FillGameTrainingMode.IsChecked == true)
-                {
-                    trainingMode = true;
-                }
-
-                isCreated = true;
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Не удалось создать игру, попробуйте снова.");
-            }
-
-            if (isCreated)
-            {
-                fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
-                FillGamePage fillGamePage = new FillGamePage(fillGame);
-                fillGamePage.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Не удалось создать игру, попробуйте снова.");
+                MessageBox.Show("В словаре недостаточно терминов для начала.");
             }
         }
 
@@ -397,14 +405,35 @@ namespace GlossaryTermApp
 
         private void MatchGameStartBTN_OnClickGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
-            MatchGame matchGame=new MatchGame(Serializer.TermList,(int)MatchGameCountUpDown.Value,(bool)MatchGameTrainingMode.IsChecked);
-            MatchGamePage matchGamePage=new MatchGamePage(matchGame);
-            matchGamePage.ShowDialog();
+            if (Serializer.TermList.Count > 0)
+            {
+                MatchGame matchGame = new MatchGame(Serializer.TermList, (int) MatchGameCountUpDown.Value,
+                    (bool) MatchGameTrainingMode.IsChecked);
+                MatchGamePage matchGamePage = new MatchGamePage(matchGame);
+                matchGamePage.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("В словаре недостаточно терминов для начала.");
+            }
         }
 
         private void CrosswordStartBTN_OnClickStartBTN_Click(object sender, RoutedEventArgs e)
         {
-            CrosswordGame crosswordGame=new CrosswordGame(Serializer.TermList);
+            int lvl = 0;
+            if (CrosswordEasyLvl.IsChecked == true)
+            {
+                lvl = 1;
+            }
+            else if (CrosswordNormalLvl.IsChecked == true)
+            {
+                lvl = 2;
+            }
+            else
+            {
+                lvl = 3;
+            }
+            CrosswordGame crosswordGame=new CrosswordGame(Serializer.TermList,lvl);
             if (crosswordGame.IsReady)
             {
                 CrosswordGamePage crosswordGamePage=new CrosswordGamePage(crosswordGame);
