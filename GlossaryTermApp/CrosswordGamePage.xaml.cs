@@ -97,6 +97,7 @@ namespace GlossaryTermApp
                         TextAlignment = TextAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center
                     };
+                    placeForWordTextBox.MaxLength = term.Word.Length;
                     placeForWordsList.Add(placeForWordTextBox);
                     placeForWordTextBox.TextChanged += PlaceForWordTextBox_TextChanged;
                     wrapPanel.Children.Add(descriptionTextBlock);
