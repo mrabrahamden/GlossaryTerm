@@ -29,7 +29,7 @@
                 <Image Source="image/exit.png" Canvas.Top="323" Canvas.Left="10" Height="32" Width="32"></Image>
                 <TextBlock Text="Домашняя страница" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="30"></TextBlock>
                 <TextBlock Text="Редактор определений и добавление терминов" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="80"></TextBlock>
-                <TextBlock Text="Словарь + поиск слов в нём" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="130"></TextBlock>
+                <TextBlock Text="Словарь и поиск слов в нём" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="130"></TextBlock>
                 <TextBlock Text="Сопоставление слов и определений" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="180"></TextBlock>
                 <TextBlock Text="Вписать пропущенные слова" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="230"></TextBlock>
                 <TextBlock Text="Решение кроссворда" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="280"></TextBlock>
@@ -54,8 +54,11 @@
                         <RadioButton x:Name="CrosswordHardLvl" Content="Трудно" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="26" Width="175"/>
                     </StackPanel>
                 </GroupBox>
-                <Button x:Name="CrosswordStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,160,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_OnClickStartBTN_Click"/>
+                <Grid Height="250" Margin="0,0,-12.2,0">
+                    <Image Source="image/help.png" Margin="10,168,651,39"  ToolTip="Выбор уровня сложности влияет на количество слов в кроссворду. Вам необходимо вписать термины в соответствующие ячейки рядом с определением." RenderTransformOrigin="0.685,0.86" />
 
+                    <Button x:Name="CrosswordStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,160,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_OnClickStartBTN_Click"/>
+                </Grid>
             </StackPanel>
             <StackPanel x:Name="FillGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
                 <Grid Height="63">

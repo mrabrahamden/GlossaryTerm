@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="FillGamePage" MinHeight="500" MinWidth="800" ResizeMode="NoResize" WindowState="Maximized">
+        Title="Вставьте пропущенные слова" MinHeight="500" MinWidth="800" ResizeMode="NoResize" WindowState="Maximized">
     <Grid>
         <ScrollViewer x:Name="scrollViewer" Visibility="Visible" MinHeight="400" MinWidth="700" Margin="10,10,10,48" >
             <StackPanel x:Name="stackPanelOutput" Orientation="Vertical"/>
