@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -46,7 +47,7 @@ namespace GlossaryTermApp
             SearchTB.Clear();
         }
 
-        private bool _searchMode = false;
+        public bool SearchMode = false;
         private ImageBrush GetBrushFromImage(string path)
         {
             var image = System.Drawing.Image.FromFile(path);
@@ -69,13 +70,13 @@ namespace GlossaryTermApp
             CrosswordStackPanel.Visibility = Visibility.Visible;
         }
 
-        private void DictionaryItem_Selected(object sender, RoutedEventArgs e)
+        public void DictionaryItem_Selected(object sender, RoutedEventArgs e)
         {
-            _searchMode = false;
+            SearchMode = false;
             PerformDictionaryPrint(Serializer.TermList);
         }
 
-        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        public void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             var btnPanel = (StackPanel)button.Parent;
@@ -221,7 +222,7 @@ namespace GlossaryTermApp
             {
                 var request = SearchTB.Text;
                 var result = Serializer.LookForAWord(request);
-                _searchMode = true;
+                SearchMode = true;
                 PerformDictionaryPrint(result);
                 SearchTB.Text = request;
             }
@@ -279,7 +280,7 @@ namespace GlossaryTermApp
             {
                 TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap, FontSize = 16};
 
-                if (_searchMode)
+                if (SearchMode)
                 {
                     newWord.Text =
                         "По Вашему запросу ничего не найдено. Возможно, Вам стоит сначала добавить термин в словарь?";
@@ -292,14 +293,6 @@ namespace GlossaryTermApp
                 DockPanel panelForOneWord = new DockPanel();
                 panelForOneWord.Children.Add(newWord);
                 StackPanelForWords.Children.Add(panelForOneWord);
-            }
-        }
-
-        private void Search_KeyUp(object sender, KeyEventArgs e)  //чтобы поиск работал не только по кнопке, но и по enter
-        {
-            if (e.Key == Key.Enter)
-            {
-                SearchButton_OnClick(null, null);
             }
         }
 
@@ -431,6 +424,20 @@ namespace GlossaryTermApp
             else
             {
                 MessageBox.Show("Не удалось создать кроссворд, попробуйте добавить больше слов в словарь.");
+            }
+        }
+
+        private void ButtonFullScreen_OnClick(object sender, RoutedEventArgs e)
+        {
+            FullScreenDictionaryPage fullScreenDictionaryPage=new FullScreenDictionaryPage(this);
+            fullScreenDictionaryPage.ShowDialog();
+        }
+
+        private void SearchTB_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SearchButton_OnClick(null, null);
             }
         }
     }
