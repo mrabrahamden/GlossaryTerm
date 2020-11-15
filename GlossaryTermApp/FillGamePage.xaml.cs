@@ -9,9 +9,6 @@ using FillGameLib;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для FillGamePage.xaml
-    /// </summary>
     public partial class FillGamePage : Window
     {
         private FillGame game;
@@ -69,6 +66,7 @@ namespace GlossaryTermApp
                             
                     }
                     Separator separate = new Separator();
+                    panelForOneWord.Margin=new Thickness(0,7,0,7);
                     stackPanelOutput.Children.Add(panelForOneWord);
                     stackPanelOutput.Children.Add(separate);
                 }

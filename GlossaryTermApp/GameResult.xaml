@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Результаты" Height="377.679" Width="800">
     <Grid>
-        <TextBlock x:Name="Result" Margin="187,60,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="75" FontSize="40" TextAlignment="Center" Foreground="Green" FontWeight="Bold"/>
-        <TextBlock x:Name="NumOfRightAnswers" Margin="187,139,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="63" FontSize="40" TextAlignment="Center" Foreground="Green"/>
-        <TextBlock x:Name="NumOfWrongAnswers" Margin="187,207,206,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="61" FontSize="40" TextAlignment="Center" Foreground="Red"/>
+        <TextBlock x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="75" FontSize="40" TextAlignment="Center" Foreground="SeaGreen" FontFamily="Arial Rounded MT Bold" Margin="0,64,0,0"/>
+        <TextBlock x:Name="NumOfRightAnswers" Margin="0,139,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="63" FontSize="40" TextAlignment="Center" Foreground="SeaGreen"/>
+        <TextBlock x:Name="NumOfWrongAnswers" Margin="0,207,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="61" FontSize="40" TextAlignment="Center" Foreground="IndianRed"/>
 
     </Grid>
 </Window>

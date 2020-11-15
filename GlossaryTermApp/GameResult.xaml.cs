@@ -11,7 +11,7 @@ namespace GlossaryTermApp
 
             if (numofErrors == 0)
             {
-                Result.Foreground = Brushes.Green;
+                Result.Foreground = Brushes.SeaGreen;
                 Result.Text = "Молодец!";
                 NumOfRightAnswers.Text = "Всё верно!";
                 NumOfWrongAnswers.Text = "";
@@ -19,9 +19,9 @@ namespace GlossaryTermApp
             else
             {
                 Result.Text = "Есть ошибки!";
-                Result.Foreground = Brushes.Red;
-                NumOfRightAnswers.Text = "Верно : "+(numOfWords-numofErrors).ToString();
-                NumOfWrongAnswers.Text = "Ошибок : " + numofErrors.ToString();
+                Result.Foreground = Brushes.IndianRed;
+                NumOfRightAnswers.Text = "Верно : "+(numOfWords-numofErrors);
+                NumOfWrongAnswers.Text = "Ошибок : " + numofErrors;
             }
 
         }

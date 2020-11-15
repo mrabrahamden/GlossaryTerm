@@ -13,7 +13,7 @@
             <HamburgerMenu:HamburgerMenuItem Icon="image/home.png" ToolTip="Главная" Text="Главная" SelectionCommand="{Binding ElementName=this_}" Selected="HomeItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem x:Name="MenuEditBTN" Icon="image/edit.png" ToolTip="Редактор" Text="Редактор" Selected="EditItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem x:Name="DictionaryBTN" Icon="image/book.png" ToolTip="Словарь" Text="Словарь" SelectionCommand="{Binding ElementName=this_}" Selected="DictionaryItem_Selected"/>
-            <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" ToolTip="Сопоставление" Text="Сопоставление" Selected="HamburgerMenuItem_Selected"/>
+            <HamburgerMenu:HamburgerMenuItem Icon="image/match.png" ToolTip="Сопоставление" Text="Сопоставление" Selected="MatchGameItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/fill in.png" ToolTip="Дополнить определения" Text="Дополнение" Selected="FillGameItem_Selected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/crossword.png" ToolTip="Кроссворд" Text="Кроссворд" Selected="CrosswordItem_OnSelected"/>
             <HamburgerMenu:HamburgerMenuItem Icon="image/exit.png" ToolTip="В начало" Text="На главную" Selected="ExitItem_OnSelected"/>
@@ -35,10 +35,10 @@
                 <TextBlock Text="Решение кроссворда" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="280"></TextBlock>
                 <TextBlock Text="Вернуться на начальную страницу приложения с выбором предмета и класса" FontSize="15" TextWrapping="Wrap" Canvas.Left="50" Canvas.Top="330"></TextBlock>
             </Canvas>
-            <StackPanel x:Name="EditStackPanel" Visibility="Hidden" Height="351" Margin="15,40,15,0">
+            <StackPanel x:Name="EditStackPanel" Visibility="Hidden" Margin="15,10,15,14">
                 <TextBlock TextWrapping="Wrap" Text="Термин: " Height="34" Margin="10,10,0,0" Width="697" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <TextBox x:Name="TermTB" Height="34" GotFocus="ReadyToAddAWord" FontSize="20" Margin="10,0" MaxLines="1" MaxLength="100" CharacterCasing="Upper"/>
-                <TextBlock TextWrapping="Wrap" Text="Описание: " Height="34" Margin="10,10,0,0" Width="697" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBlock TextWrapping="Wrap" Text="Определение: " Height="34" Margin="10,10,0,0" Width="697" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <TextBox x:Name="DescriptionTB" Height="128" GotFocus="ReadyToAddAWord" TextWrapping="Wrap" FontSize="20" Margin="10,0"/>
                 <Button x:Name="EditBTN" Content="Изменить" IsHitTestVisible="True" Margin="478,10,28,0" Height="35" FontSize="20" Click="EditBTN_Click"/>
                 <Button x:Name="ClearBTN" Content="Очистить" Margin="478,10,28,0" Height="33" FontSize="20" Click="ClearBTN_Click"/>
@@ -56,8 +56,7 @@
                 </GroupBox>
                 <Grid Height="250" Margin="0,0,-12.2,0">
                     <Image Source="image/help.png" Margin="10,168,651,39"  ToolTip="Выбор уровня сложности влияет на количество слов в кроссворду. Вам необходимо вписать термины в соответствующие ячейки рядом с определением." RenderTransformOrigin="0.685,0.86" />
-
-                    <Button x:Name="CrosswordStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,160,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_OnClickStartBTN_Click"/>
+                    <Button x:Name="CrosswordStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="515,160,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_Click"/>
                 </Grid>
             </StackPanel>
             <StackPanel x:Name="FillGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
@@ -79,30 +78,26 @@
                 </GroupBox>
                 <StackPanel Orientation="Horizontal" Margin="40,0,39,0">
                     <TextBlock Text="  Количество слов:      " FontSize="20"></TextBlock>
-                    <xctk:IntegerUpDown x:Name="FillGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Maximum="8" Minimum="1"/>
+                    <xctk:IntegerUpDown x:Name="FillGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="1"/>
                 </StackPanel>
                 <Grid Height="139">
-                    <Button x:Name="FillGameStartBTN" Content="Начать" HorizontalAlignment="Left" Margin="515,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameStartBTN_Click"/>
+                    <Button x:Name="FillGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="515,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameStartBTN_Click"/>
                     <Button x:Name="FillGameEditorBTN" Content="Редактор" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameEditorBTN_Click"/>
                 </Grid>
             </StackPanel>
             <StackPanel x:Name="DictionaryStackPanel" Visibility="Hidden" RenderTransformOrigin="0.508,0.613" >
                 <DockPanel Margin="0,10,0.2,0" KeyUp="Search_KeyUp">
-                    <TextBox x:Name="SearchTB" Height="23" TextWrapping="Wrap" Text="" Width="600" RenderTransformOrigin="0.5,0.406" Margin="0" />
-                    <Button  HorizontalAlignment="Left" Height="24"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchButton_OnClick" Foreground="Black" Content="&#xE721;">
-                        <!--<StackPanel>
-                            <Image Source="image/search.png" Stretch="Uniform"/>
-                        </StackPanel>-->
-                    </Button>
-                    <Button  HorizontalAlignment="Left" Height="24"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchEmptyButton_Click" Foreground="Red" Content="&#xE711;"/>
+                    <TextBox x:Name="SearchTB" Height="30" TextWrapping="Wrap" FontSize="20" Text="" Width="650" RenderTransformOrigin="0.5,0.406" Margin="0" />
+                    <Button  HorizontalAlignment="Left" Height="30"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchButton_OnClick" Foreground="Black" Content="&#xE721;"/>
+                    <Button  HorizontalAlignment="Left" Height="30"  Width="20" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchEmptyButton_Click" Foreground="Red" Content="&#xE711;"/>
                 </DockPanel>
-                <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,25,0,0" VerticalAlignment="Top" Width="700">
-                    <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
+                <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,20,0,0" VerticalAlignment="Top" Width="720">
+                    <StackPanel x:Name="StackPanelForWords" Orientation="Vertical" Width="694"/>
                 </ScrollViewer>
             </StackPanel>
             <StackPanel x:Name="MatchGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
                 <Grid Height="63">
-                    <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Соответствия'"/></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Height="34" Margin="0,10,0,0" Width="189" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Игра 'Соответствия'"/>
                 </Grid>
                 <GroupBox Header="Настройки" Height="88" Width="630" Margin="40,0,39,0" FontSize="20">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,-86">
@@ -111,9 +106,9 @@
                 </GroupBox>
                 <StackPanel Orientation="Horizontal" Margin="40,0,39,0">
                     <TextBlock Text="  Количество слов:      " FontSize="20"></TextBlock>
-                    <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Maximum="8" Minimum="1"/>
+                    <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="1"/>
                 </StackPanel>
-                <Button x:Name="MatchGameStartBTN" Content="Начать" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,150,0,150" Width="184" Height="51" FontSize="20" Click="MatchGameStartBTN_OnClickGameStartBTN_Click" Panel.ZIndex="-3"/>
+                <Button x:Name="MatchGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,150,0,150" Width="184" Height="51" FontSize="20" Click="MatchGameStartBTN_Click" Panel.ZIndex="-3"/>
             </StackPanel>
 
         </Grid>

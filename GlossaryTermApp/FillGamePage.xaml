@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="Вставьте пропущенные слова" MinHeight="500" MinWidth="800" ResizeMode="NoResize" WindowState="Maximized">
+        Title="Заполни пропуски" MinHeight="500" MinWidth="800" ResizeMode="NoResize" WindowState="Maximized">
     <Grid>
-        <ScrollViewer x:Name="scrollViewer" Visibility="Visible" MinHeight="400" MinWidth="700" Margin="10,10,10,48" >
+        <ScrollViewer x:Name="scrollViewer" Visibility="Visible" MinHeight="400" MinWidth="700" Margin="10,20,10,48" >
             <StackPanel x:Name="stackPanelOutput" Orientation="Vertical"/>
         </ScrollViewer>
         <Button x:Name="BtnOk" Content="Проверить" Height="33" FontSize="20" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="Button_Click" HorizontalAlignment="Right" Width="123"/>

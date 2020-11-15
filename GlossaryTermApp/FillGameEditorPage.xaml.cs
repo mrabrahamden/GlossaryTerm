@@ -20,7 +20,7 @@ namespace GlossaryTermApp
             {
                 string wordAndDescription = term.Word + " ⸺ ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
-                WrapPanel panelForOneWord = new WrapPanel();
+                WrapPanel panelForOneWord = new WrapPanel(){Margin = new Thickness(0,5,0,8)};
                 CheckBox  isKey=new CheckBox(){ Tag = term };
                 if (term.ReadyForFillGame)
                 {
