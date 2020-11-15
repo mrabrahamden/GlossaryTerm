@@ -17,10 +17,6 @@ using Brushes = System.Windows.Media.Brushes;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
 

@@ -22,7 +22,7 @@ namespace GlossaryTermApp
         private List<Border> listOfBorders=new List<Border>();
         private List<TextBlock> listOfLetters=new List<TextBlock>();
         private List<TextBlock> listOfMainWordLetters=new List<TextBlock>();
-        private List<TextBox>placeForWordsList=new List<TextBox>();
+        private List<TextBox> placeForWordsList = new List<TextBox>();
         private object mainWordTag;
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
@@ -48,7 +48,7 @@ namespace GlossaryTermApp
 
         private void PrepareAnswers()
         {
-            StackPanel _wordsStackPanel=new StackPanel();
+            StackPanel _wordsStackPanel = new StackPanel();
             _wordsStackPanel.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F2F3F4");
             AnswersScrollViewer.Content = _wordsStackPanel;
             bool firstHorizontalWord = true;
@@ -206,7 +206,7 @@ namespace GlossaryTermApp
                     }
 
 
-                    if (j == _crosswordGame.mainWordHorizontalIndex)
+                    if (j == _crosswordGame.MainWordHorizontalIndex)
                     {
                         border.Background= Brushes.LightGoldenrodYellow;
                         listOfMainWordLetters.Add(letter);

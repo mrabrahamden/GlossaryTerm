@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using SerializerLib;
 using TermLib;
-using Xceed.Wpf.Toolkit.Core.Converters;
 
 namespace GlossaryTermApp
 {
