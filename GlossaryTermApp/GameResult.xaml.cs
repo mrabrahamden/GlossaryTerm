@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для GameResult.xaml
-    /// </summary>
     public partial class GameResult : Window
     {
         public GameResult(int numofErrors,int numOfWords)
@@ -25,7 +11,7 @@ namespace GlossaryTermApp
 
             if (numofErrors == 0)
             {
-                Result.Foreground = Brushes.Green;
+                Result.Foreground = Brushes.SeaGreen;
                 Result.Text = "Молодец!";
                 NumOfRightAnswers.Text = "Всё верно!";
                 NumOfWrongAnswers.Text = "";
@@ -33,9 +19,9 @@ namespace GlossaryTermApp
             else
             {
                 Result.Text = "Есть ошибки!";
-                Result.Foreground = Brushes.Red;
-                NumOfRightAnswers.Text = "Верно : "+(numOfWords-numofErrors).ToString();
-                NumOfWrongAnswers.Text = "Ошибок : " + numofErrors.ToString();
+                Result.Foreground = Brushes.IndianRed;
+                NumOfRightAnswers.Text = "Верно : "+(numOfWords-numofErrors);
+                NumOfWrongAnswers.Text = "Ошибок : " + numofErrors;
             }
 
         }

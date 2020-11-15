@@ -1,4 +1,4 @@
-﻿ using System.Windows;
+﻿using System.Windows;
 using PdfSaver;
 using SerializerLib;
 using System.Windows.Controls;
@@ -17,10 +17,6 @@ using Brushes = System.Windows.Media.Brushes;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
 
@@ -238,15 +234,15 @@ namespace GlossaryTermApp
             ScrollDictionary.Visibility = Visibility.Visible;
             StackPanelForWords.Visibility = Visibility.Visible;
             ScrollDictionary.Height = 350;
-            ScrollDictionary.Width = 715;
+            ScrollDictionary.Width = 720;
             StackPanelForWords.Children.Clear();
             if (list.Count > 0)
             {
                 foreach (var term in list)
                 {
                     string wordAndDescription = term.ToString();
-                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap };
-                    DockPanel panelForOneWord = new DockPanel();
+                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0,0,5,0), Width = 676};
+                    DockPanel panelForOneWord = new DockPanel() {Margin = new Thickness(0,5,0,5)};
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
@@ -281,7 +277,7 @@ namespace GlossaryTermApp
             }
             else
             {
-                TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap};
+                TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap, FontSize = 16};
 
                 if (_searchMode)
                 {
@@ -388,22 +384,15 @@ namespace GlossaryTermApp
             }
         }
 
-        private void HamburgerMenuItem_Selected(object sender, RoutedEventArgs e)
+        private void MatchGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            if (Serializer.TermList.Count < 8)
-            {
-                MatchGameCountUpDown.Maximum = Serializer.TermList.Count;
-            }
-            else
-            {
-                MatchGameCountUpDown.Maximum = 8;
-            }
+            MatchGameCountUpDown.Maximum = Serializer.TermList.Count;
             MatchGameEditorPanel.Visibility = Visibility.Visible;
 
         }
 
-        private void MatchGameStartBTN_OnClickGameStartBTN_Click(object sender, RoutedEventArgs e)
+        private void MatchGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
             if (Serializer.TermList.Count > 0)
             {
@@ -418,7 +407,7 @@ namespace GlossaryTermApp
             }
         }
 
-        private void CrosswordStartBTN_OnClickStartBTN_Click(object sender, RoutedEventArgs e)
+        private void CrosswordStartBTN_Click(object sender, RoutedEventArgs e)
         {
             int lvl = 0;
             if (CrosswordEasyLvl.IsChecked == true)

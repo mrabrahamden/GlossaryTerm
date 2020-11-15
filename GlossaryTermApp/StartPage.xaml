@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="StartPage" Height="558" Width="965.6" ResizeMode="NoResize">
+        Title="Teacherry" Height="558" Width="965.6" ResizeMode="NoResize">
 
     <Grid Margin="0,0,3.6,-20" Background="WhiteSmoke">
         <Grid.ColumnDefinitions>
@@ -14,20 +14,24 @@
             <ColumnDefinition Width="440*"/>
         </Grid.ColumnDefinitions>
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
-        <Image Source="image/help.png" Margin="0,-238,9.6,262.8"  ToolTip="Здесь должно быть обращение к пользователю." RenderTransformOrigin="0.495,0.438"/>
+        <Image Source="image/help.png" Margin="0,-238,9.6,262.8"  ToolTip="Дорогой пользователь! Это приложение создано исключительно из благих намерений, дабы упростить труд учителей. Перед началом работы выберите нужный предмет и класс в выпадающих списках ниже и нажмите на кнопку 'Начать'" RenderTransformOrigin="0.495,0.438"/>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="355,458,0,0" FontSize="24" Grid.Column="2" RenderTransformOrigin="0.513,0.96"/>
-        <ComboBox Name="ComboBoxSubject" SelectedIndex="9" HorizontalAlignment="Left" Margin="97,458,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2">
+        <ComboBox Name="ComboBoxSubject" SelectedIndex="12" HorizontalAlignment="Left" Margin="97,460,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2">
+            <ComboBoxItem>Астрономия</ComboBoxItem>
             <ComboBoxItem>Английский язык</ComboBoxItem>
             <ComboBoxItem>Биология</ComboBoxItem>
             <ComboBoxItem>География</ComboBoxItem>
             <ComboBoxItem>Изобразительное искусство</ComboBoxItem>
             <ComboBoxItem>Информатика</ComboBoxItem>
             <ComboBoxItem>История</ComboBoxItem>
+            <ComboBoxItem>Литература</ComboBoxItem>
             <ComboBoxItem>Математика</ComboBoxItem>
             <ComboBoxItem>Музыка</ComboBoxItem>
             <ComboBoxItem>МХК</ComboBoxItem>
+            <ComboBoxItem>ОБЖ</ComboBoxItem>
             <ComboBoxItem>Обществознание</ComboBoxItem>
+            <ComboBoxItem>Право</ComboBoxItem>
             <ComboBoxItem>Русский язык</ComboBoxItem>
             <ComboBoxItem>Технология</ComboBoxItem>
             <ComboBoxItem>Физика</ComboBoxItem>
@@ -43,11 +47,11 @@
             <ComboBoxItem>10 класс</ComboBoxItem>
             <ComboBoxItem>11 класс</ComboBoxItem>
         </ComboBox>
-        <Button Content="Начать" BorderBrush="DarkGray" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="675,458,0,0" VerticalAlignment="Top" Width="145" Height="35" FontSize="24"  Grid.Column="2" Click="ButtonStart_OnClick"/>
+        <Button Content="Начать" BorderBrush="#FFBD2525" FontWeight="SemiBold" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="704,460,0,0" VerticalAlignment="Top" Width="145" Height="40" FontSize="24"  Grid.Column="2" Click="ButtonStart_OnClick"/>
         <RichTextBox IsReadOnly="True" Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="Изменения в версиях" FontStyle="Italic"/>
+                    <Run Text="Тут о проекте написать надо" FontStyle="Italic"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

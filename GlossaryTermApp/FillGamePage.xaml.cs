@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using FillGameLib;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для FillGamePage.xaml
-    /// </summary>
     public partial class FillGamePage : Window
     {
         private FillGame game;
@@ -76,6 +66,7 @@ namespace GlossaryTermApp
                             
                     }
                     Separator separate = new Separator();
+                    panelForOneWord.Margin=new Thickness(0,7,0,7);
                     stackPanelOutput.Children.Add(panelForOneWord);
                     stackPanelOutput.Children.Add(separate);
                 }

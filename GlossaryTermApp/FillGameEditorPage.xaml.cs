@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using SerializerLib;
 using TermLib;
-using Xceed.Wpf.Toolkit.Core.Converters;
 
 namespace GlossaryTermApp
 {
@@ -25,7 +20,7 @@ namespace GlossaryTermApp
             {
                 string wordAndDescription = term.Word + " ⸺ ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
-                WrapPanel panelForOneWord = new WrapPanel();
+                WrapPanel panelForOneWord = new WrapPanel(){Margin = new Thickness(0,5,0,8)};
                 CheckBox  isKey=new CheckBox(){ Tag = term };
                 if (term.ReadyForFillGame)
                 {
