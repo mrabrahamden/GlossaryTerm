@@ -94,6 +94,9 @@
     <Compile Include="FillGamePage.xaml.cs">
       <DependentUpon>FillGamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FullScreenDictionaryPage.xaml.cs">
+      <DependentUpon>FullScreenDictionaryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameResult.xaml.cs">
       <DependentUpon>GameResult.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FillGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FullScreenDictionaryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

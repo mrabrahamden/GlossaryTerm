@@ -52,10 +52,10 @@ namespace SerializerLib
         }
         public string GetTermDescriptionByString(string wordAndDescrString)
         {
-            Regex regex = new Regex(@" -- .+");
+            Regex regex = new Regex(@" ⸺ .+");
             MatchCollection matches = regex.Matches(wordAndDescrString);
             var description = regex.Match(wordAndDescrString).ToString();
-            description = description.Substring(4, description.Length - 4);
+            description = description.Substring(3, description.Length - 3);
             return description;
         }
         public SimpleTerm GetTermByString(string wordAndDescr)
