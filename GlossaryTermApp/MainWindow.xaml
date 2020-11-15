@@ -20,7 +20,7 @@
         </HamburgerMenu:HamburgerMenu>
         <Grid x:Name="WorkPlace" Margin="55,0,-0.4,0">
             <Canvas x:Name="instructions" Visibility="Visible" Margin="15,10,10,10">
-                <Image Source="image/help.png" Height="31" Width="42" Canvas.Left="672" ToolTip="Здесь описано, что значит каждый из значков меня. Чтобы перейти в необходимый раздел, просто нажмите на него в меню слева." />
+                <Image Source="image/help.png" Height="31" Width="42" Canvas.Left="672" ToolTip="Вы видите описания разделов меню. Чтобы перейти в необходимый раздел, нажмите на соответствующую иконку в столбце слева." />
                 <Image Source="image/home.png" Canvas.Top="23" Canvas.Left="10" Height="32" Width="32"></Image>
                 <Image Source="image/edit.png" Canvas.Top="73" Canvas.Left="10" Height="32" Width="32"></Image>
                 <Image Source="image/book.png" Canvas.Top="123" Canvas.Left="10" Height="32" Width="32"></Image>
