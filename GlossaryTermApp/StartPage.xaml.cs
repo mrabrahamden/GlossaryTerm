@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using SerializerLib;
+using Xceed.Wpf.AvalonDock.Controls;
 
 namespace GlossaryTermApp
 {
@@ -11,13 +14,52 @@ namespace GlossaryTermApp
     /// </summary>
     public partial class StartPage : Window
     {
-        public StartPage()
-        {
-            InitializeComponent();
-        }
-
         internal int grade;
         internal string subject;
+        internal Serializer serializer=new Serializer();
+        private List<string> listOfSubjects=new List<string>()
+        {
+            "Астрономия",
+            "Английский язык",
+            "Биология",
+            "География",
+            "Изобразительное искусство",
+            "Информатика",
+            "История",
+            "Литература",
+            "Математика",
+            "Музыка",
+            "МХК",
+            "ОБЖ",
+            "Обществознание",
+            "Право",
+            "Русский язык",
+            "Технология",
+            "Физика",
+            "Французский язык",
+            "Химия"
+        };
+
+        public StartPage()
+        {
+            
+            InitializeComponent();
+            foreach (var subject in listOfSubjects)
+            {
+                ComboBoxSubject.Items.Add(subject);
+            }
+            if (serializer.Settings.Class != 0)
+            {
+                ComboBoxGrade.SelectedIndex = serializer.Settings.Class-1;
+            }
+
+            if (ComboBoxSubject.Items.Contains(serializer.Settings.Subject))
+            {
+                ComboBoxSubject.SelectedIndex = ComboBoxSubject.Items.IndexOf(serializer.Settings.Subject);
+            }
+
+        }
+
         private void ButtonStart_OnClick(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrEmpty(ComboBoxGrade.Text) && !String.IsNullOrEmpty(ComboBoxSubject.Text))
@@ -31,8 +73,8 @@ namespace GlossaryTermApp
                     grade = int.Parse(regex.Match(input).ToString());
                     subject = ComboBoxSubject.Text;
                 }
-
-                Serializer serializer = new Serializer(grade, subject);
+                serializer = new Serializer(grade, subject);
+                serializer.SaveSettings();
                 serializer.Deserialize();
                 MainWindow mainWindow = new MainWindow(serializer);
                 this.Hide();
@@ -45,7 +87,5 @@ namespace GlossaryTermApp
             }
         }
 
-        private void SelectionCheck()
-        {}
     }
 }

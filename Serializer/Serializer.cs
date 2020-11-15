@@ -12,26 +12,29 @@ namespace SerializerLib
     public class Serializer 
     {
         public List<SimpleTerm> TermList=new List<SimpleTerm>();
-        public static int Class;
-        public static string Subject;
-
-        private Settings settings;
         public string DefaultPath =
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Teacherry\\";
-
         public string Path;
         public string FileName;
-        BinaryFormatter formatter = new BinaryFormatter();
+        private string settingsFileName = "settings.dat";
+        internal BinaryFormatter formatter = new BinaryFormatter();
+        public Settings Settings=new Settings(0,null);
 
-        public Serializer(int cl,string subj)
+        public Serializer()
         {
-            Class = cl;
-            Subject = subj;
-            FileName = Class + ".dat";
-            Path = DefaultPath + Subject + "\\";
+            GetSettings();
+            FileName = Settings.Class + ".dat";
+            Path = DefaultPath + Settings.Subject + "\\";
             Deserialize();
         }
-
+        public Serializer(int cl,string subj)
+        {
+            Settings.Class = cl;
+            Settings.Subject = subj;
+            FileName = Settings.Class + ".dat";
+            Path = DefaultPath + Settings.Subject + "\\";
+            Deserialize();
+        }
         public void DeleteTermByString(string wordAndDescrString)
         {
             Regex regex=new Regex(@"((\w)+\s?)+");
@@ -40,7 +43,6 @@ namespace SerializerLib
             var descr = GetTermDescriptionByString(wordAndDescrString);
             TermList.RemoveAll((simpleTerm => simpleTerm.Word==term && simpleTerm.Description==descr));
         }
-
         public string GetTermNameByString(string wordAndDescrString)
         {
             Regex regex = new Regex(@"((\w)+\s?)+");
@@ -48,7 +50,6 @@ namespace SerializerLib
             term = term.Substring(0, term.Length - 1);
             return term;
         }
-
         public string GetTermDescriptionByString(string wordAndDescrString)
         {
             Regex regex = new Regex(@" -- .+");
@@ -57,7 +58,6 @@ namespace SerializerLib
             description = description.Substring(4, description.Length - 4);
             return description;
         }
-
         public SimpleTerm GetTermByString(string wordAndDescr)
         {
             var result= TermList.Find(term =>
@@ -65,7 +65,6 @@ namespace SerializerLib
                 term.Description == GetTermDescriptionByString(wordAndDescr));
             return result;
         }
-
         public List<SimpleTerm> LookForAWord(string word)
         {
             var result = new List<SimpleTerm>();
@@ -126,7 +125,8 @@ namespace SerializerLib
                 }
                 else
                 {
-                    Serialize();
+                    if(Settings.Class>0)
+                        Serialize();
                 }
             }
             catch (Exception)
@@ -134,49 +134,60 @@ namespace SerializerLib
                 MessageBox.Show("Ошибка десериализации");
             }
         }
-        private void CheckForPathExist(string path)
+        internal void CheckForPathExist(string path)
         {
-            if (!Directory.Exists(Path))
-                Directory.CreateDirectory(Path);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
 
-        private void GetSettings()
+        private bool GetSettings()
         {
-            string fileName = "settings.dat";
             CheckForPathExist(DefaultPath);
             try
             {
-                if (File.Exists(DefaultPath + fileName))
+                if (File.Exists(DefaultPath + settingsFileName))
                 {
-                    using (FileStream fs = new FileStream(DefaultPath + fileName, FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(DefaultPath + settingsFileName, FileMode.OpenOrCreate))
                     {
-                        settings = (Settings)formatter.Deserialize(fs);
-                        Console.WriteLine("Десериализован");
+                        Settings = (Settings)formatter.Deserialize(fs);
+                        return true;
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Ошибка десериализации");
+                return false;
             }
         }
 
-        public void SaveSettings(Settings settings)
+        public bool SaveSettings()
         {
+            CheckForPathExist(DefaultPath);
+            try
+            {
+                using (FileStream fs = new FileStream(DefaultPath + settingsFileName, FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, Settings);
+                    return true;
+                }
 
-        }
-    }
-
-    [Serializable]
-    public class Settings
-    {
-        public string Subject;
-        public int Class;
-
-        public Settings(int cl, string sub)
-        {
-            Class = cl;
-            Subject = sub;
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    File.Delete(DefaultPath + settingsFileName);
+                }
+                catch (Exception)
+                {
+                    //не удалось удалить файл настроек
+                }
+                return false;
+            }
         }
     }
 }
