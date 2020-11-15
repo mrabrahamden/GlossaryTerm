@@ -15,6 +15,7 @@ namespace SerializerLib
         public static int Class;
         public static string Subject;
 
+        private Settings settings;
         public string DefaultPath =
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Teacherry\\";
 
@@ -24,8 +25,7 @@ namespace SerializerLib
 
         public Serializer(int cl,string subj)
         {
-            if(cl<=11&&cl>=1)
-                Class = cl;
+            Class = cl;
             Subject = subj;
             FileName = Class + ".dat";
             Path = DefaultPath + Subject + "\\";
@@ -101,7 +101,7 @@ namespace SerializerLib
         }
         public void Serialize()
         {
-            CheckForPathExist();
+            CheckForPathExist(Path);
             using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, TermList);
@@ -110,7 +110,7 @@ namespace SerializerLib
         }
         public void Deserialize()
         {
-            CheckForPathExist();
+            CheckForPathExist(Path);
             try
             {
                 if (File.Exists(Path + FileName))
@@ -134,10 +134,49 @@ namespace SerializerLib
                 MessageBox.Show("Ошибка десериализации");
             }
         }
-        private void CheckForPathExist()
+        private void CheckForPathExist(string path)
         {
             if (!Directory.Exists(Path))
                 Directory.CreateDirectory(Path);
+        }
+
+        private void GetSettings()
+        {
+            string fileName = "settings.dat";
+            CheckForPathExist(DefaultPath);
+            try
+            {
+                if (File.Exists(DefaultPath + fileName))
+                {
+                    using (FileStream fs = new FileStream(DefaultPath + fileName, FileMode.OpenOrCreate))
+                    {
+                        settings = (Settings)formatter.Deserialize(fs);
+                        Console.WriteLine("Десериализован");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка десериализации");
+            }
+        }
+
+        public void SaveSettings(Settings settings)
+        {
+
+        }
+    }
+
+    [Serializable]
+    public class Settings
+    {
+        public string Subject;
+        public int Class;
+
+        public Settings(int cl, string sub)
+        {
+            Class = cl;
+            Subject = sub;
         }
     }
 }
