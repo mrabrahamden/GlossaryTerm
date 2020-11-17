@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -10,6 +13,12 @@ using System.Windows.Media.Imaging;
 using MatchGameLib;
 using TermLib;
 using Color = System.Windows.Media.Color;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using DataFormats = System.Windows.DataFormats;
+using DragDropEffects = System.Windows.DragDropEffects;
+using DragEventArgs = System.Windows.DragEventArgs;
+using Orientation = System.Windows.Controls.Orientation;
 
 namespace GlossaryTermApp
 {
@@ -210,6 +219,49 @@ namespace GlossaryTermApp
                 resultWindow.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void SaveToPdf(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
+            saveFileDialog.RestoreDirectory = true;
+            DialogResult result = saveFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
+                Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
+                document.Open();
+                //создание таблицы
+                PdfPTable table = new PdfPTable(2);
+                List<string> listOfTerms = (from t in MatchGame.TermList select t.Word).ToList();
+                List<string> listOfDescr = (from t in MatchGame.TermList select t.Description).ToList();
+                Random random = new Random(DateTime.Now.Millisecond);
+                int count = 0;
+                BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+                while (listOfTerms.Count > 0)
+                {
+                    count = random.Next() % listOfTerms.Count;
+                    table.AddCell(new Phrase(listOfTerms[count], font));
+                    listOfTerms.RemoveAt(count);
+                    count = random.Next() % listOfDescr.Count;
+                    table.AddCell(new Phrase(listOfDescr[count], font));
+                    listOfDescr.RemoveAt(count);
+                }
+                document.Add(table);
+                document.Close();
+                writer.Close();
+                fStream.Close();
+            }
+        }
+
+        private void SaveBTN_OnClick(object sender, RoutedEventArgs e)
+        {
+            SaveToPdf(sender,e);
         }
     }
 

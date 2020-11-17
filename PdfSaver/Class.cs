@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -21,8 +22,18 @@ namespace PdfSaver
             if (result == DialogResult.OK)
             {
                 string fileName = saveFileDialog.FileName;
-                ImageToPdfConverter.ImageToPdf(srcimage,ImageBehavior.TopLeftCornerOfPage,true).SaveAs(Path.Combine(fileName));
+                ImageToPdfConverter.ImageToPdf(srcimage,ImageBehavior.FitToPage,true).SaveAs(Path.Combine(fileName));
             }
+        }
+
+        public void MergePdfs()
+        {
+            var PDFs = new List<PdfDocument>();
+            PDFs.Add(PdfDocument.FromFile("A.pdf"));
+            PDFs.Add(PdfDocument.FromFile("B.pdf"));
+            PDFs.Add(PdfDocument.FromFile("C.pdf"));
+            PdfDocument PDF = PdfDocument.Merge(PDFs);
+            PDF.SaveAs("merged.pdf");
         }
     }
 
