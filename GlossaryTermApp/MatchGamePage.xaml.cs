@@ -248,7 +248,6 @@ namespace GlossaryTermApp
                 document.Add(header);
                 Random random = new Random(DateTime.Now.Millisecond);
                 int count = 0;
-                
                 PdfPTable table = new PdfPTable(2);
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
                
