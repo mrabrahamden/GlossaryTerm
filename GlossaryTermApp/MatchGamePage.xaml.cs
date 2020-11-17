@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -228,21 +227,31 @@ namespace GlossaryTermApp
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
             saveFileDialog.RestoreDirectory = true;
             DialogResult result = saveFileDialog.ShowDialog();
+
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                string fileName = saveFileDialog.FileName;
-                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
-                Document document = new Document(PageSize.A4, 10, 10, 10, 10);
-                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
-                document.Open();
-                //создание таблицы
-                PdfPTable table = new PdfPTable(2);
                 List<string> listOfTerms = (from t in MatchGame.TermList select t.Word).ToList();
                 List<string> listOfDescr = (from t in MatchGame.TermList select t.Description).ToList();
-                Random random = new Random(DateTime.Now.Millisecond);
-                int count = 0;
+                string fileName = saveFileDialog.FileName;
+                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
+                Document document = new Document(PageSize.A4, 10, 10, 50, 10);
+                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
+                document.Open();
+                //шрифт для кириллицы
                 BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
                 Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+                //создание таблицы
+                Phrase task = new Phrase("Соедините термин из левой колонки с его определением.",font);
+                Paragraph header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_CENTER;
+                header.SpacingAfter = 30;
+                document.Add(header);
+                Random random = new Random(DateTime.Now.Millisecond);
+                int count = 0;
+                
+                PdfPTable table = new PdfPTable(2);
+                table.DefaultCell.Border = Rectangle.NO_BORDER;
+               
                 while (listOfTerms.Count > 0)
                 {
                     count = random.Next() % listOfTerms.Count;
@@ -251,6 +260,12 @@ namespace GlossaryTermApp
                     count = random.Next() % listOfDescr.Count;
                     table.AddCell(new Phrase(listOfDescr[count], font));
                     listOfDescr.RemoveAt(count);
+                    //добавим пробел, чтобы ряды не стояли плотно
+                    PdfPCell cell = new PdfPCell(new Phrase(""));
+                    cell.Colspan = 2;
+                    cell.FixedHeight = 8;
+                    cell.Border = Rectangle.NO_BORDER;
+                    table.AddCell(cell);
                 }
                 document.Add(table);
                 document.Close();

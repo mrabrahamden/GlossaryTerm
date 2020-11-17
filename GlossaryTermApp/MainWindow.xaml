@@ -87,7 +87,7 @@
                     <Button x:Name="FillGameEditorBTN" Content="Редактор" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameEditorBTN_Click"/>
                 </Grid>
             </StackPanel>
-            <StackPanel x:Name="DictionaryStackPanel" Visibility="Visible" RenderTransformOrigin="0.508,0.613" >
+            <StackPanel x:Name="DictionaryStackPanel" Visibility="Hidden" RenderTransformOrigin="0.508,0.613" >
                 <DockPanel Margin="0,10,0.2,0" >
                     <TextBox x:Name="SearchTB" Height="30" TextWrapping="Wrap" FontSize="20" Text="" Width="630" RenderTransformOrigin="0.5,0.406" Margin="0" KeyDown="SearchTB_OnKeyDown"/>
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchButton_OnClick" Foreground="Black" Content="&#xE721;" />
@@ -98,7 +98,7 @@
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical" Width="694"/>
                 </ScrollViewer>
             </StackPanel>
-            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
+            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="0,10,0,0" Width="189" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Игра 'Соответствия'"/>
                 </Grid>
@@ -113,7 +113,6 @@
                 </StackPanel>
                 <Button x:Name="MatchGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,150,0,150" Width="184" Height="51" FontSize="20" Click="MatchGameStartBTN_Click" Panel.ZIndex="-3"/>
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>
