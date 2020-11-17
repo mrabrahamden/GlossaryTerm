@@ -56,6 +56,7 @@ namespace TermLib
 
         public void FillingListsForFillGame()
         {
+            DescriptionWordsAndSplittersList.Clear();
             Regex regexForWordAndSplit=new Regex(@"(\w)+((\W)+)?");
             Regex regexForWord=new Regex(@"(\w)+");
             Regex regexForSplit=new Regex(@"(\W)+");

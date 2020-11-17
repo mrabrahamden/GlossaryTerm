@@ -6,32 +6,47 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using FillGameLib;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Text;
+using TermLib;
+using System.Windows.Forms;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
 {
     public partial class FillGamePage : Window
     {
         private FillGame game;
-
+        private List<SimpleTerm> list;
+        private List<bool> listOfSkippedWords;
         private int numOfSkipWords = 0;
+        private List<StringBuilder> listOfBuilders=new List<StringBuilder>();
         public FillGamePage(FillGame game)
         {
             InitializeComponent();
             this.game = game;
-            var list = game.List.FindAll((term => term.ReadyForFillGame)).ToList();
+            this.list = game.List.FindAll((term => term.ReadyForFillGame)).ToList();
             if (list.Count > 0)
             {
+                int count = 1;
                 foreach (var gameWord in list)
                 {
                     string word = gameWord.Word;                 //вывод самого термина
-                    var listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
+                    listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
                         gameWord.DescriptionWordsAndSplittersList
                             .FindAll((descriptionWord => descriptionWord.IsKeyWord)).Count);
                     numOfSkipWords += listOfSkippedWords.FindAll((b =>b==true )).Count;
                     TextBlock newWord = new TextBlock { Text = word + " ⸺ ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold};
                     WrapPanel panelForOneWord = new WrapPanel();
                     panelForOneWord.VerticalAlignment = VerticalAlignment.Top;
-                    panelForOneWord.Children.Add(newWord);                                       
+                    panelForOneWord.Children.Add(newWord);
+
+                    StringBuilder termBuilder = new StringBuilder();
+
+                    termBuilder.Append(count.ToString()+". "+word.ToString() + " - ");
+                    count++;
                     foreach (var wordPart in gameWord.DescriptionWordsAndSplittersList) //печать слов из определения
                     {
                         if (wordPart.IsKeyWord&&listOfSkippedWords.Count>0)
@@ -47,12 +62,19 @@ namespace GlossaryTermApp
                                 }
 
                                 panelForOneWord.Children.Add(skippedWord);
+
+                                for (int i = 0; i < wordPart.Word.Length; i++)
+                                {
+                                    termBuilder.Append("_");
+                                }
                             }
                             else
                             {
                                 TextBlock skippedWord = new TextBlock()
                                     { Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap };
                                 panelForOneWord.Children.Add(skippedWord);
+
+                                termBuilder.Append(wordPart.Word);
                             }
 
                             listOfSkippedWords.RemoveAt(0);
@@ -62,9 +84,13 @@ namespace GlossaryTermApp
                             TextBlock notSkippedWord = new TextBlock()
                                 {Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap};
                             panelForOneWord.Children.Add(notSkippedWord);
+
+                            termBuilder.Append(wordPart.Word);
                         }
                             
                     }
+                    termBuilder.Append(".");
+                    listOfBuilders.Add(termBuilder);
                     Separator separate = new Separator();
                     panelForOneWord.Margin=new Thickness(0,7,0,7);
                     stackPanelOutput.Children.Add(panelForOneWord);
@@ -177,6 +203,46 @@ namespace GlossaryTermApp
 
             numOfErrors = 0;
         }
+        public void SaveToPdf(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
+            saveFileDialog.RestoreDirectory = true;
+            DialogResult result = saveFileDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
+                Document document = new Document(PageSize.A4, 40, 40, 50, 50);
+                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
+                document.Open();
+                //шрифт для кириллицы
+                BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+                
+                Phrase task = new Phrase("Вставьте пропущенные слова.", font);
+                Paragraph header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_CENTER;
+                header.SpacingAfter = 30;
+                document.Add(header);
+
+
+
+                foreach (var term in listOfBuilders)
+                {
+                    Phrase phrase=new Phrase(term.ToString(),font);
+                    Paragraph paragraph = new Paragraph(phrase);
+                    document.Add(paragraph);
+                }
+
+                document.Close();
+                writer.Close();
+                fStream.Close();
+            }
+        }
+
     }
     ////https://github.com/xceedsoftware/wpftoolkit/wiki/IntegerUpDown про UpDown
 }

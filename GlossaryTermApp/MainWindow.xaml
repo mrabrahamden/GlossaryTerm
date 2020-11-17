@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Teacherry" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Teacherry" Height="450" Width="800" ResizeMode="NoResize" Closing="MainWindow_OnClosing">
 
     <Grid ShowGridLines="False" Background="White">
         <HamburgerMenu:HamburgerMenu x:Name="Menu" FontSize="16" Background="WhiteSmoke" MenuIconColor="#FFBD2525" SelectionIndicatorColor="#FFBD2525" MenuItemForeground="Black" HorizontalAlignment="Left" MaxWidth="50" Panel.ZIndex="-1">
@@ -61,7 +61,7 @@
                     <Button x:Name="CrosswordStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="515,160,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="CrosswordStartBTN_Click"/>
                 </Grid>
             </StackPanel>
-            <StackPanel x:Name="FillGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
+            <StackPanel x:Name="FillGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Заполни пропуски'"/></TextBlock>
                 </Grid>
@@ -83,6 +83,7 @@
                     <xctk:IntegerUpDown x:Name="FillGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="1"/>
                 </StackPanel>
                 <Grid Height="139">
+                    <Button  x:Name="SaveBTN" Content="&#xEA90;" ToolTip="Сохранить в формате PDF" FontFamily="Segoe MDL2 Assets" FontSize="25" Height="51" Width="52" Foreground="IndianRed" Click="SaveBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,184,10"/>
                     <Button x:Name="FillGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="515,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameStartBTN_Click"/>
                     <Button x:Name="FillGameEditorBTN" Content="Редактор" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameEditorBTN_Click"/>
                 </Grid>
@@ -98,7 +99,7 @@
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical" Width="694"/>
                 </ScrollViewer>
             </StackPanel>
-            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
+            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="0,10,0,0" Width="189" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Игра 'Соответствия'"/>
                 </Grid>

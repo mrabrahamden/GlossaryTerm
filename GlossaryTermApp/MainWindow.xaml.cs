@@ -1,19 +1,18 @@
-﻿using System.Windows;
-using PdfSaver;
-using SerializerLib;
-using System.Windows.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Interop;
-using CrosswordLib;
-using TermLib;
+﻿using CrosswordLib;
 using FillGameLib;
 using MatchGameLib;
+using SerializerLib;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using TermLib;
 using Brushes = System.Windows.Media.Brushes;
 
 namespace GlossaryTermApp
@@ -37,7 +36,7 @@ namespace GlossaryTermApp
             _editedTerm = new SimpleTerm("", "");
         }
 
-       
+
         private void ClearWorkPlace()
         {
             foreach (UIElement workPlaceChild in WorkPlace.Children)
@@ -94,17 +93,18 @@ namespace GlossaryTermApp
             TermTB.Text = Serializer.GetTermNameByString(wordAndDescr);
             DescriptionTB.Text = Serializer.GetTermDescriptionByString(wordAndDescr);
             _editedTerm = Serializer.GetTermByString(wordAndDescr);
+            _editedTerm.FillingListsForFillGame();
         }
 
         private bool _editMode = false;
         private SimpleTerm _editedTerm;
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var button = (Button) sender;
-            var btnPanel =(StackPanel) button.Parent;
-            var panelForOneWord = (DockPanel) btnPanel.Parent;
-            var newWord = (TextBlock) panelForOneWord.Children.OfType<TextBlock>().First();
-            panelForOneWord.Visibility = Visibility.Hidden; 
+            var button = (Button)sender;
+            var btnPanel = (StackPanel)button.Parent;
+            var panelForOneWord = (DockPanel)btnPanel.Parent;
+            var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
+            panelForOneWord.Visibility = Visibility.Hidden;
             Serializer.DeleteTermByString(newWord.Text);
             DictionaryItem_Selected(null, null);
             Serializer.Serialize();
@@ -118,8 +118,9 @@ namespace GlossaryTermApp
 
         private void ExitItem_OnSelected(object sender, RoutedEventArgs e)
         {
+            Serializer.Serialize();
             this.Hide();
-            StartPage startPage=new StartPage();
+            StartPage startPage = new StartPage();
             startPage.Show();
             this.Close();
         }
@@ -142,7 +143,7 @@ namespace GlossaryTermApp
             {
                 if (!_editMode)
                 {
-                
+
                     try
                     {
                         var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
@@ -161,7 +162,7 @@ namespace GlossaryTermApp
                         MessageBox.Show("Не удалось добавить новый термин.");
                     }
 
-               
+
                 }
                 else
                 {
@@ -242,8 +243,8 @@ namespace GlossaryTermApp
                 foreach (var term in list)
                 {
                     string wordAndDescription = term.ToString();
-                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0,0,5,0), Width = 676};
-                    DockPanel panelForOneWord = new DockPanel() {Margin = new Thickness(0,5,0,5)};
+                    TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0, 0, 5, 0), Width = 676 };
+                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 0, 5) };
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
@@ -278,7 +279,7 @@ namespace GlossaryTermApp
             }
             else
             {
-                TextBlock newWord = new TextBlock {TextWrapping = TextWrapping.Wrap, FontSize = 16};
+                TextBlock newWord = new TextBlock { TextWrapping = TextWrapping.Wrap, FontSize = 16 };
 
                 if (SearchMode)
                 {
@@ -301,7 +302,7 @@ namespace GlossaryTermApp
             DictionaryItem_Selected(null, null);
         }
 
-        private List<SimpleTerm> _fillGameList=new List<SimpleTerm>();
+        private List<SimpleTerm> _fillGameList = new List<SimpleTerm>();
         private void FillGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
@@ -318,16 +319,16 @@ namespace GlossaryTermApp
             fillGameEditorPage.DataContext = _fillGameList;
         }
 
-        
+        private FillGame fillGame = null;
+        private bool isPdfSaving=false;
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
+            bool isCreated = false;
+            int lvl = 0;
+            bool fixedLength = false;
+            bool trainingMode = false;
             if (Serializer.TermList.Count > 0)
             {
-                bool isCreated = false;
-                FillGame fillGame;
-                int lvl = 0;
-                bool fixedLength = false;
-                bool trainingMode = false;
                 try
                 {
                     if (FillGameEasyLvl.IsChecked == true)
@@ -363,8 +364,12 @@ namespace GlossaryTermApp
                 if (isCreated)
                 {
                     fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
-                    FillGamePage fillGamePage = new FillGamePage(fillGame);
-                    fillGamePage.ShowDialog();
+                    if (!isPdfSaving)
+                    {
+                        FillGamePage fillGamePage = new FillGamePage(fillGame);
+                        fillGamePage.ShowDialog();
+                    }
+                    isPdfSaving = false;
                 }
                 else
                 {
@@ -375,6 +380,7 @@ namespace GlossaryTermApp
             {
                 MessageBox.Show("В словаре недостаточно терминов для начала.");
             }
+
         }
 
         private void MatchGameItem_Selected(object sender, RoutedEventArgs e)
@@ -389,8 +395,8 @@ namespace GlossaryTermApp
         {
             if (Serializer.TermList.Count > 0)
             {
-                MatchGame matchGame = new MatchGame(Serializer.TermList, (int) MatchGameCountUpDown.Value,
-                    (bool) MatchGameTrainingMode.IsChecked);
+                MatchGame matchGame = new MatchGame(Serializer.TermList, (int)MatchGameCountUpDown.Value,
+                    (bool)MatchGameTrainingMode.IsChecked);
                 MatchGamePage matchGamePage = new MatchGamePage(matchGame);
                 matchGamePage.ShowDialog();
             }
@@ -415,10 +421,10 @@ namespace GlossaryTermApp
             {
                 lvl = 3;
             }
-            CrosswordGame crosswordGame=new CrosswordGame(Serializer.TermList,lvl);
+            CrosswordGame crosswordGame = new CrosswordGame(Serializer.TermList, lvl);
             if (crosswordGame.IsReady)
             {
-                CrosswordGamePage crosswordGamePage=new CrosswordGamePage(crosswordGame);
+                CrosswordGamePage crosswordGamePage = new CrosswordGamePage(crosswordGame);
                 crosswordGamePage.ShowDialog();
             }
             else
@@ -429,7 +435,7 @@ namespace GlossaryTermApp
 
         private void ButtonFullScreen_OnClick(object sender, RoutedEventArgs e)
         {
-            FullScreenDictionaryPage fullScreenDictionaryPage=new FullScreenDictionaryPage(this);
+            FullScreenDictionaryPage fullScreenDictionaryPage = new FullScreenDictionaryPage(this);
             fullScreenDictionaryPage.ShowDialog();
         }
 
@@ -439,6 +445,18 @@ namespace GlossaryTermApp
             {
                 SearchButton_OnClick(null, null);
             }
+        }
+
+        private void SaveBTN_OnClick(object sender, RoutedEventArgs e)
+        {
+            isPdfSaving = true;
+            FillGameStartBTN_Click(null, null);
+            new FillGamePage(fillGame).SaveToPdf(sender, e);
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            Serializer.Serialize();
         }
     }
 }
