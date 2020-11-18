@@ -193,7 +193,7 @@ namespace GlossaryTermApp
                 int count = 1;
                  foreach(var term in list)
                 {
-                    sb.Append(count.ToString() + ") " + term.Word+" - "+term.Description + ".");
+                    sb.Append(count.ToString() + ". " + term.Word+" - "+term.Description + ".");
                     Phrase phrase = new Phrase(sb.ToString(), font);
                     Paragraph paragraph = new Paragraph(phrase);
                     document.Add(paragraph);
