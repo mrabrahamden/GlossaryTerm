@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using TermLib;
 using Brushes = System.Windows.Media.Brushes;
 
+
 namespace GlossaryTermApp
 {
     public partial class MainWindow : Window
@@ -458,5 +459,12 @@ namespace GlossaryTermApp
         {
             Serializer.Serialize();
         }
+
+        private void BtnDictionarySavePdf_OnClick(object sender, RoutedEventArgs e)
+        {
+            new FullScreenDictionaryPage(this).BtnSavePdf_Click(sender, e);
+
+        }
+    
     }
 }

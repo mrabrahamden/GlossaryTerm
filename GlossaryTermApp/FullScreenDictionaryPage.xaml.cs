@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using SerializerLib;
 using TermLib;
 using Button = System.Windows.Controls.Button;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using Paragraph = iTextSharp.text.Paragraph;
+using Path = System.IO.Path;
 
 namespace GlossaryTermApp
 {
@@ -149,6 +154,59 @@ namespace GlossaryTermApp
             {
                 SearchButton_OnClick(null, null);
             }
+        }
+
+        public void BtnSavePdf_Click(object sender, RoutedEventArgs e)
+        {
+            //Надо проверить на пустоту словаря 
+          //  if(mainWindow.Serializer.TermList.Count==0)
+          //  {
+           //     MessageBox.Show("В Вашем словаре пока нет терминов. Добавьте их и сохраните.");
+           // }
+            List<SimpleTerm> list = new List<SimpleTerm>();
+            list = mainWindow.Serializer.TermList;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
+            saveFileDialog.RestoreDirectory = true;
+            DialogResult result = saveFileDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
+                Document document = new Document(PageSize.A4, 40, 40, 50, 50);
+                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
+                document.Open();
+                //шрифт для кириллицы
+                BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+
+
+                string nameOfFile = mainWindow.Serializer.Settings.Subject + ". " + mainWindow.Serializer.Settings.Class + " класс.";
+                Phrase task = new Phrase(nameOfFile, font);
+                Paragraph header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_CENTER;
+                header.SpacingAfter = 30;
+                document.Add(header);
+                var sb = new StringBuilder();
+                int count = 1;
+                 foreach(var term in list)
+                {
+                    sb.Append(count.ToString() + ")" + term.Word+"-"+term.Description + ".");
+                    Phrase phrase = new Phrase(sb.ToString(), font);
+                    Paragraph paragraph = new Paragraph(phrase);
+                    document.Add(paragraph);
+                    count++;
+                    sb.Clear();
+                }
+                document.Close();
+                writer.Close();
+                fStream.Close();
+
+            }
+        
+
         }
     }
 }
