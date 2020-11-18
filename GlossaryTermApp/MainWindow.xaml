@@ -94,7 +94,7 @@
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchButton_OnClick" Foreground="Black" Content="&#xE721;" />
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchEmptyButton_Click" Foreground="Red" Content="&#xE711;" />
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="ButtonFullScreen_OnClick" Foreground="Black" Content="&#xE740;" />
-                    <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="BtnDictionarySavePdf_OnClick" Foreground="Red" Content="&#xEA90;" />
+                    <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" ToolTip="Сохранить словарь." Click="BtnDictionarySavePdf_OnClick" Foreground="Red" Content="&#xEA90;" />
                 </DockPanel>
                 <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,20,0,0" VerticalAlignment="Top" Width="720">
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical" Width="694"/>
