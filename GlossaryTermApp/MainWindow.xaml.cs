@@ -1,23 +1,23 @@
 ﻿using CrosswordLib;
 using FillGameLib;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using MatchGameLib;
 using SerializerLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TermLib;
 using Brushes = System.Windows.Media.Brushes;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.IO;
-using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using Color = iTextSharp.text.Color;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
@@ -482,7 +482,7 @@ namespace GlossaryTermApp
         private void CrosswordSaveBTN_OnClick(object sender, RoutedEventArgs e)
         {
             isPdfSaving = true;
-            CrosswordStartBTN_Click(sender,e);
+            CrosswordStartBTN_Click(sender, e);
             if (_crosswordGame.IsReady)
             {
                 CrosswordSaveToPdf(_crosswordGame);
@@ -495,7 +495,7 @@ namespace GlossaryTermApp
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
-            //saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.RestoreDirectory = false;
             DialogResult result = saveFileDialog.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK)
@@ -518,29 +518,38 @@ namespace GlossaryTermApp
 
                 PdfPTable table = new PdfPTable(game.CrosswordMatrix.GetLength(1));
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
-
-                float _cellHeight = (document.PageSize.Width-document.LeftMargin-document.RightMargin) / game.CrosswordMatrix.GetLength(1);
+                char _nochar = ' ';
+                float _cellHeight = (document.PageSize.Width - document.LeftMargin - document.RightMargin) / game.CrosswordMatrix.GetLength(1);
                 for (int i = 0; i < game.CrosswordMatrix.GetLength(0); i++)
                 {
                     for (int j = 0; j < game.CrosswordMatrix.GetLength(1); j++)
                     {
                         if (game.CrosswordMatrix[i, j] != null)
                         {
-                            if (game.MainWordHorizontalIndex == j)
-                                table.AddCell(new PdfPCell() {BackgroundColor = Color.LIGHT_GRAY,FixedHeight = _cellHeight});
+                            if (game.CrosswordMatrix[i, j].Letter != _nochar)
+                            {
+                                if (game.MainWordHorizontalIndex == j)
+                                    table.AddCell(new PdfPCell()
+                                    { BackgroundColor = Color.LIGHT_GRAY, FixedHeight = _cellHeight });
+                                else
+                                    table.AddCell(new PdfPCell() { FixedHeight = _cellHeight });
+                            }
                             else
-                                table.AddCell(new PdfPCell(){FixedHeight = _cellHeight});
+                            {
+                                table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = _cellHeight });
+                            }
                         }
                         else
                         {
-                            table.AddCell(new PdfPCell(){Border=Rectangle.NO_BORDER,FixedHeight = _cellHeight});
+                            table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = _cellHeight });
                         }
                     }
+
                 }
                 table.SpacingAfter = 30;
                 document.Add(table);
 
-                task = new Phrase("По вертикали: ", font); 
+                task = new Phrase("По вертикали: ", font);
                 header = new Paragraph(task);
                 header.Alignment = Element.ALIGN_LEFT;
                 header.SpacingAfter = 30;
@@ -559,7 +568,7 @@ namespace GlossaryTermApp
                 header.SpacingAfter = 30;
                 document.Add(header);
 
-                for (int i =1;i<game.CrossWordTerms.Length-1;i++)
+                for (int i = 1; i < game.CrossWordTerms.Length - 1; i++)
                 {
                     if (game.CrossWordTerms[i] != null)
                     {
