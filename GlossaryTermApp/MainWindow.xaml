@@ -45,7 +45,7 @@
                 <Button x:Name="EditBTN" Content="Изменить" IsHitTestVisible="True" Margin="478,10,28,0" Height="35" FontSize="20" Click="EditBTN_Click"/>
                 <Button x:Name="ClearBTN" Content="Очистить" Margin="478,10,28,0" Height="33" FontSize="20" Click="ClearBTN_Click"/>
             </StackPanel>
-            <StackPanel x:Name="CrosswordStackPanel" Visibility="Visible" Margin="15,31,15.4,15">
+            <StackPanel x:Name="CrosswordStackPanel" Visibility="Hidden" Margin="15,31,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"><Run Text="Игра 'Кроссворд'"/></TextBlock>
                 </Grid>
@@ -101,7 +101,7 @@
                     <StackPanel x:Name="StackPanelForWords" Orientation="Vertical" Width="694"/>
                 </ScrollViewer>
             </StackPanel>
-            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
+            <StackPanel x:Name="MatchGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="0,10,0,0" Width="189" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Игра 'Соответствия'"/>
                 </Grid>
@@ -114,7 +114,10 @@
                     <TextBlock Text="  Количество слов:      " FontSize="20"></TextBlock>
                     <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="1"/>
                 </StackPanel>
-                <Button x:Name="MatchGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,150,0,150" Width="184" Height="51" FontSize="20" Click="MatchGameStartBTN_Click" Panel.ZIndex="-3"/>
+                <Grid>
+                <Button x:Name="MatchGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="500,150,0,150" Width="184" Height="52" FontSize="20" Click="MatchGameStartBTN_Click"/>
+                <Button  x:Name="MatchGameSaveBTN" Content="&#xEA90;" ToolTip="Сохранить в формате PDF" FontFamily="Segoe MDL2 Assets" FontSize="25" Margin="0,10,184,150" Height="52" Foreground="IndianRed" Click="MatchGameSaveBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="52"/>
+                </Grid>
             </StackPanel>
         </Grid>
     </Grid>

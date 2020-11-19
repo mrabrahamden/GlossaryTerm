@@ -12,8 +12,6 @@ using System.Windows.Media.Imaging;
 using MatchGameLib;
 using TermLib;
 using Color = System.Windows.Media.Color;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
@@ -218,64 +216,6 @@ namespace GlossaryTermApp
                 resultWindow.ShowDialog();
                 this.Close();
             }
-        }
-
-        private void SaveToPdf(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
-            saveFileDialog.RestoreDirectory = true;
-            DialogResult result = saveFileDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                List<string> listOfTerms = (from t in MatchGame.TermList select t.Word).ToList();
-                List<string> listOfDescr = (from t in MatchGame.TermList select t.Description).ToList();
-                string fileName = saveFileDialog.FileName;
-                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
-                Document document = new Document(PageSize.A4, 10, 10, 50, 10);
-                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
-                document.Open();
-                //шрифт для кириллицы
-                BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-                Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
-                //создание таблицы
-                Phrase task = new Phrase("Соедините термин из левой колонки с его определением.",font);
-                Paragraph header = new Paragraph(task);
-                header.Alignment = Element.ALIGN_CENTER;
-                header.SpacingAfter = 30;
-                document.Add(header);
-                Random random = new Random(DateTime.Now.Millisecond);
-                int count = 0;
-                PdfPTable table = new PdfPTable(2);
-                table.DefaultCell.Border = Rectangle.NO_BORDER;
-               
-                while (listOfTerms.Count > 0)
-                {
-                    count = random.Next() % listOfTerms.Count;
-                    table.AddCell(new Phrase(listOfTerms[count], font));
-                    listOfTerms.RemoveAt(count);
-                    count = random.Next() % listOfDescr.Count;
-                    table.AddCell(new Phrase(listOfDescr[count], font));
-                    listOfDescr.RemoveAt(count);
-                    //добавим пробел, чтобы ряды не стояли плотно
-                    PdfPCell cell = new PdfPCell(new Phrase(""));
-                    cell.Colspan = 2;
-                    cell.FixedHeight = 8;
-                    cell.Border = Rectangle.NO_BORDER;
-                    table.AddCell(cell);
-                }
-                document.Add(table);
-                document.Close();
-                writer.Close();
-                fStream.Close();
-            }
-        }
-
-        private void SaveBTN_OnClick(object sender, RoutedEventArgs e)
-        {
-            SaveToPdf(sender,e);
         }
     }
 

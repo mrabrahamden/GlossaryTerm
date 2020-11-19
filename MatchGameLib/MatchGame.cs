@@ -9,6 +9,7 @@ namespace MatchGameLib
         public List<SimpleTerm> TermList;
         public int NumOfTerms;
         public bool TrainingMode;
+        public bool IsReady;
 
         public MatchGame(List<SimpleTerm> list, int numOfTerms, bool trainingMode)
         {
@@ -16,6 +17,7 @@ namespace MatchGameLib
             NumOfTerms = numOfTerms;
             TrainingMode = trainingMode;
             GetRandomListOfTerms();
+            IsReady = false;
         }
 
         private void GetRandomListOfTerms()
