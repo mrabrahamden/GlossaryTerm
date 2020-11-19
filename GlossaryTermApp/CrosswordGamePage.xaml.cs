@@ -40,7 +40,7 @@ namespace GlossaryTermApp
             PrepareForm();
         }
 
-        private void PrepareForm()
+        public void PrepareForm()
         {
             PrepareCrossword();
             PrepareAnswers();

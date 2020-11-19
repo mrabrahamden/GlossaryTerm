@@ -14,7 +14,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TermLib;
 using Brushes = System.Windows.Media.Brushes;
-
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Windows.Forms;
+using Button = System.Windows.Controls.Button;
+using Color = iTextSharp.text.Color;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
 
 namespace GlossaryTermApp
 {
@@ -321,7 +329,7 @@ namespace GlossaryTermApp
         }
 
         private FillGame fillGame = null;
-        private bool isPdfSaving=false;
+        private bool isPdfSaving = false;
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
             bool isCreated = false;
@@ -407,6 +415,8 @@ namespace GlossaryTermApp
             }
         }
 
+        private CrosswordGame _crosswordGame = null;
+
         private void CrosswordStartBTN_Click(object sender, RoutedEventArgs e)
         {
             int lvl = 0;
@@ -422,11 +432,15 @@ namespace GlossaryTermApp
             {
                 lvl = 3;
             }
-            CrosswordGame crosswordGame = new CrosswordGame(Serializer.TermList, lvl);
-            if (crosswordGame.IsReady)
+
+            _crosswordGame = new CrosswordGame(Serializer.TermList, lvl);
+            if (_crosswordGame.IsReady)
             {
-                CrosswordGamePage crosswordGamePage = new CrosswordGamePage(crosswordGame);
-                crosswordGamePage.ShowDialog();
+                if (!isPdfSaving)
+                {
+                    CrosswordGamePage crosswordGamePage = new CrosswordGamePage(_crosswordGame);
+                    crosswordGamePage.ShowDialog();
+                }
             }
             else
             {
@@ -463,8 +477,104 @@ namespace GlossaryTermApp
         private void BtnDictionarySavePdf_OnClick(object sender, RoutedEventArgs e)
         {
             new FullScreenDictionaryPage(this).BtnSavePdf_Click(sender, e);
+        }
+
+        private void CrosswordSaveBTN_OnClick(object sender, RoutedEventArgs e)
+        {
+            isPdfSaving = true;
+            CrosswordStartBTN_Click(sender,e);
+            if (_crosswordGame.IsReady)
+            {
+                CrosswordSaveToPdf(_crosswordGame);
+            }
 
         }
-    
+
+        private void CrosswordSaveToPdf(CrosswordGame game)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
+            //saveFileDialog.RestoreDirectory = true;
+            DialogResult result = saveFileDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                FileStream fStream = new FileStream(Path.Combine(fileName), FileMode.Create);
+                Document document = new Document(PageSize.A4, 10, 10, 50, 10);
+                PdfWriter writer = PdfWriter.GetInstance(document, fStream);
+                document.Open();
+                //шрифт для кириллицы
+                BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+                //создание таблицы
+                Phrase task = new Phrase("Решите кроссворд.", font);
+                Paragraph header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_CENTER;
+                header.SpacingAfter = 30;
+                document.Add(header);
+                int count = 1;
+
+                PdfPTable table = new PdfPTable(game.CrosswordMatrix.GetLength(1));
+                table.DefaultCell.Border = Rectangle.NO_BORDER;
+
+                float _cellHeight = (document.PageSize.Width-document.LeftMargin-document.RightMargin) / game.CrosswordMatrix.GetLength(1);
+                for (int i = 0; i < game.CrosswordMatrix.GetLength(0); i++)
+                {
+                    for (int j = 0; j < game.CrosswordMatrix.GetLength(1); j++)
+                    {
+                        if (game.CrosswordMatrix[i, j] != null)
+                        {
+                            if (game.MainWordHorizontalIndex == j)
+                                table.AddCell(new PdfPCell() {BackgroundColor = Color.LIGHT_GRAY,FixedHeight = _cellHeight});
+                            else
+                                table.AddCell(new PdfPCell(){FixedHeight = _cellHeight});
+                        }
+                        else
+                        {
+                            table.AddCell(new PdfPCell(){Border=Rectangle.NO_BORDER,FixedHeight = _cellHeight});
+                        }
+                    }
+                }
+                table.SpacingAfter = 30;
+                document.Add(table);
+
+                task = new Phrase("По вертикали: ", font); 
+                header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_LEFT;
+                header.SpacingAfter = 30;
+                document.Add(header);
+
+                var mainWord = game.CrossWordTerms[0];
+                Phrase phrase = new Phrase(count + ". " + mainWord.Description, font);
+                Paragraph paragraph = new Paragraph(phrase);
+                paragraph.SpacingAfter = 30;
+                document.Add(paragraph);
+                count++;
+
+                task = new Phrase("По горизонтали: ", font);
+                header = new Paragraph(task);
+                header.Alignment = Element.ALIGN_LEFT;
+                header.SpacingAfter = 30;
+                document.Add(header);
+
+                for (int i =1;i<game.CrossWordTerms.Length-1;i++)
+                {
+                    if (game.CrossWordTerms[i] != null)
+                    {
+                        phrase = new Phrase(count + ". " + game.CrossWordTerms[i].Description, font);
+                        paragraph = new Paragraph(phrase);
+                        paragraph.SpacingAfter = 10;
+                        document.Add(paragraph);
+                        count++;
+                    }
+                }
+
+                document.Close();
+                writer.Close();
+                fStream.Close();
+            }
+        }
     }
 }
