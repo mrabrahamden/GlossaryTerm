@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace GlossaryTermApp
 {
@@ -39,6 +43,22 @@ namespace GlossaryTermApp
             PrepareForm();
         }
 
+        private ImageBrush GetBrushFromImage(string path)
+        {
+            var image = System.Drawing.Image.FromFile(path);
+            var bitmap = new System.Drawing.Bitmap(image);
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions()
+            );
+            bitmap.Dispose();
+            var brush = new ImageBrush(bitmapSource);
+            brush.AlignmentX = AlignmentX.Left;
+            brush.Stretch = Stretch.None;
+            return brush;
+        }
+
         private void PrepareForm()
         {
             WrapPanel panelForSubject;
@@ -61,6 +81,7 @@ namespace GlossaryTermApp
             CheckBox checkBox;
             panelForSubject = new WrapPanel();
             TextBox textBox = new TextBox() { MinWidth = 200, Margin = new Thickness(10, 0, 0, 0) };
+            textBox.Background = GetBrushFromImage("image/TextBoxBackground.png");
             checkBox = new CheckBox() { VerticalAlignment = VerticalAlignment.Center, Tag = textBox };
             textBox.Tag = checkBox;
             checkBoxes.Add(checkBox);
@@ -74,13 +95,22 @@ namespace GlossaryTermApp
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            CheckBox checkBox = (CheckBox)textBox.Tag;
-            checkBox.IsChecked = true;
-            if (!lastTextBox.Contains(sender))
+            if (textBox.Text == "")
             {
-                CreateNewTextBox();
-                lastTextBox.Add(sender);
+                textBox.Background = GetBrushFromImage("image/TextBoxBackground.png");
             }
+            else
+            {
+                textBox.Background = null;
+                CheckBox checkBox = (CheckBox)textBox.Tag;
+                checkBox.IsChecked = true;
+                if (!lastTextBox.Contains(sender))
+                {
+                    CreateNewTextBox();
+                    lastTextBox.Add(sender);
+                }
+            }
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
