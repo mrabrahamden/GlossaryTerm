@@ -140,7 +140,7 @@ namespace SerializerLib
                 Directory.CreateDirectory(path);
         }
 
-        private bool GetSettings()
+        public bool GetSettings()
         {
             CheckForPathExist(DefaultPath);
             try
