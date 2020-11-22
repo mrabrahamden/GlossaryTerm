@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using TermLib;
 using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
@@ -240,6 +241,13 @@ namespace GlossaryTermApp
                 document.Close();
                 writer.Close();
                 fStream.Close();
+
+                var msgBoxResult = MessageBox.Show("Просмотреть файл?", "PDF", MessageBoxButton.YesNo, MessageBoxImage.Question,
+                    MessageBoxResult.Yes);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
             }
         }
 

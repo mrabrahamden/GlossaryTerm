@@ -80,8 +80,8 @@ namespace GlossaryTermApp
             WrapPanel panelForSubject;
             CheckBox checkBox;
             panelForSubject = new WrapPanel();
-            TextBox textBox = new TextBox() { MinWidth = 200, Margin = new Thickness(10, 0, 0, 0) };
-            textBox.Background = GetBrushFromImage("image/TextBoxBackground.png");
+            TextBox textBox = new TextBox() { MinWidth = 290, Margin = new Thickness(10, 0, 0, 0) };
+            textBox.Background = GetBrushFromImage("image/TextBoxBackground1.png");
             checkBox = new CheckBox() { VerticalAlignment = VerticalAlignment.Center, Tag = textBox };
             textBox.Tag = checkBox;
             checkBoxes.Add(checkBox);
@@ -97,7 +97,7 @@ namespace GlossaryTermApp
             TextBox textBox = (TextBox)sender;
             if (textBox.Text == "")
             {
-                textBox.Background = GetBrushFromImage("image/TextBoxBackground.png");
+                textBox.Background = GetBrushFromImage("image/TextBoxBackground1.png");
             }
             else
             {

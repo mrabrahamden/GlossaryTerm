@@ -477,7 +477,7 @@ namespace GlossaryTermApp
             }
         }
 
-        private void SaveBTN_OnClick(object sender, RoutedEventArgs e)
+        private void FillGameSaveBTN_OnClick(object sender, RoutedEventArgs e)
         {
             isPdfSaving = true;
             FillGameStartBTN_Click(null, null);
@@ -598,6 +598,12 @@ namespace GlossaryTermApp
                 document.Close();
                 writer.Close();
                 fStream.Close();
+                var msgBoxResult = MessageBox.Show("Просмотреть файл?", "PDF", MessageBoxButton.YesNo, MessageBoxImage.Question,
+                    MessageBoxResult.Yes);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
             }
         }
 
@@ -652,6 +658,12 @@ namespace GlossaryTermApp
                 document.Close();
                 writer.Close();
                 fStream.Close();
+                var msgBoxResult = MessageBox.Show("Просмотреть файл?", "PDF", MessageBoxButton.YesNo, MessageBoxImage.Question,
+                    MessageBoxResult.Yes);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
             }
         }
 

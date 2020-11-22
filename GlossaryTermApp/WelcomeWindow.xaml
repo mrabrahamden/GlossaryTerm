@@ -5,24 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlossaryTermApp"
         mc:Ignorable="d"
-        Title="Добро пожаловать в Teacherry" MinHeight="450" MinWidth="800">
+        Title="Добро пожаловать в Teacherry" ResizeMode="NoResize" MaxWidth="785">
     <Grid>
-        <Image Source="Screenshot_1.png" Margin="333,0,0,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="76"/>
-        <Label Content="Похоже Вы первый раз в " FontSize="26" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Height="54" Width="323"/>
-        <Label Content="TEACHERRY" Foreground="#FFBD2525" FontSize="36" HorizontalAlignment="Left" Margin="409,38,0,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62" Width="231"/>
-        <Label Content="?" FontSize="26" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="645,38,0,0" VerticalAlignment="Top" Height="54" Width="20"/>
-        <GroupBox Header="Выберите список предметов" Margin="39,105,0,69" HorizontalAlignment="Left" Width="343">
-            <ScrollViewer Margin="0,0,0,2">
+        <Image Source="Screenshot_1.png" Margin="373,0,0,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="76"/>
+        <Label Content="Похоже, Вы первый раз в " FontSize="26" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="47,28,0,0" VerticalAlignment="Top" Height="54" Width="343"/>
+        <Label Content="TEACHERRY" Foreground="#FFBD2525" FontSize="36" Margin="436,22,89.6,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62"/>
+        <Label Content="?" FontSize="26" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="672,28,0,0" VerticalAlignment="Top" Height="54" Width="25"/>
+        <GroupBox Header="Выберите список предметов" FontSize="18" Margin="10,105,0,68.6" HorizontalAlignment="Left" Width="343">
+            <ScrollViewer Margin="0,0,0.2,2.2">
                 <StackPanel x:Name="SubjStackPanel" Margin="3"/>
             </ScrollViewer>
         </GroupBox>
-
-        <GroupBox Header="Впишите свои предметы, если необходимо" Margin="0,105,49,69" HorizontalAlignment="Right" Width="329">
-            <ScrollViewer>
+        <GroupBox Header="Впишите свои предметы, если необходимо" FontSize="18"  Margin="363,105,-0.4,68.6">
+            <ScrollViewer Margin="0,0,-2.2,-0.2">
                 <StackPanel x:Name="NewSubjStackPanel" Margin="3"></StackPanel>
             </ScrollViewer>
         </GroupBox>
-        <Button Content="Готово" FontSize="20" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="156" Height="44" Click="Button_Click"/>
+        <Button Content="Готово" BorderThickness="2" FontSize="20" Margin="596,0,9.6,9.6" VerticalAlignment="Bottom" Width="156" Height="44" Click="Button_Click"/>
 
     </Grid>
 </Window>

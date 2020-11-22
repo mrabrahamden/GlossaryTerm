@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using SerializerLib;
 using TermLib;
 using Button = System.Windows.Controls.Button;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
 using Paragraph = iTextSharp.text.Paragraph;
 using Path = System.IO.Path;
 
@@ -191,19 +185,25 @@ namespace GlossaryTermApp
                 document.Add(header);
                 var sb = new StringBuilder();
                 int count = 1;
-                 foreach(var term in list)
+                foreach (var term in list)
                 {
-                    sb.Append(count.ToString() + ". " + term.Word+" - "+term.Description + ".");
+                    sb.Append(count + ". " + term.Word + " - " + term.Description + ".");
                     Phrase phrase = new Phrase(sb.ToString(), font);
                     Paragraph paragraph = new Paragraph(phrase);
                     document.Add(paragraph);
                     count++;
                     sb.Clear();
                 }
+
                 document.Close();
                 writer.Close();
                 fStream.Close();
-
+                var msgBoxResult = MessageBox.Show("Просмотреть файл?", "PDF", MessageBoxButton.YesNo, MessageBoxImage.Question,
+                    MessageBoxResult.Yes);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(fileName);
+                }
             }
         
 

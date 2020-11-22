@@ -217,7 +217,7 @@
     <Content Include="image\false.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="image\TextBoxBackground.png">
+    <Content Include="image\TextBoxBackground1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="image\true.png">

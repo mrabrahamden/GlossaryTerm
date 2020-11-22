@@ -39,7 +39,18 @@ namespace TermLib
         public SimpleTerm(string word, string descr)
         {
             Word = word;
-            Description = descr;
+            int length = descr.Length;
+            bool HasDot = false;
+            if (length>0 && descr[length - 1] == '.')
+            {
+                HasDot = true;
+            }
+
+            if (HasDot)
+            {
+                Description = descr.Substring(0, length - 1);
+            }
+            else Description = descr;
             ReadyForFillGame = false;
             DescriptionWordsAndSplittersList=new List<DescriptionWord>();
             FillingListsForFillGame();
