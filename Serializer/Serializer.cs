@@ -23,17 +23,20 @@ namespace SerializerLib
         public Serializer()
         {
             GetSettings();
-            FileName = Settings.Class + ".dat";
-            Path = DefaultPath + Settings.Subject + "\\";
+            UpdateFileNameAndPath();
             Deserialize();
         }
         public Serializer(int cl,string subj)
         {
             Settings.Class = cl;
             Settings.Subject = subj;
+            UpdateFileNameAndPath();
+            Deserialize();
+        }
+        private void UpdateFileNameAndPath()
+        {
             FileName = Settings.Class + ".dat";
             Path = DefaultPath + Settings.Subject + "\\";
-            Deserialize();
         }
         public void DeleteTermByString(string wordAndDescrString)
         {
@@ -100,6 +103,7 @@ namespace SerializerLib
         }
         public void Serialize()
         {
+            UpdateFileNameAndPath();
             CheckForPathExist(Path);
             using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
             {
@@ -109,6 +113,7 @@ namespace SerializerLib
         }
         public void Deserialize()
         {
+            UpdateFileNameAndPath();
             CheckForPathExist(Path);
             try
             {
