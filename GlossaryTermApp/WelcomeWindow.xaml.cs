@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -126,7 +127,9 @@ namespace GlossaryTermApp
                     else if (checkBox.Tag is TextBox)
                     {
                         var text = ((TextBox) checkBox.Tag).Text;
-                        if(text.Length>0)
+                        var containsText =
+                            (from t in checkedList where t.ToLower() == text.ToLower() select t).ToList();
+                        if(text.Length>0 && containsText.Count==0)
                             checkedList.Add(text);
                     }
                 }
