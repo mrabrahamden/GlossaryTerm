@@ -14,7 +14,23 @@
             <ColumnDefinition Width="440*"/>
         </Grid.ColumnDefinitions>
         <Image Source="Screenshot_1.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
-        <Image Source="image/help.png" Margin="0,-238,9.6,262.8"  ToolTip="Дорогой пользователь! Это приложение создано исключительно из благих намерений, дабы упростить труд учителей. Перед началом работы выберите нужный предмет и класс в выпадающих списках ниже и нажмите на кнопку 'Начать'" RenderTransformOrigin="0.495,0.438"/>
+        <Image Source="image/help.png" Margin="-1,0,10.4,504.8" RenderTransformOrigin="0.495,0.438">
+            <Image.ToolTip>
+                <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+                    <TextBlock Text="Дорогой пользователь! Это приложение создано с целью упростить труд учителей. Перед началом работы выберите нужный предмет и класс в выпадающих списках ниже и нажмите на кнопку 'Начать'" TextWrapping="Wrap" Width="200"/>
+                </ToolTip>
+            </Image.ToolTip>
+        </Image>
+        <Button Margin="0,45,10.4,455.8" Click="ButtonEditSubjList_OnClick" Background="Transparent" BorderThickness="0" RenderTransformOrigin="0.495,0.438">
+            <Button.ToolTip>
+                <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+                    <TextBlock Text="Изменить список предметов" TextWrapping="Wrap" Width="200"/>
+                </ToolTip>
+            </Button.ToolTip>
+            <StackPanel>
+                <Image Source="image/editStart.png" Height="30" Width="31"/>
+            </StackPanel>
+        </Button>
         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.849,456,0,0" FontSize="24" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label Content="Класс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="355,458,0,0" FontSize="24" Grid.Column="2" RenderTransformOrigin="0.513,0.96"/>
         <ComboBox Name="ComboBoxSubject" HorizontalAlignment="Left" Margin="97,460,0,0"  VerticalAlignment="Top" Width="230" Height="40" FontSize="24" Grid.Column="2" >
@@ -33,16 +49,7 @@
             <ComboBoxItem>11 класс</ComboBoxItem>
         </ComboBox>
         <Button Content="Начать" BorderBrush="#FFBD2525" FontWeight="SemiBold" BorderThickness="2" Padding="-1" HorizontalAlignment="Left" Margin="704,460,0,0" VerticalAlignment="Top" Width="145" Height="40" FontSize="24"  Grid.Column="2" Click="ButtonStart_OnClick"/>
-        <RichTextBox IsReadOnly="True" Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="  'Научиться можно только тому, что любишь.'" FontStyle="Italic"/>
-                </Paragraph>
-                <Paragraph>
-                    <Run Text="  Иоганн Вольфганг Гёте" FontStyle="Italic"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <TextBlock TextWrapping="Wrap" Padding="0,20,0,0" Background="White" Grid.Column="2" FontSize="26" HorizontalAlignment="Left" TextAlignment="Center" FontWeight="UltraLight" Height="118" Margin="66,212,0,0" VerticalAlignment="Top" Width="662" Text="'Научиться можно только тому, что любишь.'                                 -Иоганн Вольфганг Гёте" FontStyle="Italic"/>
         <Label Content="Приветствуем вас в программе" FontSize="26" FontWeight="SemiBold" Grid.Column="2" HorizontalAlignment="Left" Margin="187,23,0,0" VerticalAlignment="Top" Height="54" Width="427"/>
         <Label Content="TEACHERRY" Foreground="#FFBD2525"  Grid.Column="2" FontSize="36" HorizontalAlignment="Left" Margin="332,99,0,0" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold" Height="62" Width="263"/>
     </Grid>

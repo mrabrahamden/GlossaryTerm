@@ -39,23 +39,13 @@ namespace GlossaryTermApp
         };
         public StartPage()
         {
-
             InitializeComponent();
             serializer.GetSettings();
             if (serializer.Settings.ListOfSubjects.Count == 0)
             {
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
                 welcomeWindow.ShowDialog();
-                if (welcomeWindow.checkedList.Count > 0)
-                {
-                    serializer.Settings.ListOfSubjects=new List<string>(welcomeWindow.checkedList);
-                    listOfSubjects = welcomeWindow.checkedList;
-                    serializer.SaveSettings();
-                }
-                else
-                {
-                    listOfSubjects = standartListOfSubjects;
-                }
+                GetSubjList(welcomeWindow);
             }
             else
             {
@@ -73,6 +63,20 @@ namespace GlossaryTermApp
             if (ComboBoxSubject.Items.Contains(serializer.Settings.Subject))
             {
                 ComboBoxSubject.SelectedIndex = ComboBoxSubject.Items.IndexOf(serializer.Settings.Subject);
+            }
+        }
+
+        private void GetSubjList(WelcomeWindow welcomeWindow)
+        {
+            if (welcomeWindow.checkedList.Count > 0)
+            {
+                serializer.Settings.ListOfSubjects = new List<string>(welcomeWindow.checkedList);
+                listOfSubjects = welcomeWindow.checkedList;
+                serializer.SaveSettings();
+            }
+            else
+            {
+                listOfSubjects = standartListOfSubjects;
             }
         }
 
@@ -105,5 +109,21 @@ namespace GlossaryTermApp
             }
         }
 
+        private void ButtonEditSubjList_OnClick(object sender, RoutedEventArgs e)
+        {
+            WelcomeWindow changeSubjWelcomeWindow = new WelcomeWindow();
+            changeSubjWelcomeWindow.lblFirstTime.Content = "Выберите нужные предметы";
+            changeSubjWelcomeWindow.lblFirstTime.HorizontalContentAlignment = HorizontalAlignment.Center;
+            changeSubjWelcomeWindow.imgCherry.Visibility = Visibility.Hidden;
+            changeSubjWelcomeWindow.lblAppName.Visibility = Visibility.Hidden;
+            changeSubjWelcomeWindow.lblQMark.Visibility = Visibility.Hidden;
+            changeSubjWelcomeWindow.ShowDialog();
+            GetSubjList(changeSubjWelcomeWindow);
+            ComboBoxSubject.Items.Clear();
+            foreach (var subject in listOfSubjects)
+            {
+                ComboBoxSubject.Items.Add(subject);
+            }
+        }
     }
 }

@@ -214,6 +214,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="image\editStart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="image\false.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
