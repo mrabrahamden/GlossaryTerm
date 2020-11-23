@@ -36,7 +36,10 @@
         <RichTextBox IsReadOnly="True" Background="White" BorderThickness="2" Grid.Column="2" FontSize="22" HorizontalAlignment="Left" Height="216" Margin="97,201,0,0" VerticalAlignment="Top" Width="662">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="Тут о проекте написать надо" FontStyle="Italic"/>
+                    <Run Text="  'Научиться можно только тому, что любишь.'" FontStyle="Italic"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run Text="  Иоганн Вольфганг Гёте" FontStyle="Italic"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
