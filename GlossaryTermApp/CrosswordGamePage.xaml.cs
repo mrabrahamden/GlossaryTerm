@@ -27,8 +27,6 @@ namespace GlossaryTermApp
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
             InitializeComponent();
-            //this.Width = Screen.PrimaryScreen.Bounds.Width;
-            //this.Height = Screen.PrimaryScreen.Bounds.Height;
             this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
             this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
             this._crosswordGame = crosswordGame;
@@ -36,8 +34,8 @@ namespace GlossaryTermApp
             _matrix = crosswordGame.CrosswordMatrix;
             _width = _matrix.GetLength(1);
             _height = _matrix.GetLength(0);
-            CrosswordCanvas.Width = this.Width;
-            CrosswordCanvas.Height = this.Height * 0.6;
+            CrosswordCanvas.Width = this.Width - 30;
+            CrosswordCanvas.Height = (this.Height - 30) * 0.6;
             mainWordTag = _crosswordTerms[0];
             PrepareForm();
         }
