@@ -9,6 +9,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CheckBox = System.Windows.Controls.CheckBox;
+using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
@@ -134,9 +135,9 @@ namespace GlossaryTermApp
                     else if (checkBox.Tag is TextBox)
                     {
                         var text = ((TextBox) checkBox.Tag).Text;
-                        var regex = new Regex(@"((\w)*(\s)?)*");
-                        var result;
-                        if (result.ToString().Length != text.Length)
+                        var regex = new Regex(@"([^а-яА-Яa-zA-Z\s])");
+                        var hasNonLetterSymbols=regex.IsMatch(text);
+                        if (hasNonLetterSymbols)
                         {
                             ((TextBox) checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
                             hasMistakes = true;
@@ -155,6 +156,10 @@ namespace GlossaryTermApp
             if (!hasMistakes)
             {
                 Close();
+            }
+            else
+            {
+                MessageBox.Show("Поля могут содержать только буквы и пробелы.");
             }
         }
     }
