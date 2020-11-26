@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CheckBox = System.Windows.Controls.CheckBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
 {
@@ -114,27 +118,44 @@ namespace GlossaryTermApp
            
         }
 
+        private bool hasMistakes = false;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            hasMistakes = false;
             foreach (var checkBox in checkBoxes)
             {
-                if (checkBox.IsChecked==true)
+                if (checkBox.IsChecked == true)
                 {
                     if (checkBox.Tag is string)
                     {
-                        checkedList.Add((string)checkBox.Tag);
+                        checkedList.Add((string) checkBox.Tag);
                     }
                     else if (checkBox.Tag is TextBox)
                     {
                         var text = ((TextBox) checkBox.Tag).Text;
-                        var containsText =
-                            (from t in checkedList where t.ToLower() == text.ToLower() select t).ToList();
-                        if(text.Length>0 && containsText.Count==0)
-                            checkedList.Add(text);
+                        var regex = new Regex(@"((\w)*(\s)?)*");
+                        var result;
+                        if (result.ToString().Length != text.Length)
+                        {
+                            ((TextBox) checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
+                            hasMistakes = true;
+                        }
+                        else
+                        {
+                            var containsText =
+                                (from t in checkedList where t.ToLower() == text.ToLower() select t).ToList();
+                            if (text.Length > 0 && containsText.Count == 0)
+                                checkedList.Add(text);
+                        }
                     }
                 }
             }
-            Close();
+
+            if (!hasMistakes)
+            {
+                Close();
+            }
         }
     }
 }
