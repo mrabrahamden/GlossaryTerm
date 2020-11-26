@@ -27,8 +27,10 @@ namespace GlossaryTermApp
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
             InitializeComponent();
-            this.Width = Screen.PrimaryScreen.Bounds.Width;
-            this.Height = Screen.PrimaryScreen.Bounds.Height;
+            //this.Width = Screen.PrimaryScreen.Bounds.Width;
+            //this.Height = Screen.PrimaryScreen.Bounds.Height;
+            this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
+            this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
             this._crosswordGame = crosswordGame;
             _crosswordTerms = crosswordGame.CrossWordTerms;
             _matrix = crosswordGame.CrosswordMatrix;
