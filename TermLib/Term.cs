@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 
@@ -38,19 +39,50 @@ namespace TermLib
 
         public SimpleTerm(string word, string descr)
         {
-            Word = word;
-            int length = descr.Length;
+            var indexLastSymbol = word.Length - 1;
+            for (int i = word.Length-1; i >=0; i--)
+            {
+                if (char.IsWhiteSpace(word[i]) || char.IsPunctuation(word[i]))
+                {
+                    indexLastSymbol--;
+                }
+                if (char.IsLetter(word[i])) break;
+            }
+
+            if (indexLastSymbol > 0)
+            {
+                Word = word.Substring(0, indexLastSymbol + 1);
+            }
+            else Word = word;
+            indexLastSymbol = descr.Length - 1;
             bool HasDot = false;
-            if (length > 0 && descr[length - 1] == '.')
+            if (indexLastSymbol > 0 && descr[indexLastSymbol] == '.')
             {
                 HasDot = true;
             }
-
+           
             if (HasDot)
             {
-                Description = descr.Substring(0, length - 1);
+                Description = descr.Substring(0, indexLastSymbol);
             }
-            else Description = descr;
+            else
+            {
+                if (descr.Length > 0)
+                {
+                    for (int i = descr.Length - 1; i >= 0; i--)
+                    {
+                        if (char.IsWhiteSpace(descr[i]) || char.IsPunctuation(descr[i]))
+                        {
+                            indexLastSymbol--;
+                        }
+
+                        if (char.IsLetter(descr[i])) break;
+                    }
+
+                    Description = descr.Substring(0, indexLastSymbol + 1);
+                }
+                else Description = descr;
+            }
             ReadyForFillGame = false;
             DescriptionWordsAndSplittersList = new List<DescriptionWord>();
             FillingListsForFillGame();

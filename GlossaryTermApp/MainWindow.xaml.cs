@@ -37,11 +37,6 @@ namespace GlossaryTermApp
             Serializer.DeleteSimilarTerms();
             Serializer.SortList();
             InitializeComponent();
-            //foreach (var term in Serializer.TermList)
-            //{
-            //    term.DescriptionWordsAndSplittersList.Clear();
-            //    term.FillingListsForFillGame();
-            //} чиним TermList
             _editedTerm = new SimpleTerm("", "");
         }
 
@@ -155,7 +150,6 @@ namespace GlossaryTermApp
 
                     try
                     {
-                        var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
                         Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
                         if (Serializer.DeleteSimilarTerms())
                         {
@@ -175,8 +169,9 @@ namespace GlossaryTermApp
                 }
                 else
                 {
-                    _editedTerm.Word = TermTB.Text;
-                    _editedTerm.Description = DescriptionTB.Text;
+                    var termEdited = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
+                    _editedTerm.Word = termEdited.Word;
+                    _editedTerm.Description = termEdited.Description;
                     editingSuccess = true;
                 }
             }
@@ -316,16 +311,22 @@ namespace GlossaryTermApp
         {
             ClearWorkPlace();
             FillGameCountUpDown.Maximum = Serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
+            FillGameCountUpDown.Minimum = 1;
             FillGameCountUpDown.Value = FillGameCountUpDown.Maximum;
             FillGameEditorPanel.Visibility = Visibility.Visible;
-
         }
 
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
         {
-            FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(this);
-            fillGameEditorPage.ShowDialog();
-            fillGameEditorPage.DataContext = _fillGameList;
+            if (Serializer.TermList.Count > 0)
+            {
+                FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(this);
+                fillGameEditorPage.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Сначала добавьте слов в словарь.");
+            }
         }
 
         private FillGame fillGame = null;
@@ -336,7 +337,7 @@ namespace GlossaryTermApp
             int lvl = 0;
             bool fixedLength = false;
             bool trainingMode = false;
-            if (Serializer.TermList.Count > 0)
+            if (FillGameCountUpDown.Value > 0)
             {
                 try
                 {
@@ -372,7 +373,7 @@ namespace GlossaryTermApp
 
                 if (isCreated)
                 {
-                    fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
+                    fillGame = new FillGame(Serializer.TermList, lvl, (int)FillGameCountUpDown.Value, fixedLength, trainingMode);
                     if (!isPdfSaving)
                     {
                         FillGamePage fillGamePage = new FillGamePage(fillGame);
@@ -387,7 +388,7 @@ namespace GlossaryTermApp
             }
             else
             {
-                MessageBox.Show("В словаре недостаточно терминов для начала.");
+                MessageBox.Show("В словаре недостаточно терминов для начала. Попробуйте добавить слов и выбрать их в редакторе.");
             }
 
         }
@@ -395,9 +396,9 @@ namespace GlossaryTermApp
         private void MatchGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
+            MatchGameCountUpDown.Minimum = 2;
             MatchGameCountUpDown.Maximum = Serializer.TermList.Count;
             MatchGameEditorPanel.Visibility = Visibility.Visible;
-
         }
 
         private void MatchGameStartBTN_Click(object sender, RoutedEventArgs e)

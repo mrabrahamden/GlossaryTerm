@@ -9,13 +9,15 @@ namespace FillGameLib
         public int Lvl;
         public bool FixedLength;
         public bool TrainingMode;
+        public int Count;
 
-        public FillGame(List<SimpleTerm> list, int lvl, bool bool1, bool bool2)
+        public FillGame(List<SimpleTerm> list, int lvl,int count, bool fixlength, bool trainingmode)
         {
             List = list;
             Lvl = lvl;
-            FixedLength = bool1;
-            TrainingMode = bool2;
+            FixedLength = fixlength;
+            TrainingMode = trainingmode;
+            Count = count;
         }
     }
 }

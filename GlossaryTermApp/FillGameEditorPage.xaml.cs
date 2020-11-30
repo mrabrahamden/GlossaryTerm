@@ -1,4 +1,5 @@
-﻿using SerializerLib;
+﻿using System.Linq;
+using SerializerLib;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,11 +22,15 @@ namespace GlossaryTermApp
                 string wordAndDescription = term.Word + " ⸺ ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20 };
                 WrapPanel panelForOneWord = new WrapPanel() { Margin = new Thickness(0, 5, 0, 8) };
-                CheckBox isKey = new CheckBox() { Tag = term };
+                CheckBox isKey = new CheckBox() { Tag = term, VerticalContentAlignment = VerticalAlignment.Center};
                 if (term.ReadyForFillGame)
                 {
                     isKey.IsChecked = true;
-                    VerticalContentAlignment = VerticalAlignment.Center;
+                }
+
+                if (!SomeDescriptionWordIsKey(term))
+                {
+                    DisableCheckBox(isKey, term);
                 }
                 isKey.Click += IsKey_Click;
                 panelForOneWord.Children.Add(isKey);
@@ -109,18 +114,34 @@ namespace GlossaryTermApp
             BtnOk.Content = "Готово";
             BtnOk.IsEnabled = true;
             Button clickedButton = (Button)sender;
+            WrapPanel panel = (WrapPanel) clickedButton.Parent;
+            CheckBox isKey = panel.Children.OfType<CheckBox>().First();
+            var term = (SimpleTerm) isKey.Tag;
             var descriptionWord = (DescriptionWord)clickedButton.Tag;
             if (clickedButton.Background == Brushes.LightGreen)
             {
-
                 clickedButton.Background = Brushes.LightGray;
                 descriptionWord.IsKeyWord = false;
+                if (!SomeDescriptionWordIsKey(term))
+                {
+                    DisableCheckBox(isKey, term);
+                }
             }
             else
             {
                 clickedButton.Background = Brushes.LightGreen;
                 descriptionWord.IsKeyWord = true;
+                isKey.IsEnabled = true;
+                isKey.IsChecked = true;
+                term.ReadyForFillGame = true;
             }
+        }
+
+        private static void DisableCheckBox(CheckBox isKey, SimpleTerm term)
+        {
+            isKey.IsChecked = false;
+            isKey.IsEnabled = false;
+            term.ReadyForFillGame = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -134,6 +155,16 @@ namespace GlossaryTermApp
             serializer.Serialize();
             mainWindow.FillGameCountUpDown.Maximum = serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
             mainWindow.FillGameCountUpDown.Value = mainWindow.FillGameCountUpDown.Maximum;
+        }
+
+        private bool SomeDescriptionWordIsKey(SimpleTerm term)
+        {
+            foreach (var word in term.DescriptionWordsAndSplittersList)
+            {
+                if (word.IsKeyWord)
+                    return true;
+            }
+            return false;
         }
     }
 }
