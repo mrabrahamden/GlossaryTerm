@@ -68,8 +68,6 @@ namespace GlossaryTermApp
         private void CrosswordItem_OnSelected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
-            //Export export = new Export();
-            //export.CaptureScreen();
             CrosswordStackPanel.Visibility = Visibility.Visible;
         }
 
@@ -305,8 +303,6 @@ namespace GlossaryTermApp
         {
             DictionaryItem_Selected(null, null);
         }
-
-        private List<SimpleTerm> _fillGameList = new List<SimpleTerm>();
         private void FillGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
