@@ -136,6 +136,11 @@ namespace GlossaryTermApp
                         var text = ((TextBox)checkBox.Tag).Text;
                         var regex = new Regex(@"([^а-яА-Яa-zA-Z\s])");
                         var hasNonLetterSymbols = regex.IsMatch(text);
+                        if (!hasNonLetterSymbols)
+                        {
+                            regex = new Regex(@"(\s)+");
+                            hasNonLetterSymbols = regex.IsMatch(text);
+                        }
                         if (hasNonLetterSymbols)
                         {
                             ((TextBox)checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
@@ -143,7 +148,7 @@ namespace GlossaryTermApp
                         }
                         else
                         {
-                            var containsText =
+                           var containsText =
                                 (from t in checkedList where t.ToLower() == text.ToLower() select t).ToList();
                             if (text.Length > 0 && containsText.Count == 0)
                                 checkedList.Add(text);
