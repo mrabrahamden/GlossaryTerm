@@ -131,7 +131,7 @@
                 </GroupBox>
                 <StackPanel Orientation="Horizontal" Margin="40,0,39,0">
                     <TextBlock Text="  Количество слов:      " FontSize="20"></TextBlock>
-                    <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="1"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="1"/>
+                    <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="2"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="2"/>
                 </StackPanel>
                 <Grid>
                     <Image Source="image/help.png" Margin="10,114,650.8,93" RenderTransformOrigin="0.685,0.86">
