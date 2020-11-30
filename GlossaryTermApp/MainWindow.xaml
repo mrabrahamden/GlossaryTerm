@@ -113,7 +113,7 @@
                     <TextBox x:Name="SearchTB" Height="30" TextWrapping="Wrap" FontSize="20" Text="" Width="600" RenderTransformOrigin="0.5,0.406" Margin="0" KeyDown="SearchTB_OnKeyDown"/>
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchButton_OnClick" Foreground="Black" Content="&#xE721;" />
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="SearchEmptyButton_Click" Foreground="Red" Content="&#xE711;" />
-                    <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" Click="ButtonFullScreen_OnClick" Foreground="Black" Content="&#xE740;" />
+                    <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" ToolTip="Во весь экран" Click="ButtonFullScreen_OnClick" Foreground="Black" Content="&#xE740;" />
                     <Button  HorizontalAlignment="Left" Height="30"  Width="30" RenderTransformOrigin="0.5,0.5" FontFamily="Segoe MDL2 Assets" ToolTip="Сохранить словарь в PDF" Click="BtnDictionarySavePdf_OnClick" FontSize="20"  Foreground="IndianRed" Content="&#xEA90;" />
                 </DockPanel>
                 <ScrollViewer x:Name="ScrollDictionary" Visibility="Hidden"  HorizontalAlignment="Left" Height="350" Margin="5,20,0,0" VerticalAlignment="Top" Width="720">
