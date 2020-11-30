@@ -200,7 +200,7 @@ namespace GlossaryTermApp
                             var textbox = (TextBox)child2;
                             if (textbox.Tag.ToString().ToLower() != textbox.Text.ToLower())
                             {
-                                textbox.Background = Brushes.Red;
+                                textbox.Background = Brushes.LightCoral;
                                 numOfErrors++;
                             }
                             else
