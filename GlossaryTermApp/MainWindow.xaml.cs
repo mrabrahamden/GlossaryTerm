@@ -401,7 +401,7 @@ namespace GlossaryTermApp
 
         private void MatchGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (Serializer.TermList.Count > 0)
+            if (Serializer.TermList.Count > 2)
             {
                 _matchGame = new MatchGame(Serializer.TermList, (int)MatchGameCountUpDown.Value,
                     (bool)MatchGameTrainingMode.IsChecked);
