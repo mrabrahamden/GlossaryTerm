@@ -28,7 +28,9 @@ namespace GlossaryTermApp
         {
             InitializeComponent();
             this.game = game;
-            this.list = game.List.FindAll((term => term.ReadyForFillGame)).ToList();
+            this.list = GetRandomList(game.List, game.Count);
+                game.List.FindAll((term => term.ReadyForFillGame)).ToList();
+
             if (list.Count > 0)
             {
                 int count = 1;
@@ -98,6 +100,21 @@ namespace GlossaryTermApp
                     stackPanelOutput.Children.Add(separate);
                 }
             }
+        }
+
+        private List<SimpleTerm> GetRandomList(List<SimpleTerm> list, int count)
+        {
+            var readySimpleTerms = game.List.FindAll((term => term.ReadyForFillGame)).ToList();
+            Random random=new Random(DateTime.Now.Millisecond);
+            List<SimpleTerm> resultList=new List<SimpleTerm>();
+            int randomIndex = random.Next() % readySimpleTerms.Count;
+            for (int i = 0; i < count; i++)
+            {
+                randomIndex = random.Next() % readySimpleTerms.Count;
+                resultList.Add(readySimpleTerms[randomIndex]);
+                readySimpleTerms.RemoveAt(randomIndex);
+            }
+            return resultList;
         }
 
         private void SkippedWordOnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)

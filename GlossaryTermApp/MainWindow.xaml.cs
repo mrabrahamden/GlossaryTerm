@@ -316,6 +316,7 @@ namespace GlossaryTermApp
         {
             ClearWorkPlace();
             FillGameCountUpDown.Maximum = Serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
+            FillGameCountUpDown.Minimum = 1;
             FillGameCountUpDown.Value = FillGameCountUpDown.Maximum;
             FillGameEditorPanel.Visibility = Visibility.Visible;
 
@@ -323,9 +324,15 @@ namespace GlossaryTermApp
 
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
         {
-            FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(this);
-            fillGameEditorPage.ShowDialog();
-            fillGameEditorPage.DataContext = _fillGameList;
+            if (Serializer.TermList.Count > 0)
+            {
+                FillGameEditorPage fillGameEditorPage = new FillGameEditorPage(this);
+                fillGameEditorPage.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Сначала добавьте слов в словарь.");
+            }
         }
 
         private FillGame fillGame = null;
@@ -336,7 +343,7 @@ namespace GlossaryTermApp
             int lvl = 0;
             bool fixedLength = false;
             bool trainingMode = false;
-            if (Serializer.TermList.Count > 0)
+            if (FillGameCountUpDown.Value > 0)
             {
                 try
                 {
@@ -372,7 +379,7 @@ namespace GlossaryTermApp
 
                 if (isCreated)
                 {
-                    fillGame = new FillGame(Serializer.TermList, lvl, fixedLength, trainingMode);
+                    fillGame = new FillGame(Serializer.TermList, lvl, (int)FillGameCountUpDown.Value, fixedLength, trainingMode);
                     if (!isPdfSaving)
                     {
                         FillGamePage fillGamePage = new FillGamePage(fillGame);
@@ -387,7 +394,7 @@ namespace GlossaryTermApp
             }
             else
             {
-                MessageBox.Show("В словаре недостаточно терминов для начала.");
+                MessageBox.Show("В словаре недостаточно терминов для начала. Попробуйте добавить слов и выбрать их в редакторе.");
             }
 
         }
