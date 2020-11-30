@@ -168,9 +168,17 @@ namespace GlossaryTermApp
                 else
                 {
                     var termEdited = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
-                    _editedTerm.Word = termEdited.Word;
-                    _editedTerm.Description = termEdited.Description;
-                    editingSuccess = true;
+                    var hasSimilar = (from t in Serializer.TermList where t.Word == termEdited.Word && t.Description == termEdited.Description select t).Count();
+                    if (hasSimilar!=0)
+                    {
+                        MessageBox.Show("Данный термин уже внесён в словарь!");
+                    }
+                    else
+                    {
+                        _editedTerm.Word = termEdited.Word;
+                        _editedTerm.Description = termEdited.Description;
+                        editingSuccess = true;
+                    }
                 }
             }
             else
