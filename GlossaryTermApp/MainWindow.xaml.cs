@@ -83,6 +83,7 @@ namespace GlossaryTermApp
             var btnPanel = (StackPanel)button.Parent;
             var panelForOneWord = (DockPanel)btnPanel.Parent;
             var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
+            var term = (SimpleTerm)panelForOneWord.Tag;
             MenuEditBTN.IsSelected = true;
             var wordAndDescr = newWord.Text;
             _editMode = true;
@@ -92,9 +93,9 @@ namespace GlossaryTermApp
             TermTB.Text = null;
             DescriptionTB.Text = null;
             EditStackPanel.Visibility = Visibility.Visible;
-            TermTB.Text = Serializer.GetTermNameByString(wordAndDescr);
-            DescriptionTB.Text = Serializer.GetTermDescriptionByString(wordAndDescr);
-            _editedTerm = Serializer.GetTermByString(wordAndDescr);
+            TermTB.Text = term.Word;
+            DescriptionTB.Text = term.Description;
+            _editedTerm = term;
             _editedTerm.FillingListsForFillGame();
         }
 
@@ -107,7 +108,8 @@ namespace GlossaryTermApp
             var panelForOneWord = (DockPanel)btnPanel.Parent;
             var newWord = (TextBlock)panelForOneWord.Children.OfType<TextBlock>().First();
             panelForOneWord.Visibility = Visibility.Hidden;
-            Serializer.DeleteTermByString(newWord.Text);
+            var term = (SimpleTerm)panelForOneWord.Tag;
+            Serializer.TermList.Remove(term);
             DictionaryItem_Selected(null, null);
             Serializer.Serialize();
         }
@@ -254,7 +256,7 @@ namespace GlossaryTermApp
                 {
                     string wordAndDescription = term.ToString();
                     TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0, 0, 5, 0), Width = 676 };
-                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 0, 5) };
+                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 0, 5) ,Tag=term};
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
