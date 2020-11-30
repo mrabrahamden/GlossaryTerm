@@ -132,11 +132,21 @@ namespace GlossaryTermApp
         private void PlaceForWordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var textblock = (TextBlock)sender;
+            int count = 0;
             foreach (var border in _listOfWordBorders)
             {
+                if(count==1)
+                { continue; }
+                if (border.Visibility == Visibility.Visible)
+                {
+                    continue;
+                }
                 var term = (SimpleTerm)border.Tag;
                 if (term.Word == textblock.Text)
+                {
                     border.Visibility = Visibility.Visible;
+                    count++;
+                }
             }
             textblock.Text = "";
             textblock.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
@@ -169,11 +179,24 @@ namespace GlossaryTermApp
             }
             textblock.Text = (string)e.Data.GetData(DataFormats.Text);
             textblock.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F08080");
+            int count = 0;
             foreach (var border in _listOfWordBorders)
             {
-                var term = (SimpleTerm)border.Tag;
-                if (term.Word == textblock.Text)
-                    border.Visibility = Visibility.Hidden;
+                if (count == 1)
+                    return;
+                else
+                {
+                    if(border.Visibility==Visibility.Hidden)
+                    {
+                        continue;
+                    }
+                    var term = (SimpleTerm)border.Tag;
+                    if (term.Word == textblock.Text)
+                    {
+                        border.Visibility = Visibility.Hidden;
+                        count++;
+                    }
+                }
             }
         }
 
