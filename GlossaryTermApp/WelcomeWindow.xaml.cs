@@ -163,6 +163,7 @@ namespace GlossaryTermApp
             }
             else
             {
+                checkedList.Clear();
                 MessageBox.Show("Поля могут содержать только буквы и пробелы.");
             }
         }
