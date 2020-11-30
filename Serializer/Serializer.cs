@@ -35,8 +35,9 @@ namespace SerializerLib
         }
         private void UpdateFileNameAndPath()
         {
-            FileName = Settings.Class + ".dat";
-            Path = DefaultPath + Settings.Subject + "\\";
+                FileName = Settings.Class + ".dat";
+                Path = DefaultPath + Settings.Subject + "\\";
+           
         }
         public void DeleteTermByString(string wordAndDescrString)
         {

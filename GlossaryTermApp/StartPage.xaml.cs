@@ -13,7 +13,7 @@ namespace GlossaryTermApp
     {
         internal int grade;
         internal string subject;
-        internal Serializer serializer = new Serializer();
+        internal Serializer serializer;
         private List<string> listOfSubjects = new List<string>();
         private List<string> standartListOfSubjects = new List<string>()
         {
@@ -38,9 +38,11 @@ namespace GlossaryTermApp
             "Химия"
         };
         public StartPage()
-        {
+        { 
+            serializer = new Serializer();
             InitializeComponent();
             serializer.GetSettings();
+            serializer.TermList.Clear();
             if (serializer.Settings.ListOfSubjects.Count == 0)
             {
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
