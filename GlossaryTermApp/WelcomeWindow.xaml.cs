@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -116,7 +115,7 @@ namespace GlossaryTermApp
                     lastTextBox.Add(sender);
                 }
             }
-           
+
         }
 
         private bool hasMistakes = false;
@@ -130,16 +129,16 @@ namespace GlossaryTermApp
                 {
                     if (checkBox.Tag is string)
                     {
-                        checkedList.Add((string) checkBox.Tag);
+                        checkedList.Add((string)checkBox.Tag);
                     }
                     else if (checkBox.Tag is TextBox)
                     {
-                        var text = ((TextBox) checkBox.Tag).Text;
+                        var text = ((TextBox)checkBox.Tag).Text;
                         var regex = new Regex(@"([^а-яА-Яa-zA-Z\s])");
-                        var hasNonLetterSymbols=regex.IsMatch(text);
+                        var hasNonLetterSymbols = regex.IsMatch(text);
                         if (hasNonLetterSymbols)
                         {
-                            ((TextBox) checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
+                            ((TextBox)checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
                             hasMistakes = true;
                         }
                         else

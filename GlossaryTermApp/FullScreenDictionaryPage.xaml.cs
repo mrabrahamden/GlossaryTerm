@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -7,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using TermLib;
 using Button = System.Windows.Controls.Button;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
@@ -26,7 +26,7 @@ namespace GlossaryTermApp
     {
         private bool SearchMode = false;
         private MainWindow mainWindow;
-        List<DockPanel> listOfPanels=new List<DockPanel>();
+        List<DockPanel> listOfPanels = new List<DockPanel>();
         public FullScreenDictionaryPage(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -62,7 +62,7 @@ namespace GlossaryTermApp
                 {
                     string wordAndDescription = term.ToString();
                     TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0, 0, 0, 0) };
-                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 10, 5) ,Tag=term};
+                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 10, 5), Tag = term };
                     newWord.Width = Screen.PrimaryScreen.WorkingArea.Width - 100;
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
@@ -86,7 +86,7 @@ namespace GlossaryTermApp
                         FontFamily = new FontFamily("Segoe MDL2 Assets"),
                         Content = "\xE70F",
                         Background = Brushes.White,
-                        Tag=term
+                        Tag = term
                     };
                     editBtn.Click += EditBtn_Click;
                     btnPanel.Children.Add(deleteBtn);
@@ -121,15 +121,15 @@ namespace GlossaryTermApp
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            mainWindow.EditBtn_Click(sender,e);
+            mainWindow.EditBtn_Click(sender, e);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
 
             var button = (Button)sender;
-            var term = (SimpleTerm) button.Tag;
-            var tag= button.Tag;
+            var term = (SimpleTerm)button.Tag;
+            var tag = button.Tag;
             foreach (var dockPanel in listOfPanels)
             {
                 if (dockPanel.Tag == tag)
@@ -138,7 +138,7 @@ namespace GlossaryTermApp
             mainWindow.Serializer.DeleteTermByString(term.ToString());
             InitializeComponent();
             mainWindow.Serializer.Serialize();
-            mainWindow.DictionaryItem_Selected(null,null);
+            mainWindow.DictionaryItem_Selected(null, null);
             PerformDictionaryPrint(mainWindow.Serializer.TermList);
         }
 
@@ -153,10 +153,10 @@ namespace GlossaryTermApp
         public void BtnSavePdf_Click(object sender, RoutedEventArgs e)
         {
             //Надо проверить на пустоту словаря 
-          //  if(mainWindow.Serializer.TermList.Count==0)
-          //  {
-           //     MessageBox.Show("В Вашем словаре пока нет терминов. Добавьте их и сохраните.");
-           // }
+            //  if(mainWindow.Serializer.TermList.Count==0)
+            //  {
+            //     MessageBox.Show("В Вашем словаре пока нет терминов. Добавьте их и сохраните.");
+            // }
             List<SimpleTerm> list = new List<SimpleTerm>();
             list = mainWindow.Serializer.TermList;
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -205,7 +205,7 @@ namespace GlossaryTermApp
                     System.Diagnostics.Process.Start(fileName);
                 }
             }
-        
+
 
         }
     }

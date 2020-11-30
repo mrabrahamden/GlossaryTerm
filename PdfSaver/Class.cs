@@ -1,16 +1,16 @@
-﻿using System;
+﻿using IronPdf;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using IronPdf;
 
 namespace PdfSaver
 {
     public class Export
     {
-        public Export(){}
+        public Export() { }
         public void CaptureScreen()
         {
             var srcimage = ScreenCapture.CaptureActiveWindow();
@@ -18,11 +18,11 @@ namespace PdfSaver
             saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
             saveFileDialog.RestoreDirectory = true;
-                DialogResult result = saveFileDialog.ShowDialog();
+            DialogResult result = saveFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
                 string fileName = saveFileDialog.FileName;
-                ImageToPdfConverter.ImageToPdf(srcimage,ImageBehavior.FitToPage,true).SaveAs(Path.Combine(fileName));
+                ImageToPdfConverter.ImageToPdf(srcimage, ImageBehavior.FitToPage, true).SaveAs(Path.Combine(fileName));
             }
         }
 

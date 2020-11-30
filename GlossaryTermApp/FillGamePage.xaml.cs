@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using FillGameLib;
+﻿using FillGameLib;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
-using TermLib;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
+using TermLib;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -23,7 +23,7 @@ namespace GlossaryTermApp
         private List<SimpleTerm> list;
         private List<bool> listOfSkippedWords;
         private int numOfSkipWords = 0;
-        private List<StringBuilder> listOfBuilders=new List<StringBuilder>();
+        private List<StringBuilder> listOfBuilders = new List<StringBuilder>();
         public FillGamePage(FillGame game)
         {
             InitializeComponent();
@@ -38,24 +38,24 @@ namespace GlossaryTermApp
                     listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
                         gameWord.DescriptionWordsAndSplittersList
                             .FindAll((descriptionWord => descriptionWord.IsKeyWord)).Count);
-                    numOfSkipWords += listOfSkippedWords.FindAll((b =>b==true )).Count;
-                    TextBlock newWord = new TextBlock { Text = word + " ⸺ ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold};
+                    numOfSkipWords += listOfSkippedWords.FindAll((b => b == true)).Count;
+                    TextBlock newWord = new TextBlock { Text = word + " ⸺ ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold };
                     WrapPanel panelForOneWord = new WrapPanel();
                     panelForOneWord.VerticalAlignment = VerticalAlignment.Top;
                     panelForOneWord.Children.Add(newWord);
 
                     StringBuilder termBuilder = new StringBuilder();
 
-                    termBuilder.Append(count.ToString()+". "+word.ToString() + " - ");
+                    termBuilder.Append(count.ToString() + ". " + word.ToString() + " - ");
                     count++;
                     foreach (var wordPart in gameWord.DescriptionWordsAndSplittersList) //печать слов из определения
                     {
-                        if (wordPart.IsKeyWord&&listOfSkippedWords.Count>0)
+                        if (wordPart.IsKeyWord && listOfSkippedWords.Count > 0)
                         {
                             if (listOfSkippedWords.First() == true)
                             {
                                 TextBox skippedWord = new TextBox()
-                                    {FontSize = 20, MinWidth = 20, Tag = wordPart.Word};
+                                { FontSize = 20, MinWidth = 20, Tag = wordPart.Word };
                                 skippedWord.GotKeyboardFocus += SkippedWordOnGotKeyboardFocus;
                                 if (game.FixedLength)
                                 {
@@ -72,7 +72,7 @@ namespace GlossaryTermApp
                             else
                             {
                                 TextBlock skippedWord = new TextBlock()
-                                    { Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap };
+                                { Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap };
                                 panelForOneWord.Children.Add(skippedWord);
 
                                 termBuilder.Append(wordPart.Word);
@@ -83,17 +83,17 @@ namespace GlossaryTermApp
                         else
                         {
                             TextBlock notSkippedWord = new TextBlock()
-                                {Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap};
+                            { Text = wordPart.Word, FontSize = 20, TextWrapping = TextWrapping.Wrap };
                             panelForOneWord.Children.Add(notSkippedWord);
 
                             termBuilder.Append(wordPart.Word);
                         }
-                            
+
                     }
                     termBuilder.Append(".");
                     listOfBuilders.Add(termBuilder);
                     Separator separate = new Separator();
-                    panelForOneWord.Margin=new Thickness(0,7,0,7);
+                    panelForOneWord.Margin = new Thickness(0, 7, 0, 7);
                     stackPanelOutput.Children.Add(panelForOneWord);
                     stackPanelOutput.Children.Add(separate);
                 }
@@ -109,7 +109,7 @@ namespace GlossaryTermApp
 
         private List<bool> GetNumOfSkippedWords(int lvl, int num)
         {
-            List<bool> listOfBools=new List<bool>();
+            List<bool> listOfBools = new List<bool>();
             int numOfSkippedWords = 0;
             if (lvl == 1)
             {
@@ -136,12 +136,12 @@ namespace GlossaryTermApp
             }
 
 
-            Random random=new Random();
+            Random random = new Random();
             while (true)
             {
                 if (num > 0)
                 {
-                    while ((listOfBools.FindAll((b => b == true)).Count < numOfSkippedWords)) 
+                    while ((listOfBools.FindAll((b => b == true)).Count < numOfSkippedWords))
                     {
                         var intNext = random.Next() % 2;
                         if (intNext == 1)
@@ -153,12 +153,12 @@ namespace GlossaryTermApp
                             listOfBools.Add(false);
                         }
                     }
-                
+
                     while (listOfBools.Count != num)
                     {
-                        if(listOfBools.Count>num)
+                        if (listOfBools.Count > num)
                             listOfBools.Remove(false);
-                        if(listOfBools.Count<num)
+                        if (listOfBools.Count < num)
                             listOfBools.Add(false);
                     }
                 }
@@ -175,12 +175,12 @@ namespace GlossaryTermApp
             {
                 if (child.GetType() == typeof(WrapPanel))
                 {
-                    var wrapPanel = (WrapPanel) child;
+                    var wrapPanel = (WrapPanel)child;
                     foreach (var child2 in wrapPanel.Children)
                     {
                         if (child2.GetType() == typeof(TextBox))
                         {
-                            var textbox = (TextBox) child2;
+                            var textbox = (TextBox)child2;
                             if (textbox.Tag.ToString().ToLower() != textbox.Text.ToLower())
                             {
                                 textbox.Background = Brushes.Red;
@@ -192,12 +192,12 @@ namespace GlossaryTermApp
                             }
                         }
                     }
-                }   
+                }
             }
 
             if (!game.TrainingMode)
             {
-                GameResult gameResult=new GameResult(numOfErrors,numOfSkipWords);
+                GameResult gameResult = new GameResult(numOfErrors, numOfSkipWords);
                 gameResult.ShowDialog();
                 this.Close();
             }
@@ -222,7 +222,7 @@ namespace GlossaryTermApp
                 //шрифт для кириллицы
                 BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
                 Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
-                
+
                 Phrase task = new Phrase("Вставьте пропущенные слова.", font);
                 Paragraph header = new Paragraph(task);
                 header.Alignment = Element.ALIGN_CENTER;
@@ -233,7 +233,7 @@ namespace GlossaryTermApp
 
                 foreach (var term in listOfBuilders)
                 {
-                    Phrase phrase=new Phrase(term.ToString(),font);
+                    Phrase phrase = new Phrase(term.ToString(), font);
                     Paragraph paragraph = new Paragraph(phrase);
                     document.Add(paragraph);
                 }

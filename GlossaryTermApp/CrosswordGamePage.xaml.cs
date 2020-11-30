@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using CrosswordLib;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
-using CrosswordLib;
 using TermLib;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Orientation = System.Windows.Controls.Orientation;
@@ -19,9 +18,9 @@ namespace GlossaryTermApp
         private LetterFromWord[,] _matrix;
         private int _width;
         private int _height;
-        private List<Border> listOfBorders=new List<Border>();
-        private List<TextBlock> listOfLetters=new List<TextBlock>();
-        private List<TextBlock> listOfMainWordLetters=new List<TextBlock>();
+        private List<Border> listOfBorders = new List<Border>();
+        private List<TextBlock> listOfLetters = new List<TextBlock>();
+        private List<TextBlock> listOfMainWordLetters = new List<TextBlock>();
         private List<TextBox> placeForWordsList = new List<TextBox>();
         private object mainWordTag;
         public CrosswordGamePage(CrosswordGame crosswordGame)
@@ -59,11 +58,11 @@ namespace GlossaryTermApp
                 {
                     if (i == 0)
                     {
-                        _wordsStackPanel.Children.Add(new TextBlock() {Text = "По вертикали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
+                        _wordsStackPanel.Children.Add(new TextBlock() { Text = "По вертикали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
                     }
                     else if (firstHorizontalWord)
                     {
-                        _wordsStackPanel.Children.Add(new TextBlock() { Text = "По горизонтали: ", FontSize = 20, Margin = new Thickness(10,8,0,2)});
+                        _wordsStackPanel.Children.Add(new TextBlock() { Text = "По горизонтали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
                         firstHorizontalWord = false;
                     }
 
@@ -111,8 +110,8 @@ namespace GlossaryTermApp
 
         private void PlaceForWordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var textBox= (TextBox) sender;
-            var term = (SimpleTerm) textBox.Tag;
+            var textBox = (TextBox)sender;
+            var term = (SimpleTerm)textBox.Tag;
             if (textBox.Text.ToUpper() == term.Word.ToUpper())
             {
                 textBox.IsEnabled = false;
@@ -159,15 +158,15 @@ namespace GlossaryTermApp
 
             if (IsTaskComplete)
             {
-                GameResult gameResult=new GameResult(0,0);
+                GameResult gameResult = new GameResult(0, 0);
                 gameResult.ShowDialog();
                 this.Close();
             }
         }
         private void PrepareCrossword()
         {
-            CrosswordCanvas.Background=new SolidColorBrush(Color.FromRgb(245, 238, 248));
-            var borderWidth =  CrosswordCanvas.Width / _width;
+            CrosswordCanvas.Background = new SolidColorBrush(Color.FromRgb(245, 238, 248));
+            var borderWidth = CrosswordCanvas.Width / _width;
             var borderHeight = CrosswordCanvas.Height / _height;
             if (borderHeight < borderWidth)
             {
@@ -198,7 +197,7 @@ namespace GlossaryTermApp
                         Child = letter,
                         Width = borderWidth,
                         Height = borderHeight,
-                        Background = new SolidColorBrush(Color.FromRgb(255,255,255))
+                        Background = new SolidColorBrush(Color.FromRgb(255, 255, 255))
                     };
                     if (_matrix[i, j] != null)
                     {
@@ -209,11 +208,11 @@ namespace GlossaryTermApp
 
                     if (j == _crosswordGame.MainWordHorizontalIndex)
                     {
-                        border.Background= new SolidColorBrush(Color.FromRgb(250, 219, 216));
+                        border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
                         listOfMainWordLetters.Add(letter);
                     }
                     char ch = ' ';
-                    if ((_matrix[i, j] != null ) && (_matrix[i, j].Letter != ch))
+                    if ((_matrix[i, j] != null) && (_matrix[i, j].Letter != ch))
                     {
                         ch = _matrix[i, j].Letter;
                     }
@@ -225,12 +224,12 @@ namespace GlossaryTermApp
                     letter.Visibility = Visibility.Hidden;
                     listOfLetters.Add(letter);
                     listOfBorders.Add(border);
-                    Canvas.SetLeft(border,x);
-                    Canvas.SetTop(border,y);
-                    x += borderWidth-2;
+                    Canvas.SetLeft(border, x);
+                    Canvas.SetTop(border, y);
+                    x += borderWidth - 2;
                     CrosswordCanvas.Children.Add(border);
                 }
-                y += borderHeight-2;
+                y += borderHeight - 2;
                 x = 0;
             }
         }
@@ -243,7 +242,7 @@ namespace GlossaryTermApp
                 if (textBox.IsEnabled)
                     errors++;
             }
-            new GameResult(errors,placeForWordsList.Count).ShowDialog();
+            new GameResult(errors, placeForWordsList.Count).ShowDialog();
         }
     }
 }

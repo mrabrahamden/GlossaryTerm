@@ -41,7 +41,7 @@ namespace TermLib
             Word = word;
             int length = descr.Length;
             bool HasDot = false;
-            if (length>0 && descr[length - 1] == '.')
+            if (length > 0 && descr[length - 1] == '.')
             {
                 HasDot = true;
             }
@@ -52,11 +52,11 @@ namespace TermLib
             }
             else Description = descr;
             ReadyForFillGame = false;
-            DescriptionWordsAndSplittersList=new List<DescriptionWord>();
+            DescriptionWordsAndSplittersList = new List<DescriptionWord>();
             FillingListsForFillGame();
         }
 
-        public override string ToString() 
+        public override string ToString()
         {
             if (Word.Length > 0)
             {
@@ -68,17 +68,17 @@ namespace TermLib
         public void FillingListsForFillGame()
         {
             DescriptionWordsAndSplittersList.Clear();
-            Regex regexForWordAndSplit=new Regex(@"(\w)+((\W)+)?");
-            Regex regexForWord=new Regex(@"(\w)+");
-            Regex regexForSplit=new Regex(@"(\W)+");
+            Regex regexForWordAndSplit = new Regex(@"(\w)+((\W)+)?");
+            Regex regexForWord = new Regex(@"(\w)+");
+            Regex regexForSplit = new Regex(@"(\W)+");
             var matches = regexForWordAndSplit.Matches(Description);
             foreach (var wordAndSplitter in matches)
             {
                 var stringword = wordAndSplitter.ToString();
                 var word = regexForWord.Match(stringword).ToString();
                 var splitter = regexForSplit.Match(stringword).ToString();
-                DescriptionWordsAndSplittersList.Add(new DescriptionWord(word,false,false));
-                DescriptionWordsAndSplittersList.Add(new DescriptionWord(splitter,false,true));
+                DescriptionWordsAndSplittersList.Add(new DescriptionWord(word, false, false));
+                DescriptionWordsAndSplittersList.Add(new DescriptionWord(splitter, false, true));
             }
         }
     }
@@ -90,14 +90,14 @@ namespace TermLib
         public string Word;
         public bool IsKeyWord;
         public bool IsSplitter;
-        public DescriptionWord(string word, bool iskeyword,bool issplitter)
+        public DescriptionWord(string word, bool iskeyword, bool issplitter)
         {
             Word = word;
             IsKeyWord = iskeyword;
-           // if (DefNotKeyWords.Contains(Word))
-          //  {
+            // if (DefNotKeyWords.Contains(Word))
+            //  {
 
-          //  }
+            //  }
             IsSplitter = issplitter;
             if (IsSplitter)
             {

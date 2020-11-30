@@ -22,11 +22,11 @@ namespace MatchGameLib
 
         private void GetRandomListOfTerms()
         {
-            List<SimpleTerm> resultList=new List<SimpleTerm>();
-            Random random = new Random((int) DateTime.Now.Millisecond);
-            while (TermList.Count>NumOfTerms)
+            List<SimpleTerm> resultList = new List<SimpleTerm>();
+            Random random = new Random((int)DateTime.Now.Millisecond);
+            while (TermList.Count > NumOfTerms)
             {
-                int numNext= random.Next() % TermList.Count;
+                int numNext = random.Next() % TermList.Count;
                 TermList.RemoveAt(numNext);
             }
         }

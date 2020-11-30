@@ -5,7 +5,7 @@ namespace GlossaryTermApp
 {
     public partial class GameResult : Window
     {
-        public GameResult(int numofErrors,int numOfWords)
+        public GameResult(int numofErrors, int numOfWords)
         {
             InitializeComponent();
 
@@ -20,7 +20,7 @@ namespace GlossaryTermApp
             {
                 Result.Text = "Есть ошибки!";
                 Result.Foreground = Brushes.IndianRed;
-                NumOfRightAnswers.Text = "Верно : "+(numOfWords-numofErrors);
+                NumOfRightAnswers.Text = "Верно : " + (numOfWords - numofErrors);
                 NumOfWrongAnswers.Text = "Ошибок : " + numofErrors;
             }
 

@@ -1,7 +1,7 @@
-﻿using System.Windows;
+﻿using SerializerLib;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using SerializerLib;
 using TermLib;
 
 namespace GlossaryTermApp
@@ -19,9 +19,9 @@ namespace GlossaryTermApp
             foreach (var term in serializer.TermList)
             {
                 string wordAndDescription = term.Word + " ⸺ ";
-                TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20};
-                WrapPanel panelForOneWord = new WrapPanel(){Margin = new Thickness(0,5,0,8)};
-                CheckBox  isKey=new CheckBox(){ Tag = term };
+                TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20 };
+                WrapPanel panelForOneWord = new WrapPanel() { Margin = new Thickness(0, 5, 0, 8) };
+                CheckBox isKey = new CheckBox() { Tag = term };
                 if (term.ReadyForFillGame)
                 {
                     isKey.IsChecked = true;
@@ -39,7 +39,9 @@ namespace GlossaryTermApp
                         {
                             Button button = new Button()
                             {
-                                Content = word, FontSize = 20, Tag = descriptionWord
+                                Content = word,
+                                FontSize = 20,
+                                Tag = descriptionWord
                             };
                             if (descriptionWord.IsKeyWord)
                                 button.Background = Brushes.LightGreen;
@@ -51,9 +53,10 @@ namespace GlossaryTermApp
                         }
                         else
                         {
-                            TextBlock split=new TextBlock()
+                            TextBlock split = new TextBlock()
                             {
-                                Text = word, FontSize = 20
+                                Text = word,
+                                FontSize = 20
                             };
                             panelForOneWord.Children.Add(split);
                         }
@@ -67,26 +70,26 @@ namespace GlossaryTermApp
 
         private void FillGameEditorPage_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-                string msg = "Сохранить?";
-                MessageBoxResult result =
-                    MessageBox.Show(
-                        msg,
-                        "Внимание",
-                        MessageBoxButton.OKCancel,
-                        MessageBoxImage.Warning);
-                if (result == MessageBoxResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-                else Button_Click(null, null);
+            string msg = "Сохранить?";
+            MessageBoxResult result =
+                MessageBox.Show(
+                    msg,
+                    "Внимание",
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+            else Button_Click(null, null);
 
         }
 
         private void IsKey_Click(object sender, RoutedEventArgs e)
         {
-            var clickedCheckBox = (CheckBox) sender;
-            var term = (SimpleTerm) clickedCheckBox.Tag;
-            if (clickedCheckBox.IsChecked==true)
+            var clickedCheckBox = (CheckBox)sender;
+            var term = (SimpleTerm)clickedCheckBox.Tag;
+            if (clickedCheckBox.IsChecked == true)
             {
                 term.ReadyForFillGame = true;
             }
@@ -105,11 +108,11 @@ namespace GlossaryTermApp
             BtnOk.FontWeight = FontWeights.Regular;
             BtnOk.Content = "Готово";
             BtnOk.IsEnabled = true;
-            Button clickedButton = (Button) sender;
-            var descriptionWord = (DescriptionWord) clickedButton.Tag;
+            Button clickedButton = (Button)sender;
+            var descriptionWord = (DescriptionWord)clickedButton.Tag;
             if (clickedButton.Background == Brushes.LightGreen)
             {
-                
+
                 clickedButton.Background = Brushes.LightGray;
                 descriptionWord.IsKeyWord = false;
             }
