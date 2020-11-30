@@ -37,11 +37,6 @@ namespace GlossaryTermApp
             Serializer.DeleteSimilarTerms();
             Serializer.SortList();
             InitializeComponent();
-            //foreach (var term in Serializer.TermList)
-            //{
-            //    term.DescriptionWordsAndSplittersList.Clear();
-            //    term.FillingListsForFillGame();
-            //} чиним TermList
             _editedTerm = new SimpleTerm("", "");
         }
 
@@ -155,7 +150,6 @@ namespace GlossaryTermApp
 
                     try
                     {
-                        var term = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
                         Serializer.TermList.Add(new SimpleTerm(TermTB.Text, DescriptionTB.Text));
                         if (Serializer.DeleteSimilarTerms())
                         {
@@ -175,8 +169,9 @@ namespace GlossaryTermApp
                 }
                 else
                 {
-                    _editedTerm.Word = TermTB.Text;
-                    _editedTerm.Description = DescriptionTB.Text;
+                    var termEdited = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
+                    _editedTerm.Word = termEdited.Word;
+                    _editedTerm.Description = termEdited.Description;
                     editingSuccess = true;
                 }
             }
@@ -319,7 +314,6 @@ namespace GlossaryTermApp
             FillGameCountUpDown.Minimum = 1;
             FillGameCountUpDown.Value = FillGameCountUpDown.Maximum;
             FillGameEditorPanel.Visibility = Visibility.Visible;
-
         }
 
         private void FillGameEditorBTN_Click(object sender, RoutedEventArgs e)
@@ -402,9 +396,9 @@ namespace GlossaryTermApp
         private void MatchGameItem_Selected(object sender, RoutedEventArgs e)
         {
             ClearWorkPlace();
+            MatchGameCountUpDown.Minimum = 2;
             MatchGameCountUpDown.Maximum = Serializer.TermList.Count;
             MatchGameEditorPanel.Visibility = Visibility.Visible;
-
         }
 
         private void MatchGameStartBTN_Click(object sender, RoutedEventArgs e)
