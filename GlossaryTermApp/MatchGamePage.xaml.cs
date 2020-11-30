@@ -49,7 +49,6 @@ namespace GlossaryTermApp
             _listTextBlocksForCheck = new List<TextBlock>();
             _listOfWordBorders = new List<Border>();
             _wordsStackPanel.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F2F3F4");
-            _wordsStackPanel.Margin = new Thickness(0, 0, 0, 10);
             ForStackPanelScrollViewer.Content = _wordsStackPanel;
             foreach (var term in MatchGame.TermList)
             {
