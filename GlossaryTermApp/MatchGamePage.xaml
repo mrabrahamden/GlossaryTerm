@@ -8,7 +8,9 @@
         Title="Соответствия" MinHeight="497.543" MinWidth="800" Width="788.943" ResizeMode="NoResize" WindowState="Maximized">
     <Grid x:Name="Grid">
         <ScrollViewer x:Name="ForStackPanelScrollViewer"  Margin="10,10,10,154" Panel.ZIndex="-2"/>
-        <WrapPanel  x:Name="WordsWrapPanel" Background="#F5EEF8" Height="92" VerticalAlignment="Bottom" Margin="10,0,10,57" Panel.ZIndex="-2"/>
+        <ScrollViewer x:Name="ForWrapPanelScrollViewer" Margin="10,0,10,57" Background="#F5EEF8" Height="92" VerticalAlignment="Bottom" Panel.ZIndex="-2"> 
+					 <WrapPanel  x:Name="WordsWrapPanel"/>
+        </ScrollViewer>
         <Grid Margin="0,454,-0.4,-0.4">
             <Image Source="image/help.png" Margin="10,0,0,9.6" ToolTip="Перетащите слова в серые прямоугольники выше и нажмите 'Проверить'. Чтобы очистить заполненную клетку - просто кликните по ней." VerticalAlignment="Bottom" HorizontalAlignment="Left" RenderTransformOrigin="0.851,9.6" Width="41" />
             <Button  x:Name="CheckBTN" Content="Проверить" FontSize="20" Height="42" Click="CheckBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="123" Margin="0,0,10,10"/>
