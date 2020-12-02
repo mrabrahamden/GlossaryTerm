@@ -106,6 +106,7 @@ namespace GlossaryTermApp
                     _wordsStackPanel.Children.Add(dockPanel);
                 }
             }
+
         }
 
         private void PlaceForWordTextBox_TextChanged(object sender, TextChangedEventArgs e)
