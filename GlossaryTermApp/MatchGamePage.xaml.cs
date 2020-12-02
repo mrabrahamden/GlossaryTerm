@@ -134,8 +134,11 @@ namespace GlossaryTermApp
             int count = 0;
             foreach (var border in _listOfWordBorders)
             {
-                if(count==1)
-                { continue; }
+                if (count == 1)
+                {
+                    continue;
+                }
+
                 if (border.Visibility == Visibility.Visible)
                 {
                     continue;
@@ -185,7 +188,7 @@ namespace GlossaryTermApp
                     return;
                 else
                 {
-                    if(border.Visibility==Visibility.Hidden)
+                    if (border.Visibility == Visibility.Hidden)
                     {
                         continue;
                     }
