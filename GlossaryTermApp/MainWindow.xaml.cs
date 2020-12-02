@@ -488,7 +488,8 @@ namespace GlossaryTermApp
         {
             isPdfSaving = true;
             FillGameStartBTN_Click(null, null);
-            new FillGamePage(fillGame).SaveToPdf(sender, e);
+            if(fillGame!=null)
+                new FillGamePage(fillGame).SaveToPdf(sender, e);
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)

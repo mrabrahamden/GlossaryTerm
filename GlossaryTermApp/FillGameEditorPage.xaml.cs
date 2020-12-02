@@ -75,19 +75,7 @@ namespace GlossaryTermApp
 
         private void FillGameEditorPage_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            string msg = "Сохранить?";
-            MessageBoxResult result =
-                MessageBox.Show(
-                    msg,
-                    "Внимание",
-                    MessageBoxButton.OKCancel,
-                    MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Cancel)
-            {
-                e.Cancel = true;
-            }
-            else Button_Click(null, null);
-
+            Button_Click(null, null);
         }
 
         private void IsKey_Click(object sender, RoutedEventArgs e)

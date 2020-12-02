@@ -76,7 +76,7 @@
                     <Button x:Name="CrosswordStartBTN" Content="Начать" FontWeight="DemiBold" Margin="0,0,22.2,39" FontSize="20" Click="CrosswordStartBTN_Click" HorizontalAlignment="Right" Width="184" Height="51" VerticalAlignment="Bottom"/>
                 </Grid>
             </StackPanel>
-            <StackPanel x:Name="FillGameEditorPanel" Visibility="Hidden" Margin="15,10,15.4,15">
+            <StackPanel x:Name="FillGameEditorPanel" Visibility="Visible" Margin="15,10,15.4,15">
                 <Grid Height="63">
                     <TextBlock TextWrapping="Wrap" Height="34" Margin="204,10,0,0" Width="248" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"><Run Text="Игра 'Заполни пропуски'"/></TextBlock>
                 </Grid>
