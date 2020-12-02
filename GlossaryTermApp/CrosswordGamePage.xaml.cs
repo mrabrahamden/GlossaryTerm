@@ -107,6 +107,7 @@ namespace GlossaryTermApp
                     wordsStackPanel.Children.Add(dockPanel);
                 }
             }
+
         }
 
         private bool[] writtenMainwordLetters;

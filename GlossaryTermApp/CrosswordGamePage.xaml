@@ -7,9 +7,7 @@
         mc:Ignorable="d"
         Title="Кроссворд" WindowState="Maximized" ResizeMode="NoResize" Closing="CrosswordGamePage_OnClosing">
     <DockPanel LastChildFill="True">
-        <Canvas x:Name="CrosswordCanvas" Margin="15,15,15,15" DockPanel.Dock="Top">
-        </Canvas>
-        <ScrollViewer x:Name="AnswersScrollViewer">
-        </ScrollViewer>
+        <Canvas x:Name="CrosswordCanvas" Margin="15,15,15,15" DockPanel.Dock="Top"/>
+        <ScrollViewer x:Name="AnswersScrollViewer"/>
     </DockPanel>
 </Window>

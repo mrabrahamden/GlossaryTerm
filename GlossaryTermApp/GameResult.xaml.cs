@@ -25,5 +25,10 @@ namespace GlossaryTermApp
             }
 
         }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

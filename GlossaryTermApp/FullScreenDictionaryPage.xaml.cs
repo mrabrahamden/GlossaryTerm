@@ -47,7 +47,7 @@ namespace GlossaryTermApp
             }
         }
 
-        private void SearchEmptyButton_Click(object sender, RoutedEventArgs e)
+        private void EmptyButton_Click(object sender, RoutedEventArgs e)
         {
             SearchTB.Clear();
             PerformDictionaryPrint(mainWindow.Serializer.TermList);
@@ -207,6 +207,11 @@ namespace GlossaryTermApp
             }
 
 
+        }
+
+        private void FullScreenClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

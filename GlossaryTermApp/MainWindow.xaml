@@ -70,6 +70,8 @@
                             </ToolTip>
                         </Image.ToolTip>
                     </Image>
+                    <TextBlock Text="* Если Вы хотите посмотреть результат, не 
+                           заполнив весь кроссворд, то нажмите на крестик в правом верхнем углу экрана" Margin="-100,170,0,0" TextWrapping="Wrap" MaxWidth="250" />
                     <Button  x:Name="CrosswordSaveBTN" Content="&#xEA90;" ToolTip="Сохранить в формате PDF" FontFamily="Segoe MDL2 Assets" FontSize="25" Height="51" Width="52" Foreground="IndianRed" Click="CrosswordSaveBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,206.2,39"/>
                     <Button x:Name="CrosswordStartBTN" Content="Начать" FontWeight="DemiBold" Margin="0,0,22.2,39" FontSize="20" Click="CrosswordStartBTN_Click" HorizontalAlignment="Right" Width="184" Height="51" VerticalAlignment="Bottom"/>
                 </Grid>

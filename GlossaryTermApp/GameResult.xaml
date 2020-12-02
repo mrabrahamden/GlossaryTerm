@@ -10,6 +10,7 @@
         <TextBlock x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="75" FontSize="40" TextAlignment="Center" Foreground="SeaGreen" FontFamily="Arial Rounded MT Bold" Margin="0,64,0,0"/>
         <TextBlock x:Name="NumOfRightAnswers" Margin="0,139,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="63" FontSize="40" TextAlignment="Center" Foreground="SeaGreen"/>
         <TextBlock x:Name="NumOfWrongAnswers" Margin="0,207,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="61" FontSize="40" TextAlignment="Center" Foreground="IndianRed"/>
+        <Button x:Name="btnOk" Content="ОК" HorizontalAlignment="Left" Margin="705,301,0,0" VerticalAlignment="Top" Width="61" Height="32" FontSize="20"  FontWeight="DemiBold" Click="btnOk_Click"/>
 
     </Grid>
 </Window>
