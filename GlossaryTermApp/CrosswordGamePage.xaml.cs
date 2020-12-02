@@ -1,6 +1,7 @@
 ﻿using CrosswordLib;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,7 +19,6 @@ namespace GlossaryTermApp
         private LetterFromWord[,] _matrix;
         private int _width;
         private int _height;
-        private List<Border> listOfBorders = new List<Border>();
         private List<TextBlock> listOfLetters = new List<TextBlock>();
         private List<TextBlock> listOfMainWordLetters = new List<TextBlock>();
         private List<TextBox> placeForWordsList = new List<TextBox>();
@@ -36,6 +36,7 @@ namespace GlossaryTermApp
             CrosswordCanvas.Width = this.Width - 30;
             CrosswordCanvas.Height = (this.Height - 30) * 0.6;
             mainWordTag = _crosswordTerms[0];
+            writtenMainwordLetters = new bool[_height];
             PrepareForm();
         }
 
@@ -47,9 +48,9 @@ namespace GlossaryTermApp
 
         private void PrepareAnswers()
         {
-            StackPanel _wordsStackPanel = new StackPanel();
-            _wordsStackPanel.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F2F3F4");
-            AnswersScrollViewer.Content = _wordsStackPanel;
+            StackPanel wordsStackPanel = new StackPanel();
+            wordsStackPanel.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#F2F3F4");
+            AnswersScrollViewer.Content = wordsStackPanel;
             bool firstHorizontalWord = true;
             for (int i = 0; i < _crosswordTerms.Length; i++)
             {
@@ -58,11 +59,11 @@ namespace GlossaryTermApp
                 {
                     if (i == 0)
                     {
-                        _wordsStackPanel.Children.Add(new TextBlock() { Text = "По вертикали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
+                        wordsStackPanel.Children.Add(new TextBlock() { Text = "По вертикали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
                     }
                     else if (firstHorizontalWord)
                     {
-                        _wordsStackPanel.Children.Add(new TextBlock() { Text = "По горизонтали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
+                        wordsStackPanel.Children.Add(new TextBlock() { Text = "По горизонтали: ", FontSize = 20, Margin = new Thickness(10, 8, 0, 2) });
                         firstHorizontalWord = false;
                     }
 
@@ -103,60 +104,102 @@ namespace GlossaryTermApp
                     termStackPanel.Children.Add(placeForWordTextBox);
                     dockPanel.Children.Add(termStackPanel);
                     dockPanel.Children.Add(wrapPanel);
-                    _wordsStackPanel.Children.Add(dockPanel);
+                    wordsStackPanel.Children.Add(dockPanel);
                 }
             }
         }
 
+        private bool[] writtenMainwordLetters;
         private void PlaceForWordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
             var term = (SimpleTerm)textBox.Tag;
+            textBox.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
+            List<TextBlock> listOfTermTextBlocks = new List<TextBlock>();
+            if (textBox.Tag == mainWordTag)
+            {
+                listOfTermTextBlocks = listOfMainWordLetters;
+            }
+            else
+            {
+                listOfTermTextBlocks =
+                    (from t in listOfLetters where (t.Tag != null) && ((SimpleTerm)t.Tag) == term select t).ToList();
+            }
+            string textToUpper = textBox.Text.ToUpper();
+
+            for (int i = 0; i < listOfTermTextBlocks.Count; i++)
+            {
+                if (i < textToUpper.Length)
+                    if (textBox.Tag != mainWordTag)
+                    {
+                        if ((listOfTermTextBlocks[i].Text.Length > 0) && (listOfTermTextBlocks[i].Text[0] != textToUpper[i]) && (listOfTermTextBlocks[i].IsEnabled == false))
+                        {
+                            textBox.Background = Brushes.LightCoral;
+                        }
+                        else
+                        {
+                            if (listOfTermTextBlocks[i].IsEnabled)
+                            {
+                                listOfTermTextBlocks[i].Text = textToUpper[i].ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if ((listOfTermTextBlocks[i].Text.Length > 0) && (listOfTermTextBlocks[i].Text[0] != textToUpper[i]) && (listOfTermTextBlocks[i].IsEnabled == false))
+                        {
+                            textBox.Background = Brushes.LightCoral;
+                        }
+                        else
+                        {
+                            if (listOfTermTextBlocks[i].IsEnabled)
+                            {
+                                listOfTermTextBlocks[i].Text = textToUpper[i].ToString();
+                                writtenMainwordLetters[i] = true;
+                            }
+                        }
+                    }
+                else
+                {
+                    if (textBox.Tag != mainWordTag)
+                    {
+                        if (listOfTermTextBlocks[i].IsEnabled)
+                            listOfTermTextBlocks[i].Text = "";
+                    }
+                    else
+                    {
+                        if (listOfTermTextBlocks[i].IsEnabled)
+                            if (writtenMainwordLetters[i])
+                            {
+                                listOfTermTextBlocks[i].Text = " ";
+                                writtenMainwordLetters[i] = false;
+                            }
+                    }
+                }
+            }
+
+
             if (textBox.Text.ToUpper() == term.Word.ToUpper())
             {
                 textBox.IsEnabled = false;
-                if (textBox.Tag == mainWordTag)
+                foreach (var tb in listOfTermTextBlocks)
                 {
-                    ShowMainWord();
+                    tb.IsEnabled = false;
                 }
-                else
-                {
-                    ShowRightWord(textBox.Tag);
-                }
+                CheckTaskComplete();
             }
-        }
-
-        private void ShowRightWord(object tag)
-        {
-            foreach (var textBlock in listOfLetters)
-            {
-                if (textBlock.Tag == tag)
-                {
-                    textBlock.Visibility = Visibility.Visible;
-                }
-            }
-            CheckTaskComplete();
-        }
-
-        private void ShowMainWord()
-        {
-            foreach (var textBlock in listOfMainWordLetters)
-            {
-                textBlock.Visibility = Visibility.Visible;
-            }
-            CheckTaskComplete();
         }
 
         private void CheckTaskComplete()
         {
-            bool IsTaskComplete = true;
+            bool isTaskComplete = true;
             foreach (var textBox in placeForWordsList)
             {
                 if (textBox.IsEnabled)
-                    IsTaskComplete = false;
+                    isTaskComplete = false;
             }
 
-            if (IsTaskComplete)
+            if (isTaskComplete)
             {
                 GameResult gameResult = new GameResult(0, 0);
                 gameResult.ShowDialog();
@@ -220,10 +263,9 @@ namespace GlossaryTermApp
                     {
                         border.Visibility = Visibility.Hidden;
                     }
-                    letter.Text = ch.ToString();
-                    letter.Visibility = Visibility.Hidden;
+                    //letter.Text = ch.ToString();
+                    //letter.Visibility = Visibility.Hidden;
                     listOfLetters.Add(letter);
-                    listOfBorders.Add(border);
                     Canvas.SetLeft(border, x);
                     Canvas.SetTop(border, y);
                     x += borderWidth - 2;
