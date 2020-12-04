@@ -7,8 +7,8 @@
     <ProjectGuid>{100EE1B9-A373-488C-B6C4-A474C43C0D52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordSkipGame</RootNamespace>
-    <AssemblyName>WordSkipGame</AssemblyName>
+    <RootNamespace>FillGameLib</RootNamespace>
+    <AssemblyName>FillGameLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
