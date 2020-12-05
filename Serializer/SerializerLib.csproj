@@ -7,8 +7,8 @@
     <ProjectGuid>{C8B8A60B-F661-4098-9EC0-859F7ADB625C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Serializer</RootNamespace>
-    <AssemblyName>Serializer</AssemblyName>
+    <RootNamespace>SerializerLib</RootNamespace>
+    <AssemblyName>SerializerLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
