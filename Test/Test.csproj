@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrosswordLib\CrosswordLib.csproj">
+    <ProjectReference Include="..\CrosswordLib\GameLib.csproj">
       <Project>{922e6f04-15b5-492c-bf8a-a749b93a9bfc}</Project>
-      <Name>CrosswordLib</Name>
+      <Name>GameLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\GlossaryTermApp\GlossaryTermApp.csproj">
       <Project>{ef477ce4-beb1-4ba9-858a-aff267e47423}</Project>

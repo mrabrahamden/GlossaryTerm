@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TermLib;
 
-namespace CrosswordLib
+namespace GameLib
 {
     public class CrosswordGame
     {
@@ -212,15 +212,4 @@ namespace CrosswordLib
         }
     }
 
-    public class LetterFromWord
-    {
-        public char Letter;
-        public SimpleTerm Term;
-
-        public LetterFromWord(char letter, SimpleTerm term)
-        {
-            Letter = letter;
-            Term = term;
-        }
-    }
 }

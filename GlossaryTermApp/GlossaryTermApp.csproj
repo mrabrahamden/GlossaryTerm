@@ -188,9 +188,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrosswordLib\CrosswordLib.csproj">
+    <ProjectReference Include="..\CrosswordLib\GameLib.csproj">
       <Project>{922e6f04-15b5-492c-bf8a-a749b93a9bfc}</Project>
-      <Name>CrosswordLib</Name>
+      <Name>GameLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\MatchGameLib\MatchGameLib.csproj">
       <Project>{66af6e37-6bb6-42cb-8fb1-76955b8146d0}</Project>
