@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Screenshot_1.ico</ApplicationIcon>
+    <ApplicationIcon>image\cherry.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -84,75 +84,75 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="Page\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CrosswordGamePage.xaml.cs">
+    <Compile Include="Page\CrosswordGamePage.xaml.cs">
       <DependentUpon>CrosswordGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FillGameEditorPage.xaml.cs">
+    <Compile Include="Page\FillGameEditorPage.xaml.cs">
       <DependentUpon>FillGameEditorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FillGamePage.xaml.cs">
+    <Compile Include="Page\FillGamePage.xaml.cs">
       <DependentUpon>FillGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FullScreenDictionaryPage.xaml.cs">
+    <Compile Include="Page\FullScreenDictionaryPage.xaml.cs">
       <DependentUpon>FullScreenDictionaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameResult.xaml.cs">
+    <Compile Include="Page\GameResult.xaml.cs">
       <DependentUpon>GameResult.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MatchGamePage.xaml.cs">
+    <Compile Include="Page\MatchGamePage.xaml.cs">
       <DependentUpon>MatchGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartPage.xaml.cs">
+    <Compile Include="Page\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WelcomeWindow.xaml.cs">
+    <Compile Include="Page\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="CrosswordGamePage.xaml">
+    <Page Include="Page\CrosswordGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FillGameEditorPage.xaml">
+    <Page Include="Page\FillGameEditorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FillGamePage.xaml">
+    <Page Include="Page\FillGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FullScreenDictionaryPage.xaml">
+    <Page Include="Page\FullScreenDictionaryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameResult.xaml">
+    <Page Include="Page\GameResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Page\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="Page\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Page\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MatchGamePage.xaml">
+    <Page Include="Page\MatchGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartPage.xaml">
+    <Page Include="Page\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WelcomeWindow.xaml">
+    <Page Include="Page\WelcomeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +174,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="image\arial.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -192,21 +193,9 @@
       <Project>{922e6f04-15b5-492c-bf8a-a749b93a9bfc}</Project>
       <Name>GameLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MatchGameLib\MatchGameLib.csproj">
-      <Project>{66af6e37-6bb6-42cb-8fb1-76955b8146d0}</Project>
-      <Name>MatchGameLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Serializer\SerializerLib.csproj">
       <Project>{c8b8a60b-f661-4098-9ec0-859f7adb625c}</Project>
       <Name>SerializerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TermLib\TermLib.csproj">
-      <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
-      <Name>TermLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordSkipGame\FillGameLib.csproj">
-      <Project>{100ee1b9-a373-488c-b6c4-a474c43c0d52}</Project>
-      <Name>FillGameLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -223,7 +212,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="image\help.png" />
-    <Content Include="image\Screenshot_1.png">
+    <Content Include="image\cherry.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -259,13 +248,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Screenshot_1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Screenshot_1.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Screenshot_1.ico" />
+    <Resource Include="image\cherry.ico" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="image\book.png">
@@ -282,6 +265,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

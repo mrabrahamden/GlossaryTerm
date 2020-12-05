@@ -12,7 +12,7 @@
         <ScrollViewer x:Name="ScrollEditor" Visibility="Visible" MinHeight="350" MinWidth="772" Margin="10,10,9.6,74" >
             <StackPanel x:Name="StackPanelForWords" Orientation="Vertical"/>
         </ScrollViewer>
-        <Image Source="image/help.png" MaxHeight="55" MaxWidth="55" Margin="0,375,753.6,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" ToolTip="Чтобы добавить термин в задание, выберите слова, которые могут быть пропущены в определении, просто нажав на них (они поменяют цвет на зеленый), галочка слева от слова поставится сама." RenderTransformOrigin="0.395,0.497" />
+        <Image Source="../image/help.png" MaxHeight="55" MaxWidth="55" Margin="0,375,753.6,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" ToolTip="Чтобы добавить термин в задание, выберите слова, которые могут быть пропущены в определении, просто нажав на них (они поменяют цвет на зеленый), галочка слева от слова поставится сама." RenderTransformOrigin="0.395,0.497" />
         <Button x:Name="BtnOk" Content="Готово" Height="33" FontSize="20" Margin="0,0,30,10" VerticalAlignment="Bottom" Click="Button_Click" HorizontalAlignment="Right" Width="75"/>
 
 

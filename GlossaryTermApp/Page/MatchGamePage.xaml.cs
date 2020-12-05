@@ -1,4 +1,4 @@
-﻿using MatchGameLib;
+﻿using GameLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using TermLib;
+using SerializerLib;
 using Color = System.Windows.Media.Color;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;

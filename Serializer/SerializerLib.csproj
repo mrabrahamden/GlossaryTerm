@@ -45,12 +45,7 @@
     <Compile Include="Serializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TermLib\TermLib.csproj">
-      <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
-      <Name>TermLib</Name>
-    </ProjectReference>
+    <Compile Include="Term.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

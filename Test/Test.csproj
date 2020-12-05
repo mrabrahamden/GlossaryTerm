@@ -64,17 +64,9 @@
       <Project>{ef477ce4-beb1-4ba9-858a-aff267e47423}</Project>
       <Name>GlossaryTermApp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MatchGameLib\MatchGameLib.csproj">
-      <Project>{66af6e37-6bb6-42cb-8fb1-76955b8146d0}</Project>
-      <Name>MatchGameLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Serializer\SerializerLib.csproj">
       <Project>{c8b8a60b-f661-4098-9ec0-859f7adb625c}</Project>
       <Name>SerializerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TermLib\TermLib.csproj">
-      <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
-      <Name>TermLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,6 @@
-﻿using CrosswordLib;
-using FillGameLib;
+﻿using GameLib;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using MatchGameLib;
 using SerializerLib;
 using System;
 using System.Collections.Generic;
@@ -16,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using TermLib;
+using SerializerLib;
 using Brushes = System.Windows.Media.Brushes;
 using Button = System.Windows.Controls.Button;
 using Color = iTextSharp.text.Color;

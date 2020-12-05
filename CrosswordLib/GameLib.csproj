@@ -42,17 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrosswordGame.cs" />
+    <Compile Include="FillGame.cs" />
     <Compile Include="LetterFromWord.cs" />
+    <Compile Include="MatchGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Serializer\SerializerLib.csproj">
       <Project>{c8b8a60b-f661-4098-9ec0-859f7adb625c}</Project>
       <Name>SerializerLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TermLib\TermLib.csproj">
-      <Project>{5bed843a-1224-43e8-89c9-77f4c512f10f}</Project>
-      <Name>TermLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
