@@ -29,6 +29,8 @@ namespace TeacherryApp
             InitializeComponent();
             this._mainWindow = mainWindow;
             _searchMode = false;
+            this.Width = SystemParameters.PrimaryScreenWidth;
+            this.Height = SystemParameters.PrimaryScreenHeight;
             PerformDictionaryPrint(mainWindow.Serializer.TermList);
         }
 
