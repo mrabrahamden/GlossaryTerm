@@ -60,7 +60,7 @@ namespace TeacherryApp
                     string wordAndDescription = term.ToString();
                     TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0, 0, 0, 0) };
                     DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 10, 5), Tag = term };
-                    newWord.Width = Screen.PrimaryScreen.WorkingArea.Width - 100;
+                    newWord.Width = SystemParameters.PrimaryScreenWidth - 100;
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
