@@ -21,7 +21,7 @@ using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class MainWindow : Window
     {

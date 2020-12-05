@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class GameResult : Window
     {

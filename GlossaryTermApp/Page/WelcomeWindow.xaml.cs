@@ -11,7 +11,7 @@ using CheckBox = System.Windows.Controls.CheckBox;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class WelcomeWindow : Window
     {

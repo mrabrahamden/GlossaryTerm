@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using SerializerLib;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class FillGameEditorPage : Window
     {

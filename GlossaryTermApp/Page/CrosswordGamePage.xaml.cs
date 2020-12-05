@@ -10,7 +10,7 @@ using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class CrosswordGamePage : Window
     {

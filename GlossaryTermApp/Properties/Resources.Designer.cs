@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GlossaryTermApp.Properties {
+namespace TeacherryApp.Properties {
     using System;
     
     

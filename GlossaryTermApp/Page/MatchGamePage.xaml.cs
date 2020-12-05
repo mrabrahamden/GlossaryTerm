@@ -15,7 +15,7 @@ using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using Orientation = System.Windows.Controls.Orientation;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class MatchGamePage : Window
     {

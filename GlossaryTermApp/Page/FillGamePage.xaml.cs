@@ -15,7 +15,7 @@ using SerializerLib;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class FillGamePage : Window
     {

@@ -60,9 +60,9 @@
       <Project>{922e6f04-15b5-492c-bf8a-a749b93a9bfc}</Project>
       <Name>GameLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GlossaryTermApp\GlossaryTermApp.csproj">
+    <ProjectReference Include="..\GlossaryTermApp\TeacherryApp.csproj">
       <Project>{ef477ce4-beb1-4ba9-858a-aff267e47423}</Project>
-      <Name>GlossaryTermApp</Name>
+      <Name>TeacherryApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serializer\SerializerLib.csproj">
       <Project>{c8b8a60b-f661-4098-9ec0-859f7adb625c}</Project>

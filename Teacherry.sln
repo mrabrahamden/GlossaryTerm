@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlossaryTermApp", "GlossaryTermApp\GlossaryTermApp.csproj", "{EF477CE4-BEB1-4BA9-858A-AFF267E47423}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherryApp", "GlossaryTermApp\TeacherryApp.csproj", "{EF477CE4-BEB1-4BA9-858A-AFF267E47423}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializerLib", "Serializer\SerializerLib.csproj", "{C8B8A60B-F661-4098-9EC0-859F7ADB625C}"
 EndProject

@@ -1,7 +1,7 @@
-﻿<Application x:Class="GlossaryTermApp.App"
+﻿<Application x:Class="TeacherryApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:GlossaryTermApp"
+             xmlns:local="clr-namespace:TeacherryApp"
              StartupUri="Page/StartPage.xaml">
     <Application.Resources>
     </Application.Resources>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class StartPage : Window
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml

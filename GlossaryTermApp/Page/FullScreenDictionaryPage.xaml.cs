@@ -17,7 +17,7 @@ using MessageBox = System.Windows.MessageBox;
 using Paragraph = iTextSharp.text.Paragraph;
 using Path = System.IO.Path;
 
-namespace GlossaryTermApp
+namespace TeacherryApp
 {
     public partial class FullScreenDictionaryPage : Window
     {
