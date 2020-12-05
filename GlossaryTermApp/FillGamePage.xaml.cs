@@ -19,28 +19,28 @@ namespace GlossaryTermApp
 {
     public partial class FillGamePage : Window
     {
-        private FillGame game;
-        private List<SimpleTerm> list;
-        private List<bool> listOfSkippedWords;
-        private int numOfSkipWords = 0;
-        private List<StringBuilder> listOfBuilders = new List<StringBuilder>();
+        private FillGame _game;
+        private List<SimpleTerm> _list;
+        private List<bool> _listOfSkippedWords;
+        private int _numOfSkipWords = 0;
+        private List<StringBuilder> _listOfBuilders = new List<StringBuilder>();
         public FillGamePage(FillGame game)
         {
             InitializeComponent();
-            this.game = game;
-            this.list = GetRandomList(game.List, game.Count);
+            this._game = game;
+            this._list = GetRandomList(game.List, game.Count);
                 game.List.FindAll((term => term.ReadyForFillGame)).ToList();
 
-            if (list.Count > 0)
+            if (_list.Count > 0)
             {
                 int count = 1;
-                foreach (var gameWord in list)
+                foreach (var gameWord in _list)
                 {
                     string word = gameWord.Word;                 //вывод самого термина
-                    listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
+                    _listOfSkippedWords = GetNumOfSkippedWords(game.Lvl,
                         gameWord.DescriptionWordsAndSplittersList
                             .FindAll((descriptionWord => descriptionWord.IsKeyWord)).Count);
-                    numOfSkipWords += listOfSkippedWords.FindAll((b => b == true)).Count;
+                    _numOfSkipWords += _listOfSkippedWords.FindAll((b => b == true)).Count;
                     TextBlock newWord = new TextBlock { Text = word + " ⸺ ", TextWrapping = TextWrapping.Wrap, FontSize = 20, FontWeight = FontWeights.Bold };
                     WrapPanel panelForOneWord = new WrapPanel();
                     panelForOneWord.VerticalAlignment = VerticalAlignment.Top;
@@ -52,9 +52,9 @@ namespace GlossaryTermApp
                     count++;
                     foreach (var wordPart in gameWord.DescriptionWordsAndSplittersList) //печать слов из определения
                     {
-                        if (wordPart.IsKeyWord && listOfSkippedWords.Count > 0)
+                        if (wordPart.IsKeyWord && _listOfSkippedWords.Count > 0)
                         {
-                            if (listOfSkippedWords.First() == true)
+                            if (_listOfSkippedWords.First() == true)
                             {
                                 TextBox skippedWord = new TextBox()
                                 { FontSize = 20, MinWidth = 20, Tag = wordPart.Word };
@@ -80,7 +80,7 @@ namespace GlossaryTermApp
                                 termBuilder.Append(wordPart.Word);
                             }
 
-                            listOfSkippedWords.RemoveAt(0);
+                            _listOfSkippedWords.RemoveAt(0);
                         }
                         else
                         {
@@ -93,7 +93,7 @@ namespace GlossaryTermApp
 
                     }
                     termBuilder.Append(".");
-                    listOfBuilders.Add(termBuilder);
+                    _listOfBuilders.Add(termBuilder);
                     Separator separate = new Separator();
                     panelForOneWord.Margin = new Thickness(0, 7, 0, 7);
                     stackPanelOutput.Children.Add(panelForOneWord);
@@ -104,7 +104,7 @@ namespace GlossaryTermApp
 
         private List<SimpleTerm> GetRandomList(List<SimpleTerm> list, int count)
         {
-            var readySimpleTerms = game.List.FindAll((term => term.ReadyForFillGame)).ToList();
+            var readySimpleTerms = _game.List.FindAll((term => term.ReadyForFillGame)).ToList();
             Random random=new Random(DateTime.Now.Millisecond);
             List<SimpleTerm> resultList=new List<SimpleTerm>();
             int randomIndex = random.Next() % readySimpleTerms.Count;
@@ -185,7 +185,7 @@ namespace GlossaryTermApp
 
         }
 
-        private int numOfErrors = 0;
+        private int _numOfErrors = 0;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (var child in stackPanelOutput.Children)
@@ -201,7 +201,7 @@ namespace GlossaryTermApp
                             if (textbox.Tag.ToString().ToLower() != textbox.Text.ToLower())
                             {
                                 textbox.Background = Brushes.LightCoral;
-                                numOfErrors++;
+                                _numOfErrors++;
                             }
                             else
                             {
@@ -212,14 +212,14 @@ namespace GlossaryTermApp
                 }
             }
 
-            if (!game.TrainingMode)
+            if (!_game.TrainingMode)
             {
-                GameResult gameResult = new GameResult(numOfErrors, numOfSkipWords);
+                GameResult gameResult = new GameResult(_numOfErrors, _numOfSkipWords);
                 gameResult.ShowDialog();
                 this.Close();
             }
 
-            numOfErrors = 0;
+            _numOfErrors = 0;
         }
         public void SaveToPdf(object sender, EventArgs e)
         {
@@ -248,7 +248,7 @@ namespace GlossaryTermApp
 
 
 
-                foreach (var term in listOfBuilders)
+                foreach (var term in _listOfBuilders)
                 {
                     Phrase phrase = new Phrase(term.ToString(), font);
                     Paragraph paragraph = new Paragraph(phrase);
@@ -269,5 +269,4 @@ namespace GlossaryTermApp
         }
 
     }
-    ////https://github.com/xceedsoftware/wpftoolkit/wiki/IntegerUpDown про UpDown
 }

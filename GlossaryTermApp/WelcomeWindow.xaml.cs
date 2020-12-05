@@ -13,12 +13,9 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для WelcomeWindow.xaml
-    /// </summary>
     public partial class WelcomeWindow : Window
     {
-        private List<string> listOfSubjects = new List<string>()
+        private List<string> _listOfSubjects = new List<string>()
         {
             "Астрономия",
             "Английский язык",
@@ -40,8 +37,8 @@ namespace GlossaryTermApp
             "Французский язык",
             "Химия"
         };
-        private List<CheckBox> checkBoxes = new List<CheckBox>();
-        public List<string> checkedList = new List<string>();
+        private List<CheckBox> _checkBoxes = new List<CheckBox>();
+        public List<string> CheckedList = new List<string>();
         public WelcomeWindow()
         {
             InitializeComponent();
@@ -66,15 +63,13 @@ namespace GlossaryTermApp
 
         private void PrepareForm()
         {
-            WrapPanel panelForSubject;
-            CheckBox checkBox;
-            foreach (var subj in listOfSubjects)
+            foreach (var subj in _listOfSubjects)
             {
-                panelForSubject = new WrapPanel();
-                checkBox = new CheckBox() { Content = subj, Tag = subj };
+                var panelForSubject = new WrapPanel();
+                var checkBox = new CheckBox() { Content = subj, Tag = subj };
                 panelForSubject.Children.Add(checkBox);
                 SubjStackPanel.Children.Add(panelForSubject);
-                checkBoxes.Add(checkBox);
+                _checkBoxes.Add(checkBox);
             }
 
             CreateNewTextBox();
@@ -82,21 +77,19 @@ namespace GlossaryTermApp
 
         private void CreateNewTextBox()
         {
-            WrapPanel panelForSubject;
-            CheckBox checkBox;
-            panelForSubject = new WrapPanel();
+            var panelForSubject = new WrapPanel();
             TextBox textBox = new TextBox() { MinWidth = 290, Margin = new Thickness(10, 0, 0, 0) };
             textBox.Background = GetBrushFromImage("image/TextBoxBackground1.png");
-            checkBox = new CheckBox() { VerticalAlignment = VerticalAlignment.Center, Tag = textBox };
+            var checkBox = new CheckBox() { VerticalAlignment = VerticalAlignment.Center, Tag = textBox };
             textBox.Tag = checkBox;
-            checkBoxes.Add(checkBox);
+            _checkBoxes.Add(checkBox);
             textBox.TextChanged += TextBox_TextChanged;
             panelForSubject.Children.Add(checkBox);
             panelForSubject.Children.Add(textBox);
             NewSubjStackPanel.Children.Add(panelForSubject);
         }
 
-        private List<object> lastTextBox = new List<object>();
+        private List<object> _lastTextBox = new List<object>();
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
@@ -109,27 +102,27 @@ namespace GlossaryTermApp
                 textBox.Background = null;
                 CheckBox checkBox = (CheckBox)textBox.Tag;
                 checkBox.IsChecked = true;
-                if (!lastTextBox.Contains(sender))
+                if (!_lastTextBox.Contains(sender))
                 {
                     CreateNewTextBox();
-                    lastTextBox.Add(sender);
+                    _lastTextBox.Add(sender);
                 }
             }
 
         }
 
-        private bool hasMistakes = false;
+        private bool _hasMistakes = false;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            hasMistakes = false;
-            foreach (var checkBox in checkBoxes)
+            _hasMistakes = false;
+            foreach (var checkBox in _checkBoxes)
             {
                 if (checkBox.IsChecked == true)
                 {
                     if (checkBox.Tag is string)
                     {
-                        checkedList.Add((string)checkBox.Tag);
+                        CheckedList.Add((string)checkBox.Tag);
                     }
                     else if (checkBox.Tag is TextBox)
                     {
@@ -144,26 +137,26 @@ namespace GlossaryTermApp
                         if (hasNonLetterSymbols)
                         {
                             ((TextBox)checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
-                            hasMistakes = true;
+                            _hasMistakes = true;
                         }
                         else
                         {
-                           var containsText =
-                                (from t in checkedList where t.ToLower() == text.ToLower() select t).ToList();
+                            var containsText =
+                                 (from t in CheckedList where t.ToLower() == text.ToLower() select t).ToList();
                             if (text.Length > 0 && containsText.Count == 0)
-                                checkedList.Add(text);
+                                CheckedList.Add(text);
                         }
                     }
                 }
             }
 
-            if (!hasMistakes)
+            if (!_hasMistakes)
             {
                 Close();
             }
             else
             {
-                checkedList.Clear();
+                CheckedList.Clear();
                 MessageBox.Show("Поля могут содержать только буквы и пробелы.");
             }
         }

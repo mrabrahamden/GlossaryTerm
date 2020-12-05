@@ -1,4 +1,4 @@
-﻿using CrosswordLib;
+﻿using GameLib;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,15 +19,15 @@ namespace GlossaryTermApp
         private LetterFromWord[,] _matrix;
         private int _width;
         private int _height;
-        private List<TextBlock> listOfLetters = new List<TextBlock>();
-        private List<TextBlock> listOfMainWordLetters = new List<TextBlock>();
-        private List<TextBox> placeForWordsList = new List<TextBox>();
-        private object mainWordTag;
+        private List<TextBlock> _listOfLetters = new List<TextBlock>();
+        private List<TextBlock> _listOfMainWordLetters = new List<TextBlock>();
+        private List<TextBox> _placeForWordsList = new List<TextBox>();
+        private object _mainWordTag;
         public CrosswordGamePage(CrosswordGame crosswordGame)
         {
             InitializeComponent();
-            this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
-            this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+            this.Width = SystemParameters.PrimaryScreenWidth;
+            this.Height = SystemParameters.PrimaryScreenHeight;
             this._crosswordGame = crosswordGame;
             _crosswordTerms = crosswordGame.CrossWordTerms;
             _matrix = crosswordGame.CrosswordMatrix;
@@ -35,8 +35,8 @@ namespace GlossaryTermApp
             _height = _matrix.GetLength(0);
             CrosswordCanvas.Width = this.Width - 30;
             CrosswordCanvas.Height = (this.Height - 30) * 0.6;
-            mainWordTag = _crosswordTerms[0];
-            writtenMainwordLetters = new bool[_height];
+            _mainWordTag = _crosswordTerms[0];
+            _writtenMainWordLetters = new bool[_height];
             PrepareForm();
         }
 
@@ -98,7 +98,7 @@ namespace GlossaryTermApp
                         VerticalAlignment = VerticalAlignment.Center
                     };
                     placeForWordTextBox.MaxLength = term.Word.Length;
-                    placeForWordsList.Add(placeForWordTextBox);
+                    _placeForWordsList.Add(placeForWordTextBox);
                     placeForWordTextBox.TextChanged += PlaceForWordTextBox_TextChanged;
                     wrapPanel.Children.Add(descriptionTextBlock);
                     termStackPanel.Children.Add(placeForWordTextBox);
@@ -110,28 +110,28 @@ namespace GlossaryTermApp
 
         }
 
-        private bool[] writtenMainwordLetters;
+        private bool[] _writtenMainWordLetters;
         private void PlaceForWordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
             var term = (SimpleTerm)textBox.Tag;
             textBox.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
             List<TextBlock> listOfTermTextBlocks = new List<TextBlock>();
-            if (textBox.Tag == mainWordTag)
+            if (textBox.Tag == _mainWordTag)
             {
-                listOfTermTextBlocks = listOfMainWordLetters;
+                listOfTermTextBlocks = _listOfMainWordLetters;
             }
             else
             {
                 listOfTermTextBlocks =
-                    (from t in listOfLetters where (t.Tag != null) && ((SimpleTerm)t.Tag) == term select t).ToList();
+                    (from t in _listOfLetters where (t.Tag != null) && ((SimpleTerm)t.Tag) == term select t).ToList();
             }
             string textToUpper = textBox.Text.ToUpper();
 
             for (int i = 0; i < listOfTermTextBlocks.Count; i++)
             {
                 if (i < textToUpper.Length)
-                    if (textBox.Tag != mainWordTag)
+                    if (textBox.Tag != _mainWordTag)
                     {
                         if ((listOfTermTextBlocks[i].Text.Length > 0) && (listOfTermTextBlocks[i].Text[0] != textToUpper[i]) && (listOfTermTextBlocks[i].IsEnabled == false))
                         {
@@ -156,13 +156,13 @@ namespace GlossaryTermApp
                             if (listOfTermTextBlocks[i].IsEnabled)
                             {
                                 listOfTermTextBlocks[i].Text = textToUpper[i].ToString();
-                                writtenMainwordLetters[i] = true;
+                                _writtenMainWordLetters[i] = true;
                             }
                         }
                     }
                 else
                 {
-                    if (textBox.Tag != mainWordTag)
+                    if (textBox.Tag != _mainWordTag)
                     {
                         if (listOfTermTextBlocks[i].IsEnabled)
                             listOfTermTextBlocks[i].Text = "";
@@ -170,10 +170,10 @@ namespace GlossaryTermApp
                     else
                     {
                         if (listOfTermTextBlocks[i].IsEnabled)
-                            if (writtenMainwordLetters[i])
+                            if (_writtenMainWordLetters[i])
                             {
                                 listOfTermTextBlocks[i].Text = " ";
-                                writtenMainwordLetters[i] = false;
+                                _writtenMainWordLetters[i] = false;
                             }
                     }
                 }
@@ -194,7 +194,7 @@ namespace GlossaryTermApp
         private void CheckTaskComplete()
         {
             bool isTaskComplete = true;
-            foreach (var textBox in placeForWordsList)
+            foreach (var textBox in _placeForWordsList)
             {
                 if (textBox.IsEnabled)
                     isTaskComplete = false;
@@ -253,7 +253,7 @@ namespace GlossaryTermApp
                     if (j == _crosswordGame.MainWordHorizontalIndex)
                     {
                         border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
-                        listOfMainWordLetters.Add(letter);
+                        _listOfMainWordLetters.Add(letter);
                     }
                     char ch = ' ';
                     if ((_matrix[i, j] != null) && (_matrix[i, j].Letter != ch))
@@ -266,7 +266,7 @@ namespace GlossaryTermApp
                     }
                     //letter.Text = ch.ToString();
                     //letter.Visibility = Visibility.Hidden;
-                    listOfLetters.Add(letter);
+                    _listOfLetters.Add(letter);
                     Canvas.SetLeft(border, x);
                     Canvas.SetTop(border, y);
                     x += borderWidth - 2;
@@ -280,12 +280,12 @@ namespace GlossaryTermApp
         private void CrosswordGamePage_OnClosing(object sender, CancelEventArgs e)
         {
             int errors = 0;
-            foreach (var textBox in placeForWordsList)
+            foreach (var textBox in _placeForWordsList)
             {
                 if (textBox.IsEnabled)
                     errors++;
             }
-            new GameResult(errors, placeForWordsList.Count).ShowDialog();
+            new GameResult(errors, _placeForWordsList.Count).ShowDialog();
         }
     }
 }
