@@ -9,16 +9,16 @@ using TermLib;
 
 namespace SerializerLib
 {
-    public class Serializer 
+    public class Serializer
     {
-        public List<SimpleTerm> TermList=new List<SimpleTerm>();
+        public List<SimpleTerm> TermList = new List<SimpleTerm>();
         public string DefaultPath =
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Teacherry\\";
         public string Path;
         public string FileName;
         private string settingsFileName = "settings.dat";
-        internal BinaryFormatter formatter = new BinaryFormatter();
-        public Settings Settings=new Settings(0,null);
+        internal BinaryFormatter Formatter = new BinaryFormatter();
+        public Settings Settings = new Settings(0, null);
 
         public Serializer()
         {
@@ -26,7 +26,7 @@ namespace SerializerLib
             UpdateFileNameAndPath();
             Deserialize();
         }
-        public Serializer(int cl,string subj)
+        public Serializer(int cl, string subj)
         {
             Settings.Class = cl;
             Settings.Subject = subj;
@@ -35,17 +35,16 @@ namespace SerializerLib
         }
         private void UpdateFileNameAndPath()
         {
-                FileName = Settings.Class + ".dat";
-                Path = DefaultPath + Settings.Subject + "\\";
-           
+            FileName = Settings.Class + ".dat";
+            Path = DefaultPath + Settings.Subject + "\\";
         }
         public void DeleteTermByString(string wordAndDescrString)
         {
-            Regex regex=new Regex(@"((\w)+\s?)+");
-            var term =regex.Match(wordAndDescrString).ToString();
+            Regex regex = new Regex(@"((\w)+\s?)+");
+            var term = regex.Match(wordAndDescrString).ToString();
             term = term.Substring(0, term.Length - 1);
             var descr = GetTermDescriptionByString(wordAndDescrString);
-            TermList.RemoveAll((simpleTerm => simpleTerm.Word==term && simpleTerm.Description==descr));
+            TermList.RemoveAll((simpleTerm => simpleTerm.Word == term && simpleTerm.Description == descr));
         }
         public string GetTermNameByString(string wordAndDescrString)
         {
@@ -64,16 +63,16 @@ namespace SerializerLib
         }
         public SimpleTerm GetTermByString(string wordAndDescr)
         {
-            var result= TermList.Find(term =>
-                term.Word == GetTermNameByString(wordAndDescr) &&
-                term.Description == GetTermDescriptionByString(wordAndDescr));
+            var result = TermList.Find(term =>
+                 term.Word == GetTermNameByString(wordAndDescr) &&
+                 term.Description == GetTermDescriptionByString(wordAndDescr));
             return result;
         }
         public List<SimpleTerm> LookForAWord(string word)
         {
             var result = new List<SimpleTerm>();
             result = TermList.FindAll(term => term.Word.ToLower().Contains(word.ToLower()));
-            result.AddRange(TermList.FindAll(term=> term.Description.ToLower().Contains(word.ToLower())));         
+            result.AddRange(TermList.FindAll(term => term.Description.ToLower().Contains(word.ToLower())));
             return DeleteSimilarTerms(result);
         }
         public List<SimpleTerm> DeleteSimilarTerms(List<SimpleTerm> list)
@@ -97,18 +96,18 @@ namespace SerializerLib
         }
         public void SortList()
         {
-            var sortedList =(from term in TermList
-                orderby term.Word
-                select term).ToList();
+            var sortedList = (from term in TermList
+                              orderby term.Word
+                              select term).ToList();
             TermList = sortedList;
         }
         public void Serialize()
         {
             UpdateFileNameAndPath();
             CheckForPathExist(Path);
-            using (FileStream fs = new FileStream(Path+FileName, FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(Path + FileName, FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, TermList);
+                Formatter.Serialize(fs, TermList);
                 Console.WriteLine("Сериализован");
             }
         }
@@ -124,14 +123,14 @@ namespace SerializerLib
                     {
                         using (FileStream fs = new FileStream(Path + FileName, FileMode.OpenOrCreate))
                         {
-                            TermList = (List<SimpleTerm>) formatter.Deserialize(fs);
+                            TermList = (List<SimpleTerm>)Formatter.Deserialize(fs);
                             Console.WriteLine("Десериализован");
                         }
                     }
                 }
                 else
                 {
-                    if(Settings.Class>0)
+                    if (Settings.Class > 0)
                         Serialize();
                 }
             }
@@ -155,14 +154,11 @@ namespace SerializerLib
                 {
                     using (FileStream fs = new FileStream(DefaultPath + settingsFileName, FileMode.OpenOrCreate))
                     {
-                        Settings = (Settings)formatter.Deserialize(fs);
+                        Settings = (Settings)Formatter.Deserialize(fs);
                         return true;
                     }
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
             catch (Exception)
             {
@@ -177,7 +173,7 @@ namespace SerializerLib
             {
                 using (FileStream fs = new FileStream(DefaultPath + settingsFileName, FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(fs, Settings);
+                    Formatter.Serialize(fs, Settings);
                     return true;
                 }
 

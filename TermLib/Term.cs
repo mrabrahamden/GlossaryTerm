@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 
@@ -40,28 +39,17 @@ namespace TermLib
         public SimpleTerm(string word, string descr)
         {
             var indexLastSymbol = word.Length - 1;
-            for (int i = word.Length-1; i >=0; i--)
-            {
-                if (char.IsWhiteSpace(word[i]) || char.IsPunctuation(word[i]))
-                {
-                    indexLastSymbol--;
-                }
-                if (char.IsLetter(word[i])) break;
-            }
-
+            indexLastSymbol = FindIndexLastSymbol(word, indexLastSymbol);
             if (indexLastSymbol > 0)
             {
                 Word = word.Substring(0, indexLastSymbol + 1);
             }
+
             else Word = word;
             indexLastSymbol = descr.Length - 1;
-            bool HasDot = false;
-            if (indexLastSymbol > 0 && descr[indexLastSymbol] == '.')
-            {
-                HasDot = true;
-            }
-           
-            if (HasDot)
+            bool hasDot = indexLastSymbol > 0 && descr[indexLastSymbol] == '.';
+
+            if (hasDot)
             {
                 Description = descr.Substring(0, indexLastSymbol);
             }
@@ -69,16 +57,7 @@ namespace TermLib
             {
                 if (descr.Length > 0)
                 {
-                    for (int i = descr.Length - 1; i >= 0; i--)
-                    {
-                        if (char.IsWhiteSpace(descr[i]) || char.IsPunctuation(descr[i]))
-                        {
-                            indexLastSymbol--;
-                        }
-
-                        if (char.IsLetter(descr[i])) break;
-                    }
-
+                    indexLastSymbol = FindIndexLastSymbol(descr, indexLastSymbol);
                     Description = descr.Substring(0, indexLastSymbol + 1);
                 }
                 else Description = descr;
@@ -86,6 +65,21 @@ namespace TermLib
             ReadyForFillGame = false;
             DescriptionWordsAndSplittersList = new List<DescriptionWord>();
             FillingListsForFillGame();
+        }
+
+        private static int FindIndexLastSymbol(string word, int indexLastSymbol)
+        {
+            for (int i = word.Length - 1; i >= 0; i--)
+            {
+                if (char.IsWhiteSpace(word[i]) || char.IsPunctuation(word[i]))
+                {
+                    indexLastSymbol--;
+                }
+
+                if (char.IsLetter(word[i])) break;
+            }
+
+            return indexLastSymbol;
         }
 
         public override string ToString()
@@ -106,9 +100,9 @@ namespace TermLib
             var matches = regexForWordAndSplit.Matches(Description);
             foreach (var wordAndSplitter in matches)
             {
-                var stringword = wordAndSplitter.ToString();
-                var word = regexForWord.Match(stringword).ToString();
-                var splitter = regexForSplit.Match(stringword).ToString();
+                var stringWord = wordAndSplitter.ToString();
+                var word = regexForWord.Match(stringWord).ToString();
+                var splitter = regexForSplit.Match(stringWord).ToString();
                 DescriptionWordsAndSplittersList.Add(new DescriptionWord(word, false, false));
                 DescriptionWordsAndSplittersList.Add(new DescriptionWord(splitter, false, true));
             }
@@ -117,20 +111,14 @@ namespace TermLib
     [Serializable]
     public class DescriptionWord
     {
-        //private List<string> DefNotKeyWords = new List<string>()
-        //    {"это", "так", "которое", "которая", "который", "которые"};
         public string Word;
         public bool IsKeyWord;
         public bool IsSplitter;
-        public DescriptionWord(string word, bool iskeyword, bool issplitter)
+        public DescriptionWord(string word, bool isKeyword, bool isSplitter)
         {
             Word = word;
-            IsKeyWord = iskeyword;
-            // if (DefNotKeyWords.Contains(Word))
-            //  {
-
-            //  }
-            IsSplitter = issplitter;
+            IsKeyWord = isKeyword;
+            IsSplitter = isSplitter;
             if (IsSplitter)
             {
                 IsKeyWord = false;
