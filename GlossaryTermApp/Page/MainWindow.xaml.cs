@@ -1,8 +1,4 @@
 ﻿using GameLib;
-<<<<<<< HEAD:GlossaryTermApp/Page/MainWindow.xaml.cs
-=======
-using FillGameLib;
->>>>>>> 6d9fbdf9033390d6514d27570d15f7ea3775ca4d:GlossaryTermApp/MainWindow.xaml.cs
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using SerializerLib;
@@ -18,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using SerializerLib;
 using Brushes = System.Windows.Media.Brushes;
 using Button = System.Windows.Controls.Button;
 using Color = iTextSharp.text.Color;
