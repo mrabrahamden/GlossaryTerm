@@ -11,12 +11,12 @@ namespace FillGameLib
         public bool TrainingMode;
         public int Count;
 
-        public FillGame(List<SimpleTerm> list, int lvl,int count, bool fixlength, bool trainingmode)
+        public FillGame(List<SimpleTerm> list, int lvl,int count, bool fixLength, bool trainingMode)
         {
             List = list;
             Lvl = lvl;
-            FixedLength = fixlength;
-            TrainingMode = trainingmode;
+            FixedLength = fixLength;
+            TrainingMode = trainingMode;
             Count = count;
         }
     }
