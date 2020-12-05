@@ -1,4 +1,8 @@
 ﻿using GameLib;
+<<<<<<< HEAD:GlossaryTermApp/Page/MainWindow.xaml.cs
+=======
+using FillGameLib;
+>>>>>>> 6d9fbdf9033390d6514d27570d15f7ea3775ca4d:GlossaryTermApp/MainWindow.xaml.cs
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using SerializerLib;
@@ -333,8 +337,8 @@ namespace GlossaryTermApp
             }
         }
 
-        private FillGame fillGame = null;
-        private bool isPdfSaving = false;
+        private FillGame _fillGame = null;
+        private bool _isPdfSaving = false;
         private void FillGameStartBTN_Click(object sender, RoutedEventArgs e)
         {
             bool isCreated = false;
@@ -345,18 +349,7 @@ namespace GlossaryTermApp
             {
                 try
                 {
-                    if (FillGameEasyLvl.IsChecked == true)
-                    {
-                        lvl = 1;
-                    }
-                    else if (FillGameNormalLvl.IsChecked == true)
-                    {
-                        lvl = 2;
-                    }
-                    else
-                    {
-                        lvl = 3;
-                    }
+                    lvl = LevelCheck();
 
                     if (FillGameFixedLength.IsChecked == true)
                     {
@@ -377,13 +370,13 @@ namespace GlossaryTermApp
 
                 if (isCreated)
                 {
-                    fillGame = new FillGame(Serializer.TermList, lvl, (int)FillGameCountUpDown.Value, fixedLength, trainingMode);
-                    if (!isPdfSaving)
+                    _fillGame = new FillGame(Serializer.TermList, lvl, (int)FillGameCountUpDown.Value, fixedLength, trainingMode);
+                    if (!_isPdfSaving)
                     {
-                        FillGamePage fillGamePage = new FillGamePage(fillGame);
+                        FillGamePage fillGamePage = new FillGamePage(_fillGame);
                         fillGamePage.ShowDialog();
                     }
-                    isPdfSaving = false;
+                    _isPdfSaving = false;
                 }
                 else
                 {
@@ -409,10 +402,11 @@ namespace GlossaryTermApp
         {
             if (Serializer.TermList.Count >= 2)
             {
-                _matchGame = new MatchGame(Serializer.TermList, (int)MatchGameCountUpDown.Value,
-                    (bool)MatchGameTrainingMode.IsChecked);
+                if (MatchGameCountUpDown.Value != null)
+                    _matchGame = new MatchGame(Serializer.TermList, (int) MatchGameCountUpDown.Value,
+                        MatchGameTrainingMode.IsChecked != null && (bool) MatchGameTrainingMode.IsChecked);
                 _matchGame.IsReady = true;
-                if (!isPdfSaving)
+                if (!_isPdfSaving)
                 {
                     MatchGamePage matchGamePage = new MatchGamePage(_matchGame);
                     matchGamePage.ShowDialog();
@@ -429,7 +423,7 @@ namespace GlossaryTermApp
 
         private void MatchGameSaveBTN_OnClick(object sender, RoutedEventArgs e)
         {
-            isPdfSaving = true;
+            _isPdfSaving = true;
             MatchGameStartBTN_Click(sender, e);
             if (_matchGame.IsReady)
             {
@@ -438,6 +432,24 @@ namespace GlossaryTermApp
         }
 
         private void CrosswordStartBTN_Click(object sender, RoutedEventArgs e)
+        {
+            int lvl = LevelCheck();
+            _crosswordGame = new CrosswordGame(Serializer.TermList, lvl);
+            if (_crosswordGame.IsReady)
+            {
+                if (!_isPdfSaving)
+                {
+                    CrosswordGamePage crosswordGamePage = new CrosswordGamePage(_crosswordGame);
+                    crosswordGamePage.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Не удалось создать кроссворд, попробуйте добавить больше слов в словарь.");
+            }
+        }
+
+        private int LevelCheck()
         {
             int lvl = 0;
             if (CrosswordEasyLvl.IsChecked == true)
@@ -453,21 +465,8 @@ namespace GlossaryTermApp
                 lvl = 3;
             }
 
-            _crosswordGame = new CrosswordGame(Serializer.TermList, lvl);
-            if (_crosswordGame.IsReady)
-            {
-                if (!isPdfSaving)
-                {
-                    CrosswordGamePage crosswordGamePage = new CrosswordGamePage(_crosswordGame);
-                    crosswordGamePage.ShowDialog();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Не удалось создать кроссворд, попробуйте добавить больше слов в словарь.");
-            }
+            return lvl;
         }
-
         private void ButtonFullScreen_OnClick(object sender, RoutedEventArgs e)
         {
             FullScreenDictionaryPage fullScreenDictionaryPage = new FullScreenDictionaryPage(this);
@@ -484,10 +483,10 @@ namespace GlossaryTermApp
 
         private void FillGameSaveBTN_OnClick(object sender, RoutedEventArgs e)
         {
-            isPdfSaving = true;
+            _isPdfSaving = true;
             FillGameStartBTN_Click(null, null);
-            if(fillGame!=null)
-                new FillGamePage(fillGame).SaveToPdf(sender, e);
+            if(_fillGame!=null)
+                new FillGamePage(_fillGame).SaveToPdf(sender, e);
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
@@ -502,7 +501,7 @@ namespace GlossaryTermApp
 
         private void CrosswordSaveBTN_OnClick(object sender, RoutedEventArgs e)
         {
-            isPdfSaving = true;
+            _isPdfSaving = true;
             CrosswordStartBTN_Click(sender, e);
             if (_crosswordGame.IsReady)
             {
@@ -539,30 +538,30 @@ namespace GlossaryTermApp
 
                 PdfPTable table = new PdfPTable(game.CrosswordMatrix.GetLength(1));
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
-                char _nochar = ' ';
-                float _cellHeight = (document.PageSize.Width - document.LeftMargin - document.RightMargin) / game.CrosswordMatrix.GetLength(1);
+                char whiteSpaceChar = ' ';
+                float cellHeight = (document.PageSize.Width - document.LeftMargin - document.RightMargin) / game.CrosswordMatrix.GetLength(1);
                 for (int i = 0; i < game.CrosswordMatrix.GetLength(0); i++)
                 {
                     for (int j = 0; j < game.CrosswordMatrix.GetLength(1); j++)
                     {
                         if (game.CrosswordMatrix[i, j] != null)
                         {
-                            if (game.CrosswordMatrix[i, j].Letter != _nochar)
+                            if (game.CrosswordMatrix[i, j].Letter != whiteSpaceChar)
                             {
                                 if (game.MainWordHorizontalIndex == j)
                                     table.AddCell(new PdfPCell()
-                                    { BackgroundColor = Color.LIGHT_GRAY, FixedHeight = _cellHeight });
+                                    { BackgroundColor = Color.LIGHT_GRAY, FixedHeight = cellHeight });
                                 else
-                                    table.AddCell(new PdfPCell() { FixedHeight = _cellHeight });
+                                    table.AddCell(new PdfPCell() { FixedHeight = cellHeight });
                             }
                             else
                             {
-                                table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = _cellHeight });
+                                table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = cellHeight });
                             }
                         }
                         else
                         {
-                            table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = _cellHeight });
+                            table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = cellHeight });
                         }
                     }
 
@@ -641,13 +640,12 @@ namespace GlossaryTermApp
                 header.SpacingAfter = 30;
                 document.Add(header);
                 Random random = new Random(DateTime.Now.Millisecond);
-                int count = 0;
                 PdfPTable table = new PdfPTable(2);
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
 
                 while (listOfTerms.Count > 0)
                 {
-                    count = random.Next() % listOfTerms.Count;
+                    var count = random.Next() % listOfTerms.Count;
                     table.AddCell(new Phrase(listOfTerms[count], font));
                     listOfTerms.RemoveAt(count);
                     count = random.Next() % listOfDescr.Count;

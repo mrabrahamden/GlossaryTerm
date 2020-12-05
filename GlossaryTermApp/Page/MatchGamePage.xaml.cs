@@ -130,7 +130,7 @@ namespace GlossaryTermApp
 
         private void PlaceForWordTextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var textblock = (TextBlock)sender;
+            var textBlock = (TextBlock)sender;
             int count = 0;
             foreach (var border in _listOfWordBorders)
             {
@@ -144,14 +144,14 @@ namespace GlossaryTermApp
                     continue;
                 }
                 var term = (SimpleTerm)border.Tag;
-                if (term.Word == textblock.Text)
+                if (term.Word == textBlock.Text)
                 {
                     border.Visibility = Visibility.Visible;
                     count++;
                 }
             }
-            textblock.Text = "";
-            textblock.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
+            textBlock.Text = "";
+            textBlock.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
 
         }
 

@@ -9,15 +9,15 @@ namespace GlossaryTermApp
 {
     public partial class FillGameEditorPage : Window
     {
-        private Serializer serializer;
-        private MainWindow mainWindow;
+        private Serializer _serializer;
+        private MainWindow _mainWindow;
         public FillGameEditorPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
-            this.serializer = mainWindow.Serializer;
+            this._mainWindow = mainWindow;
+            this._serializer = mainWindow.Serializer;
             this.Closing += FillGameEditorPage_Closing;
-            foreach (var term in serializer.TermList)
+            foreach (var term in _serializer.TermList)
             {
                 string wordAndDescription = term.Word + " ⸺ ";
                 TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 20 };
@@ -140,9 +140,9 @@ namespace GlossaryTermApp
             BtnOk.FontWeight = FontWeights.Bold;
             BtnOk.Content = "\xE73E" + " ";
             BtnOk.IsEnabled = false;
-            serializer.Serialize();
-            mainWindow.FillGameCountUpDown.Maximum = serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
-            mainWindow.FillGameCountUpDown.Value = mainWindow.FillGameCountUpDown.Maximum;
+            _serializer.Serialize();
+            _mainWindow.FillGameCountUpDown.Maximum = _serializer.TermList.FindAll((term => term.ReadyForFillGame)).Count;
+            _mainWindow.FillGameCountUpDown.Value = _mainWindow.FillGameCountUpDown.Maximum;
         }
 
         private bool SomeDescriptionWordIsKey(SimpleTerm term)

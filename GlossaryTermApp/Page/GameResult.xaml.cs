@@ -5,11 +5,11 @@ namespace GlossaryTermApp
 {
     public partial class GameResult : Window
     {
-        public GameResult(int numofErrors, int numOfWords)
+        public GameResult(int numOfErrors, int numOfWords)
         {
             InitializeComponent();
 
-            if (numofErrors == 0)
+            if (numOfErrors == 0)
             {
                 Result.Foreground = Brushes.SeaGreen;
                 Result.Text = "Молодец!";
@@ -20,8 +20,8 @@ namespace GlossaryTermApp
             {
                 Result.Text = "Есть ошибки!";
                 Result.Foreground = Brushes.IndianRed;
-                NumOfRightAnswers.Text = "Верно : " + (numOfWords - numofErrors);
-                NumOfWrongAnswers.Text = "Ошибок : " + numofErrors;
+                NumOfRightAnswers.Text = "Верно : " + (numOfWords - numOfErrors);
+                NumOfWrongAnswers.Text = "Ошибок : " + numOfErrors;
             }
 
         }

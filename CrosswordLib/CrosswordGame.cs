@@ -104,12 +104,11 @@ namespace GameLib
 
         private void TryAddWordToCrossword(int i)
         {
-            SimpleTerm term;
             char letter = _mainWord.Word[i - 1];
             var listWords = GetWordsByLetter(letter);
             if (listWords.Count > 0)
             {
-                term = listWords[GetRandom(listWords.Count)];
+                var term = listWords[GetRandom(listWords.Count)];
                 CrossWordTerms[i] = term;
                 FillMatrixByWord(term, i);
                 List.Remove(term);

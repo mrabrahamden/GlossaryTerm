@@ -19,19 +19,16 @@ using Path = System.IO.Path;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Логика взаимодействия для FullScreenDictionaryPage.xaml
-    /// </summary>
     public partial class FullScreenDictionaryPage : Window
     {
-        private bool SearchMode = false;
-        private MainWindow mainWindow;
-        List<DockPanel> listOfPanels = new List<DockPanel>();
+        private bool _searchMode = false;
+        private MainWindow _mainWindow;
+        List<DockPanel> _listOfPanels = new List<DockPanel>();
         public FullScreenDictionaryPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
-            SearchMode = false;
+            this._mainWindow = mainWindow;
+            _searchMode = false;
             PerformDictionaryPrint(mainWindow.Serializer.TermList);
         }
 
@@ -40,8 +37,8 @@ namespace GlossaryTermApp
             if (!string.IsNullOrEmpty(SearchTB.Text))
             {
                 var request = SearchTB.Text;
-                var result = mainWindow.Serializer.LookForAWord(request);
-                SearchMode = true;
+                var result = _mainWindow.Serializer.LookForAWord(request);
+                _searchMode = true;
                 PerformDictionaryPrint(result);
                 SearchTB.Text = request;
             }
@@ -50,7 +47,7 @@ namespace GlossaryTermApp
         private void EmptyButton_Click(object sender, RoutedEventArgs e)
         {
             SearchTB.Clear();
-            PerformDictionaryPrint(mainWindow.Serializer.TermList);
+            PerformDictionaryPrint(_mainWindow.Serializer.TermList);
         }
 
         private void PerformDictionaryPrint(List<SimpleTerm> list)
@@ -95,14 +92,14 @@ namespace GlossaryTermApp
                     Separator separate = new Separator();
                     StackPanelForWords.Children.Add(panelForOneWord);
                     StackPanelForWords.Children.Add(separate);
-                    listOfPanels.Add(panelForOneWord);
+                    _listOfPanels.Add(panelForOneWord);
                 }
             }
             else
             {
                 TextBlock newWord = new TextBlock { TextWrapping = TextWrapping.Wrap, FontSize = 16 };
 
-                if (SearchMode)
+                if (_searchMode)
                 {
                     newWord.Text =
                         "По Вашему запросу ничего не найдено. Возможно, Вам стоит сначала добавить термин в словарь?";
@@ -121,7 +118,7 @@ namespace GlossaryTermApp
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            mainWindow.EditBtn_Click(sender, e);
+            _mainWindow.EditBtn_Click(sender, e);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -130,16 +127,16 @@ namespace GlossaryTermApp
             var button = (Button)sender;
             var term = (SimpleTerm)button.Tag;
             var tag = button.Tag;
-            foreach (var dockPanel in listOfPanels)
+            foreach (var dockPanel in _listOfPanels)
             {
                 if (dockPanel.Tag == tag)
                     dockPanel.Visibility = Visibility.Hidden;
             }
-            mainWindow.Serializer.DeleteTermByString(term.ToString());
+            _mainWindow.Serializer.DeleteTermByString(term.ToString());
             InitializeComponent();
-            mainWindow.Serializer.Serialize();
-            mainWindow.DictionaryItem_Selected(null, null);
-            PerformDictionaryPrint(mainWindow.Serializer.TermList);
+            _mainWindow.Serializer.Serialize();
+            _mainWindow.DictionaryItem_Selected(null, null);
+            PerformDictionaryPrint(_mainWindow.Serializer.TermList);
         }
 
         private void SearchTB_OnKeyDown(object sender, KeyEventArgs e)
@@ -153,12 +150,12 @@ namespace GlossaryTermApp
         public void BtnSavePdf_Click(object sender, RoutedEventArgs e)
         {
             //Надо проверить на пустоту словаря 
-            //  if(mainWindow.Serializer.TermList.Count==0)
-            //  {
-            //     MessageBox.Show("В Вашем словаре пока нет терминов. Добавьте их и сохраните.");
-            // }
-            List<SimpleTerm> list = new List<SimpleTerm>();
-            list = mainWindow.Serializer.TermList;
+            if (_mainWindow.Serializer.TermList.Count == 0)
+            {
+                MessageBox.Show("В Вашем словаре пока нет терминов. Добавьте их и сохраните.");
+            }
+            List<SimpleTerm> list;
+            list = _mainWindow.Serializer.TermList;
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments);
@@ -177,7 +174,7 @@ namespace GlossaryTermApp
                 Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
 
-                string nameOfFile = mainWindow.Serializer.Settings.Subject + ". " + mainWindow.Serializer.Settings.Class + " класс.";
+                string nameOfFile = _mainWindow.Serializer.Settings.Subject + ". " + _mainWindow.Serializer.Settings.Class + " класс.";
                 Phrase task = new Phrase(nameOfFile, font);
                 Paragraph header = new Paragraph(task);
                 header.Alignment = Element.ALIGN_CENTER;

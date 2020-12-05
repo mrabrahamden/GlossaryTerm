@@ -6,16 +6,13 @@ using System.Windows;
 
 namespace GlossaryTermApp
 {
-    /// <summary>
-    /// Interaction logic for StartPage.xaml
-    /// </summary>
     public partial class StartPage : Window
     {
-        internal int grade;
-        internal string subject;
-        internal Serializer serializer;
-        private List<string> listOfSubjects = new List<string>();
-        private List<string> standartListOfSubjects = new List<string>()
+        internal int Grade;
+        internal string Subject;
+        internal Serializer Serializer;
+        private List<string> _listOfSubjects = new List<string>();
+        private List<string> _standartListOfSubjects = new List<string>()
         {
             "Астрономия",
             "Английский язык",
@@ -39,11 +36,11 @@ namespace GlossaryTermApp
         };
         public StartPage()
         { 
-            serializer = new Serializer();
+            Serializer = new Serializer();
             InitializeComponent();
-            serializer.GetSettings();
-            serializer.TermList.Clear();
-            if (serializer.Settings.ListOfSubjects.Count == 0)
+            Serializer.GetSettings();
+            Serializer.TermList.Clear();
+            if (Serializer.Settings.ListOfSubjects.Count == 0)
             {
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
                 welcomeWindow.ShowDialog();
@@ -51,34 +48,34 @@ namespace GlossaryTermApp
             }
             else
             {
-                listOfSubjects = serializer.Settings.ListOfSubjects;
+                _listOfSubjects = Serializer.Settings.ListOfSubjects;
             }
 
-            foreach (var subject in listOfSubjects)
+            foreach (var subject in _listOfSubjects)
             {
                 ComboBoxSubject.Items.Add(subject);
             }
-            if (serializer.Settings.Class != 0)
+            if (Serializer.Settings.Class != 0)
             {
-                ComboBoxGrade.SelectedIndex = serializer.Settings.Class - 1;
+                ComboBoxGrade.SelectedIndex = Serializer.Settings.Class - 1;
             }
-            if (ComboBoxSubject.Items.Contains(serializer.Settings.Subject))
+            if (ComboBoxSubject.Items.Contains(Serializer.Settings.Subject))
             {
-                ComboBoxSubject.SelectedIndex = ComboBoxSubject.Items.IndexOf(serializer.Settings.Subject);
+                ComboBoxSubject.SelectedIndex = ComboBoxSubject.Items.IndexOf(Serializer.Settings.Subject);
             }
         }
 
         private void GetSubjList(WelcomeWindow welcomeWindow)
         {
-            if (welcomeWindow.checkedList.Count > 0)
+            if (welcomeWindow.CheckedList.Count > 0)
             {
-                serializer.Settings.ListOfSubjects = new List<string>(welcomeWindow.checkedList);
-                listOfSubjects = welcomeWindow.checkedList;
-                serializer.SaveSettings();
+                Serializer.Settings.ListOfSubjects = new List<string>(welcomeWindow.CheckedList);
+                _listOfSubjects = welcomeWindow.CheckedList;
+                Serializer.SaveSettings();
             }
             else
             {
-                listOfSubjects = standartListOfSubjects;
+                _listOfSubjects = _standartListOfSubjects;
             }
         }
 
@@ -92,15 +89,15 @@ namespace GlossaryTermApp
                     okayToContinue = true;
                     string input = ComboBoxGrade.Text;
                     Regex regex = new Regex(@"(\d)+\D");
-                    grade = int.Parse(regex.Match(input).ToString());
-                    subject = ComboBoxSubject.Text;
+                    Grade = int.Parse(regex.Match(input).ToString());
+                    Subject = ComboBoxSubject.Text;
                 }
 
-                serializer.Settings.Class = grade;
-                serializer.Settings.Subject = subject;
-                serializer.SaveSettings();
-                serializer.Deserialize();
-                MainWindow mainWindow = new MainWindow(serializer);
+                Serializer.Settings.Class = Grade;
+                Serializer.Settings.Subject = Subject;
+                Serializer.SaveSettings();
+                Serializer.Deserialize();
+                MainWindow mainWindow = new MainWindow(Serializer);
                 this.Hide();
                 mainWindow.Show();
                 this.Close();
@@ -122,7 +119,7 @@ namespace GlossaryTermApp
             changeSubjWelcomeWindow.ShowDialog();
             GetSubjList(changeSubjWelcomeWindow);
             ComboBoxSubject.Items.Clear();
-            foreach (var subject in listOfSubjects)
+            foreach (var subject in _listOfSubjects)
             {
                 ComboBoxSubject.Items.Add(subject);
             }
