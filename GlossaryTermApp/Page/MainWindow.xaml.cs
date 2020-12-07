@@ -168,7 +168,7 @@ namespace TeacherryApp
                 {
                     var termEdited = new SimpleTerm(TermTB.Text, DescriptionTB.Text);
                     var hasSimilar = (from t in Serializer.TermList where t.Word == termEdited.Word && t.Description == termEdited.Description select t).Count();
-                    if (hasSimilar!=0)
+                    if (hasSimilar != 0)
                     {
                         MessageBox.Show("Данный термин уже внесён в словарь!");
                     }
@@ -253,7 +253,7 @@ namespace TeacherryApp
                 {
                     string wordAndDescription = term.ToString();
                     TextBlock newWord = new TextBlock { Text = wordAndDescription, TextWrapping = TextWrapping.Wrap, FontSize = 16, Padding = new Thickness(0, 0, 5, 0), Width = 676 };
-                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 0, 5) ,Tag=term};
+                    DockPanel panelForOneWord = new DockPanel() { Margin = new Thickness(0, 5, 0, 5), Tag = term };
                     panelForOneWord.Children.Add(newWord);
                     StackPanel btnPanel = new StackPanel();
                     Button deleteBtn = new Button
@@ -398,8 +398,8 @@ namespace TeacherryApp
             if (Serializer.TermList.Count >= 2)
             {
                 if (MatchGameCountUpDown.Value != null)
-                    _matchGame = new MatchGame(Serializer.TermList, (int) MatchGameCountUpDown.Value,
-                        MatchGameTrainingMode.IsChecked != null && (bool) MatchGameTrainingMode.IsChecked);
+                    _matchGame = new MatchGame(Serializer.TermList, (int)MatchGameCountUpDown.Value,
+                        MatchGameTrainingMode.IsChecked != null && (bool)MatchGameTrainingMode.IsChecked);
                 _matchGame.IsReady = true;
                 if (!_isPdfSaving)
                 {
@@ -480,7 +480,7 @@ namespace TeacherryApp
         {
             _isPdfSaving = true;
             FillGameStartBTN_Click(null, null);
-            if(_fillGame!=null)
+            if (_fillGame != null)
                 new FillGamePage(_fillGame).SaveToPdf(sender, e);
         }
 
@@ -523,8 +523,9 @@ namespace TeacherryApp
                 //шрифт для кириллицы
                 BaseFont baseFont = BaseFont.CreateFont("image/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
                 Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+                Font numFont = new Font(baseFont, 5, Font.NORMAL);
                 //создание таблицы
-                Phrase task = new Phrase("Решите кроссворд.", font);
+                Phrase task = new Phrase("Решите кроссворд", font);
                 Paragraph header = new Paragraph(task);
                 header.Alignment = Element.ALIGN_CENTER;
                 header.SpacingAfter = 30;
@@ -532,11 +533,14 @@ namespace TeacherryApp
                 int count = 1;
 
                 PdfPTable table = new PdfPTable(game.CrosswordMatrix.GetLength(1));
+                table.WidthPercentage = 100;
                 table.DefaultCell.Border = Rectangle.NO_BORDER;
                 char whiteSpaceChar = ' ';
-                float cellHeight = (document.PageSize.Width - document.LeftMargin - document.RightMargin) / game.CrosswordMatrix.GetLength(1);
+                float cellHeight = document.PageSize.Width / game.CrosswordMatrix.GetLength(1);
                 for (int i = 0; i < game.CrosswordMatrix.GetLength(0); i++)
                 {
+                    bool firstLetterOfWord = !(_crosswordGame.CrossWordTerms[i+1] == null);
+                    var numPhrase = new Phrase(count.ToString() + ".",numFont);
                     for (int j = 0; j < game.CrosswordMatrix.GetLength(1); j++)
                     {
                         if (game.CrosswordMatrix[i, j] != null)
@@ -544,10 +548,34 @@ namespace TeacherryApp
                             if (game.CrosswordMatrix[i, j].Letter != whiteSpaceChar)
                             {
                                 if (game.MainWordHorizontalIndex == j)
-                                    table.AddCell(new PdfPCell()
-                                    { BackgroundColor = Color.LIGHT_GRAY, FixedHeight = cellHeight });
+                                {
+                                    if (firstLetterOfWord)
+                                    {
+                                        table.AddCell(new PdfPCell()
+                                        {
+                                            BackgroundColor = Color.LIGHT_GRAY, FixedHeight = cellHeight,
+                                            Phrase = numPhrase
+                                        });
+                                        firstLetterOfWord = false;
+                                    }
+                                    else
+                                    {
+                                        table.AddCell(new PdfPCell()
+                                            {BackgroundColor = Color.LIGHT_GRAY, FixedHeight = cellHeight});
+                                    }
+                                }
                                 else
-                                    table.AddCell(new PdfPCell() { FixedHeight = cellHeight });
+                                {
+                                    if (firstLetterOfWord)
+                                    {
+                                        table.AddCell(new PdfPCell() {FixedHeight = cellHeight,Phrase = numPhrase});
+                                        firstLetterOfWord = false;
+                                    }
+                                    else
+                                    {
+                                        table.AddCell(new PdfPCell() { FixedHeight = cellHeight });
+                                    }
+                                }
                             }
                             else
                             {
@@ -559,7 +587,8 @@ namespace TeacherryApp
                             table.AddCell(new PdfPCell() { Border = Rectangle.NO_BORDER, FixedHeight = cellHeight });
                         }
                     }
-
+                    if(_crosswordGame.CrossWordTerms[i + 1] != null)
+                        count++;
                 }
                 table.SpacingAfter = 30;
                 document.Add(table);
@@ -571,11 +600,11 @@ namespace TeacherryApp
                 document.Add(header);
 
                 var mainWord = game.CrossWordTerms[0];
-                Phrase phrase = new Phrase(count + ". " + mainWord.Description, font);
+                Phrase phrase = new Phrase("1. " + mainWord.Description, font);
                 Paragraph paragraph = new Paragraph(phrase);
                 paragraph.SpacingAfter = 30;
                 document.Add(paragraph);
-                count++;
+                count = 1;
 
                 task = new Phrase("По горизонтали: ", font);
                 header = new Paragraph(task);
@@ -583,7 +612,7 @@ namespace TeacherryApp
                 header.SpacingAfter = 30;
                 document.Add(header);
 
-                for (int i = 1; i < game.CrossWordTerms.Length - 1; i++)
+                for (int i = 1; i < game.CrossWordTerms.Length; i++)
                 {
                     if (game.CrossWordTerms[i] != null)
                     {

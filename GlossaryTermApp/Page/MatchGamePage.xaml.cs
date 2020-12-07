@@ -153,6 +153,11 @@ namespace TeacherryApp
             textBlock.Text = "";
             textBlock.Background = new SolidColorBrush(Color.FromRgb(202, 207, 210));
 
+            var smallStackPanel = (StackPanel)textBlock.Parent;
+            var dockPanel = (DockPanel)smallStackPanel.Parent;
+            var correctOrNotSign = (TextBlock)dockPanel.Children.OfType<TextBlock>().First();
+            correctOrNotSign.Background = default;
+
         }
 
         private void ShuffleList()

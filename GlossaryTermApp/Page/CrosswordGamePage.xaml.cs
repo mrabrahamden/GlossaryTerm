@@ -1,11 +1,11 @@
 ﻿using GameLib;
+using SerializerLib;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using SerializerLib;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
@@ -100,14 +100,82 @@ namespace TeacherryApp
                     placeForWordTextBox.MaxLength = term.Word.Length;
                     _placeForWordsList.Add(placeForWordTextBox);
                     placeForWordTextBox.TextChanged += PlaceForWordTextBox_TextChanged;
+                    placeForWordTextBox.GotKeyboardFocus += PlaceForWordTextBox_GotKeyboardFocus;
+                    placeForWordTextBox.LostKeyboardFocus += PlaceForWordTextBox_LostKeyboardFocus;
                     wrapPanel.Children.Add(descriptionTextBlock);
                     termStackPanel.Children.Add(placeForWordTextBox);
                     dockPanel.Children.Add(termStackPanel);
                     dockPanel.Children.Add(wrapPanel);
+                    dockPanel.Tag = placeForWordTextBox;
+                    dockPanel.MouseEnter += DockPanel_MouseEnter;
+                    dockPanel.MouseLeave += DockPanel_MouseLeave;
                     wordsStackPanel.Children.Add(dockPanel);
                 }
             }
 
+        }
+
+        private void PlaceForWordTextBox_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            if (textBox.Tag != _mainWordTag)
+            {
+                foreach (var textBlock in _listOfLetters)
+                {
+                    if (textBox.Tag == textBlock.Tag)
+                    {
+                        var border = (Border) textBlock.Parent;
+                        if (!_listOfMainWordLetters.Contains(textBlock))
+                            border.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                        else
+                            border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
+                    }
+                }
+            }
+        }
+        private void PlaceForWordTextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            if (textBox.Tag != _mainWordTag)
+            {
+                foreach (var textBlock in _listOfLetters)
+                {
+                    if (textBox.Tag == textBlock.Tag)
+                    {
+                        var border = (Border)textBlock.Parent;
+                        border.Background = Brushes.Aquamarine;
+                    }
+                }
+            }
+        }
+
+        private void DockPanel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var textBox = (TextBox)((DockPanel)sender).Tag;
+            foreach (var textBlock in _listOfLetters)
+            {
+                if (textBox.Tag == textBlock.Tag)
+                {
+                    var border = (Border)textBlock.Parent;
+                    if (!_listOfMainWordLetters.Contains(textBlock))
+                        border.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    else
+                        border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
+                }
+            }
+        }
+
+        private void DockPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var textBox = (TextBox)((DockPanel)sender).Tag;
+            foreach (var textBlock in _listOfLetters)
+            {
+                if (textBox.Tag == textBlock.Tag)
+                {
+                    var border = (Border)textBlock.Parent;
+                    border.Background = Brushes.Aquamarine;
+                }
+            }
         }
 
         private bool[] _writtenMainWordLetters;

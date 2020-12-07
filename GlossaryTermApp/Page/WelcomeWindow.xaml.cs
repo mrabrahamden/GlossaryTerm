@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -129,11 +130,6 @@ namespace TeacherryApp
                         var text = ((TextBox)checkBox.Tag).Text;
                         var regex = new Regex(@"([^а-яА-Яa-zA-Z\s])");
                         var hasNonLetterSymbols = regex.IsMatch(text);
-                        if (!hasNonLetterSymbols)
-                        {
-                            regex = new Regex(@"(\s)+");
-                            hasNonLetterSymbols = regex.IsMatch(text);
-                        }
                         if (hasNonLetterSymbols)
                         {
                             ((TextBox)checkBox.Tag).Background = new SolidColorBrush(Colors.LightCoral);
@@ -141,10 +137,26 @@ namespace TeacherryApp
                         }
                         else
                         {
+                            var words = text.Split(new char[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+                            var subjectSB=new StringBuilder();
+                            foreach (var word in words)
+                            {
+                                subjectSB.Append(word + " ");
+                            }
+
+                            string subject;
+                            if (subjectSB.Length > 0 && subjectSB[subjectSB.Length - 1] == ' ')
+                            {
+                                subject = subjectSB.ToString().Substring(0,subjectSB.Length-1);
+                            }
+                            else
+                            {
+                                subject = text;
+                            }
                             var containsText =
-                                 (from t in CheckedList where t.ToLower() == text.ToLower() select t).ToList();
-                            if (text.Length > 0 && containsText.Count == 0)
-                                CheckedList.Add(text);
+                                 (from t in CheckedList where t.ToLower() == subject.ToLower() select t).ToList();
+                            if (subject.Length > 0 && containsText.Count == 0)
+                                CheckedList.Add(subject);
                         }
                     }
                 }
