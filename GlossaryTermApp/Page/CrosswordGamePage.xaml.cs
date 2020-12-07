@@ -173,7 +173,7 @@ namespace TeacherryApp
                 if (textBox.Tag == textBlock.Tag)
                 {
                     var border = (Border)textBlock.Parent;
-                    border.Background = Brushes.Aquamarine;
+                    border.Background = new SolidColorBrush(Color.FromRgb(208, 236, 231)); 
                 }
             }
         }
