@@ -20,7 +20,7 @@
         </HamburgerMenu:HamburgerMenu>
         <Grid x:Name="WorkPlace" Margin="55,0,-0.4,0">
             <Canvas x:Name="instructions" Visibility="Hidden" Margin="15,10,10,10">
-                <Image Source="../image/help.png" Height="31" Width="42" Canvas.Left="672">
+                <Image Source="../image/help.png" Height="31" Width="42" Canvas.Left="672" ToolTipService.ShowDuration="50000">
                     <Image.ToolTip>
                         <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                             <TextBlock Text="Вы видите описания разделов меню. Чтобы перейти в необходимый раздел, нажмите на соответствующую иконку в столбце слева." TextWrapping="Wrap" Width="200"/>
@@ -63,7 +63,7 @@
                     </StackPanel>
                 </GroupBox>
                 <Grid Height="250" Margin="0,0,-12.2,0">
-                    <Image Source="../image/help.png" Margin="10,168,651,39" RenderTransformOrigin="0.685,0.86">
+                    <Image Source="../image/help.png" Margin="10,168,651,39" RenderTransformOrigin="0.685,0.86" ToolTipService.ShowDuration="50000">
                         <Image.ToolTip>
                             <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                                 <TextBlock Text="Выбор уровня сложности влияет на количество слов в кроссворде. Вам необходимо вписать термины в соответствующие ячейки рядом с определением." TextWrapping="Wrap" Width="200"/>
@@ -101,7 +101,7 @@
                     <Button  x:Name="SaveBTN" Content="&#xEA90;" ToolTip="Сохранить в формате PDF" FontFamily="Segoe MDL2 Assets" FontSize="25" Height="51" Width="52" Foreground="IndianRed" Click="FillGameSaveBTN_OnClick"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,184,10"/>
                     <Button x:Name="FillGameStartBTN" Content="Начать" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="515,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameStartBTN_Click"/>
                     <Button x:Name="FillGameEditorBTN" Content="Редактор" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" Width="184" Height="51" FontSize="20" Click="FillGameEditorBTN_Click"/>
-                    <Image Source="../image/help.png" Margin="32,78,307.8,10" RenderTransformOrigin="0.685,0.86">
+                    <Image Source="../image/help.png" Margin="32,78,307.8,10" RenderTransformOrigin="0.685,0.86" ToolTipService.ShowDuration="50000">
                         <Image.ToolTip>
                             <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                                 <TextBlock Text="Перед началом игры откройте Редактор. Отметьте галочками нужные термины и выделите слова, которые могут быть пропущены. Не забудьте установить уровень сложности и выбрать режим. После этого Вы можете начать игру или сохранить её в формате PDF." TextWrapping="Wrap" Width="200"/>
@@ -136,7 +136,7 @@
                     <xctk:IntegerUpDown x:Name="MatchGameCountUpDown" FormatString="N0" Value="2"  Increment="1"  Width="100" Height="29" FontSize="20" Minimum="2"/>
                 </StackPanel>
                 <Grid>
-                    <Image Source="../image/help.png" Margin="10,114,650.8,93" RenderTransformOrigin="0.685,0.86">
+                    <Image Source="../image/help.png" Margin="10,114,650.8,93" RenderTransformOrigin="0.685,0.86" ToolTipService.ShowDuration="50000">
                         <Image.ToolTip>
                             <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                                 <TextBlock Text="Перед тем, как сохранить задание в формате PDF, не забудьте выбрать нужное количество слов. В режиме тренировки не выполняется подведение итогов." TextWrapping="Wrap" Width="200"/>

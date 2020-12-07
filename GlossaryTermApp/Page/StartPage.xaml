@@ -14,7 +14,7 @@
             <ColumnDefinition Width="440*"/>
         </Grid.ColumnDefinitions>
         <Image Source="../image/cherry.png" Grid.Column="2" Margin="251,-157,553,156.8"/>
-        <Image Source="../image/help.png" Margin="-1,0,10.4,504.8" RenderTransformOrigin="0.495,0.438">
+        <Image Source="../image/help.png" Margin="-1,0,10.4,504.8" RenderTransformOrigin="0.495,0.438" ToolTipService.ShowDuration="50000">
             <Image.ToolTip>
                 <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
                     <TextBlock Text="Дорогой пользователь! Это приложение создано с целью упростить труд учителей. Перед началом работы выберите нужный предмет и класс в выпадающих списках ниже и нажмите на кнопку 'Начать'" TextWrapping="Wrap" Width="200"/>
