@@ -143,7 +143,7 @@ namespace TeacherryApp
                     if (textBox.Tag == textBlock.Tag)
                     {
                         var border = (Border)textBlock.Parent;
-                        border.Background = Brushes.Aquamarine;
+                        border.Background = new SolidColorBrush(Color.FromRgb(208, 236, 231));
                     }
                 }
             }
@@ -152,15 +152,18 @@ namespace TeacherryApp
         private void DockPanel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var textBox = (TextBox)((DockPanel)sender).Tag;
-            foreach (var textBlock in _listOfLetters)
+            if (textBox.Tag != _mainWordTag)
             {
-                if (textBox.Tag == textBlock.Tag)
+                foreach (var textBlock in _listOfLetters)
                 {
-                    var border = (Border)textBlock.Parent;
-                    if (!_listOfMainWordLetters.Contains(textBlock))
-                        border.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    else
-                        border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
+                    if (textBox.Tag == textBlock.Tag)
+                    {
+                        var border = (Border) textBlock.Parent;
+                        if (!_listOfMainWordLetters.Contains(textBlock))
+                            border.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                        else
+                            border.Background = new SolidColorBrush(Color.FromRgb(250, 219, 216));
+                    }
                 }
             }
         }
@@ -168,12 +171,15 @@ namespace TeacherryApp
         private void DockPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var textBox = (TextBox)((DockPanel)sender).Tag;
-            foreach (var textBlock in _listOfLetters)
+            if (textBox.Tag != _mainWordTag)
             {
-                if (textBox.Tag == textBlock.Tag)
+                foreach (var textBlock in _listOfLetters)
                 {
-                    var border = (Border)textBlock.Parent;
-                    border.Background = new SolidColorBrush(Color.FromRgb(208, 236, 231)); 
+                    if (textBox.Tag == textBlock.Tag)
+                    {
+                        var border = (Border) textBlock.Parent;
+                        border.Background = new SolidColorBrush(Color.FromRgb(208, 236, 231));
+                    }
                 }
             }
         }
