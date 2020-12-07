@@ -30,34 +30,37 @@ namespace GameLib
 
         private void PrepareGame()
         {
-            var list = new List<SimpleTerm>();
-            ChooseRandomMainWord();
-            if (_mainWord != null)
+            if (List.Count > 0)
             {
-                _verticalSize = _mainWord.Word.Length;
-                _horizontalSize = _maxLength * 2 + 1;
-                CrossWordTerms = new SimpleTerm[_verticalSize + 1];
-                CrossWordTerms[0] = _mainWord;
-                MainWordHorizontalIndex = _maxLength + 1;
-                _preparingMatrix = new LetterFromWord[_verticalSize, _horizontalSize];
-                for (int i = 0; i < _verticalSize; i++)
+                ChooseRandomMainWord();
+                if (_mainWord != null)
                 {
-                    _preparingMatrix[i, MainWordHorizontalIndex] = new LetterFromWord(_mainWord.Word[i], _mainWord);
-                }
-
-                int count = 0;
-                while (count < _verticalSize)
-                {
-                    int rand = GetRandom(_verticalSize) + 1;
-                    if (CrossWordTerms[rand] == null)
+                    _verticalSize = _mainWord.Word.Length;
+                    _horizontalSize = _maxLength * 2 + 1;
+                    CrossWordTerms = new SimpleTerm[_verticalSize + 1];
+                    CrossWordTerms[0] = _mainWord;
+                    MainWordHorizontalIndex = _maxLength + 1;
+                    _preparingMatrix = new LetterFromWord[_verticalSize, _horizontalSize];
+                    for (int i = 0; i < _verticalSize; i++)
                     {
-                        if (_mainWord.Word[rand - 1] != ' ')
-                            TryAddWordToCrossword(rand);
-                        count++;
+                        _preparingMatrix[i, MainWordHorizontalIndex] = new LetterFromWord(_mainWord.Word[i], _mainWord);
                     }
+
+                    int count = 0;
+                    while (count < _verticalSize)
+                    {
+                        int rand = GetRandom(_verticalSize) + 1;
+                        if (CrossWordTerms[rand] == null)
+                        {
+                            if (_mainWord.Word[rand - 1] != ' ')
+                                TryAddWordToCrossword(rand);
+                            count++;
+                        }
+                    }
+
+                    PerformMatrix();
+                    IsReady = true;
                 }
-                PerformMatrix();
-                IsReady = true;
             }
         }
 
